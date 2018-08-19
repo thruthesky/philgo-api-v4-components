@@ -508,7 +508,7 @@ export class PhilGoApiService {
 
     private validatePost(data) {
         const q = this.httpBuildQuery(data);
-        console.log('PhilGoApiService::post() url: ', this.getServerUrl() + '?' + q);
+        // console.log('PhilGoApiService::post() url: ', this.getServerUrl() + '?' + q);
         if (!this.getServerUrl()) {
             console.error(`Error. Server URL is not set.`);
         }

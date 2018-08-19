@@ -16,6 +16,7 @@
 
 ## Document
 
+* [PhilGo Api Example](https://github.com/thruthesky/philgo-api-example)
 * [PhilGo API v4 Document](https://docs.google.com/document/d/1E_IxnMGDPkjOI0Fl3Hg07RbFwYRjHq89VlfBuESu3BI/edit#)
 * [PhilGo API](https://docs.google.com/document/d/1DbGXezNIVoOgFmjhnnZBZjrsx9vEwSVv-BzSJHB3C2s/edit#heading=h.wuw5os21mdy)
 * [PhilGo Family Github](https://github.com/thruthesky/philgo-family) which uses this project.
@@ -49,13 +50,11 @@ git submodule add https://github.com/thruthesky/philgo-api src/app/modules/philg
 * Consider not to import `PhilGoApiComponentModule` since it is only holding exmaples of components. Or you may update it and use it in production.
 
 ```` typescript
-import { PhilGoApiModule } from './modules/philgo-api/philgo-api.module';
-import { PhilGoApiComponentModule } from './modules/philgo-api/philgo-api.component.module';
+import { PhilGoApiModule, PhilGoApiService } from './module/philgo-api/philgo-api.module';
 
 @NgModule({
   imports: [
-    PhilGoApiModule,
-    PhilGoApiComponentModule
+    PhilGoApiModule
   ],
 })
 export class AppModule { }
@@ -67,17 +66,29 @@ export class AppModule { }
 ```` typescript
 export class AppModule {
   constructor(philgo: PhilGoApiService) {
+    /** Example 1 */
+    // philgo.setServerUrl('http://59.30.59.162/sapcms_1_2/api.php');
+    // philgo.setFileServerUrl('http://59.30.59.162/sapcms_1_2/index.php'); // Philgo API file server url. Must end with 'indx.php'.
+    // philgo.setNewFileServerUrl('http://59.30.59.162/file-server/index.php');
+  
+    /** Example 2 */
     philgo.setServerUrl('https://local.philgo.com/api.php');
-    /**
-     * Philgo API file server url. Must end with 'indx.php'.
-     */
     philgo.setFileServerUrl('https://local.philgo.com/index.php');
+    philgo.setNewFileServerUrl('http://work.org/file-server/index.php');
+
+    /** Example 3 */
+    // philgoServerUrl: 'https://www.philgo.com/api.php',
+    // philgoFileServerUrl: 'https://file.philgo.com/index.php',
+    // newFileServerUrl: 'https://file.philgo.com/~file_server/index.php'
   }
 }
 ````
 
 ## TEST
 
+* Test service put the service in root injector by using `providedIn: root`. So, no need to import it in module while `PhilGoApiService` needs to be imported by each module.
+
+* [Old test code example](https://github.com/thruthesky/philgo-api-old/blob/master/providers/philgo-api-test.service.ts)
 * http://localhost:4200/test/philgo/home for test page
 * http://localhost:4200/test/philgo/register
 
