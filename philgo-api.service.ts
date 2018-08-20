@@ -392,6 +392,7 @@ export interface ApiCommentEditResponse extends ApiVersion2Response {
  * Chat interface
  *
  */
+
 export interface ApiChatRoom {
     idx: string;                // always api_chat_room.idx
     idx_member: string;         // is the owner of the chat room.
@@ -407,6 +408,12 @@ export interface ApiChatRoom {
     idx_message_last_read?: string;     // api_chat_message.idx which lastly read by the user for that chat room.
     no_of_unread_messages?: string;     // no of unread messages for this room.
 }
+
+export interface ApiChatRooms {
+    info: ApiChatInfo;
+    rooms: Array<ApiChatRoom>;
+}
+
 
 export interface ApiChatMessage {
     idx: string;
@@ -445,7 +452,7 @@ export interface ApiChatRoomEnter extends ApiChatRoom {
 }
 
 export interface ApiChatInfo {
-    version: number;
+    version: string;
 }
 
 /**
@@ -1334,11 +1341,10 @@ export class PhilGoApiService {
     /**
      * Get chat room list. It includes my own chat rooms.
      */
-    chatOtherRooms(): Observable<Array<ApiChatRoom>> {
+    chatOtherRooms(): Observable<ApiChatRooms> {
         return this.query('chat.otherRooms');
     }
-    chatMyRooms(): Observable<Array<ApiChatRoom>> {
-
+    chatMyRooms(): Observable<ApiChatRooms> {
         return this.query('chat.myRooms');
     }
     /**
