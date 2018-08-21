@@ -397,6 +397,7 @@ export interface ApiCommentEditResponse extends ApiVersion2Response {
  * Chat interface
  *
  */
+
 export interface ApiChatRoom {
     idx: string;                // always api_chat_room.idx
     idx_member: string;         // is the owner of the chat room.
@@ -412,6 +413,12 @@ export interface ApiChatRoom {
     idx_message_last_read?: string;     // api_chat_message.idx which lastly read by the user for that chat room.
     no_of_unread_messages?: string;     // no of unread messages for this room.
 }
+
+export interface ApiChatRooms {
+    info: ApiChatInfo;
+    rooms: Array<ApiChatRoom>;
+}
+
 
 export interface ApiChatMessage {
     idx: string;
@@ -432,10 +439,9 @@ export interface ApiChatRoomCreateRequest extends ApiRequest {
     description: string;
 }
 
-// export interface ApiChatRoomCreateResponse {
-//     idx?: string;
-// }
-
+export interface ApiChatRoomCreateResponse {
+    idx?: string;
+}
 
 
 export interface ApiChatRoomEnterRequest extends ApiOptionalRequest {
@@ -451,7 +457,7 @@ export interface ApiChatRoomEnter extends ApiChatRoom {
 }
 
 export interface ApiChatInfo {
-    version: number;
+    version: string;
 }
 
 /**
@@ -468,12 +474,12 @@ export class PhilGoApiService {
         private sanitizer: DomSanitizer,
         public http: HttpClient
     ) {
-        console.log('PhilGoApiService::constructor');
+        // console.log('PhilGoApiService::constructor');
     }
 
     setServerUrl(url: string) {
         PhilGoApiService.serverUrl = url;
-        console.log('setServerUrl(): ', this.getServerUrl());
+        // console.log('setServerUrl(): ', this.getServerUrl());
     }
     getServerUrl(): string {
         return PhilGoApiService.serverUrl;
@@ -515,7 +521,7 @@ export class PhilGoApiService {
         const q = this.httpBuildQuery(data);
         // console.log('PhilGoApiService::post() url: ', this.getServerUrl() + '?' + q);
         if (!this.getServerUrl()) {
-            console.error(`Error. Server URL is not set.`);
+            // console.error(`Error. Server URL is not set.`);
         }
     }
     /**
@@ -557,8 +563,8 @@ export class PhilGoApiService {
                 }
             }),
             catchError(e => {
-                console.log('PhilGoApiService::post() => catchError()');
-                console.log('catchError: ', e);
+                // console.log('PhilGoApiService::post() => catchError()');
+                // console.log('catchError: ', e);
                 /**
                  * PhilGo API 의 에러이면 그대로 Observable Error 를 리턴한다.
                  */
@@ -694,11 +700,11 @@ export class PhilGoApiService {
         req.session_id = this.getSessionId();
         req.id = this.getIdxMember().toString();
         const q = this.httpBuildQuery(req);
-        console.log('PhilGoApiService::post() to Old V2 url: ', this.getV2ServerUrl() + '?' + q);
+        // console.log('PhilGoApiService::post() to Old V2 url: ', this.getV2ServerUrl() + '?' + q);
         const url = this.getV2ServerUrl() + '?module=ajax&action=' + req.action + '&submit=1';
         return this.http.post(url, req).pipe(
             map((res: ApiVersion2Response) => {
-                console.log('old api: ', res);
+                // console.log('old api: ', res);
                 /**
                  * PhilGo API Version 2 부터 잘 처리된 결과 데이터가 전달되었다면,
                  * 데이터만 Observable 로 리턴한다.
@@ -740,7 +746,7 @@ export class PhilGoApiService {
         return this.query<ApiRegisterRequest, ApiRegisterResponse>('register', data)
             .pipe(
                 map(res => {
-                    console.log('register -> query -> pipe -> map -> res: ', res);
+                    // console.log('register -> query -> pipe -> map -> res: ', res);
                     this.saveUserInformation(res);
                     return res;
                 })
@@ -941,7 +947,7 @@ export class PhilGoApiService {
         formData.append('file', file, file.name);
         formData.append('module', 'ajax');
         formData.append('action', 'file_upload_submit');
-        console.log('option: ', option);
+        // console.log('option: ', option);
         if (option.gid) {
             formData.append('gid', option.gid);
         }
@@ -966,7 +972,7 @@ export class PhilGoApiService {
             responseType: 'json'
         });
 
-        console.log('file upload: ', this.getFileServerUrl());
+        // console.log('file upload: ', this.getFileServerUrl());
         return this.http.request(req).pipe(
             map(e => {
                 if (e instanceof HttpResponse) { // success event.
@@ -989,9 +995,9 @@ export class PhilGoApiService {
                 } else if (e.type === HttpEventType.UploadProgress) { // progress event
                     const precentage = Math.round(100 * e.loaded / e.total);
                     if (isNaN(precentage)) {
-                        console.log('file upload error. percentage is not number');
+                        // console.log('file upload error. percentage is not number');
                     } else {
-                        console.log('upload percentage: ', precentage);
+                        // console.log('upload percentage: ', precentage);
                         return precentage;
                     }
                 }
@@ -1018,7 +1024,7 @@ export class PhilGoApiService {
         const formData = new FormData();
         formData.append('userfile', file, file.name);
         formData.append('action', 'file-upload');
-        console.log('option: ', options);
+        // console.log('option: ', options);
         if (options.uid) {
             formData.append('uid', options.uid);
         }
@@ -1031,7 +1037,7 @@ export class PhilGoApiService {
             responseType: 'json'
         });
 
-        console.log('file upload: ', this.getNewFileServerUrl());
+        // console.log('file upload: ', this.getNewFileServerUrl());
         return this.http.request(req).pipe(
             map(e => {
                 if (e instanceof HttpResponse) { // success event.
@@ -1053,10 +1059,10 @@ export class PhilGoApiService {
                     const precentage = Math.round(100 * e.loaded / e.total);
                     if (isNaN(precentage)) {
                         // don't do here anything. this will never happens.
-                        console.log('file upload error. percentage is not number');
+                        // console.log('file upload error. percentage is not number');
                         return <any>0;
                     } else {
-                        console.log('upload percentage: ', precentage);
+                        // console.log('upload percentage: ', precentage);
                         return <any>precentage;
                     }
                 } else {
@@ -1324,56 +1330,58 @@ export class PhilGoApiService {
         return this.queryVersion2(req);
     }
 
-    /**
+    /***********************************************************
+     *
      * Chat methods
-     */
+     *
+     **********************************************************/
+
     /**
      * Create a chat room
      */
-    chatRoomCreate(option: ApiChatRoomCreateRequest): Observable<number> {
+    chatRoomCreate(option: ApiChatRoomCreateRequest): Observable<ApiChatRoomCreateResponse> {
         return this.query('chat.createRoom', option);
     }
 
     /**
      * Get chat room list. It includes my own chat rooms.
      */
-    chatOtherRooms(): Observable<Array<ApiChatRoom>> {
+    chatOtherRooms(): Observable<ApiChatRooms> {
         return this.query('chat.otherRooms');
     }
-    chatMyRoomList(): Observable<Array<ApiChatRoom>> {
-
-        return this.query('chatRoomMyList');
+    chatMyRooms(): Observable<ApiChatRooms> {
+        return this.query('chat.myRooms');
     }
     /**
      * Get a chat room info. Only 1.
      */
-    chatRoomEnter(data: ApiChatRoomEnterRequest): Observable<ApiChatRoomEnter> {
-        return this.query('chatRoomEnter', data);
+    chatEnterRoom(data: ApiChatRoomEnterRequest): Observable<ApiChatRoomEnter> {
+        return this.query('chat.enterRoom', data);
     }
-    chatRoomLeave(idx: string): Observable<ApiChatRoom> {
+    chatLeaveRoom(idx: string): Observable<ApiChatRoom> {
         const data: ApiChatRoomLeaveRequest = {
             idx: idx
         };
-        return this.query('chatRoomLeave', data);
+        return this.query('chat.leaveRoom', data);
     }
 
-    chatRoomFavorite(idx: string): Observable<ApiChatRoom> {
-        return this.query('chatRoomFavorite', { idx: idx });
+    chatFavorite(idx: string): Observable<ApiChatRoom> {
+        return this.query('chat.favorite', { idx: idx });
     }
 
-    chatRoomUnfavorite(idx: string): Observable<ApiChatRoom> {
-        return this.query('chatRoomUnfavorite', { idx: idx });
+    chatUnfavorite(idx: string): Observable<ApiChatRoom> {
+        return this.query('chat.unfavorite', { idx: idx });
     }
 
     /**
      * Get chat room list. It includes my own chat rooms.
      */
-    chatMessageSend(form: ApiChatMessage): Observable<ApiChatMessage> {
-        return this.query('chatMessageSend', form);
+    chatSendMessage(form: ApiChatMessage): Observable<ApiChatMessage> {
+        return this.query('chat.sendMessage', form);
     }
 
-    chatMessageLastRead(idx_room: string, idx_message: string): Observable<any> {
-        return this.query('chatMessageLastRead', { idx_room: idx_room, idx_message: idx_message });
+    chatLastRead(idx_room: string, idx_message: string): Observable<any> {
+        return this.query('chat.lastRead', { idx_room: idx_room, idx_message: idx_message });
     }
 
 
@@ -1381,7 +1389,7 @@ export class PhilGoApiService {
      * Returns chat app version. You can use it to see if the app is latest version or not.
      */
     chatInfo() {
-        return this.query('chatInfo');
+        return this.query('chat.info');
     }
     /**
      * Returns true if the input 'message' is my message.
@@ -1404,8 +1412,9 @@ export class PhilGoApiService {
      * Save push token
      * @param token token
      */
-    pushSaveToken(data: { token: string, domain?: string }) {
-        return this.query('pushSaveToken', data);
+    chatSaveToken(data: { token: string, domain?: string }) {
+        return this.query('chat.saveToken', data);
     }
 }
 
+// EOF
