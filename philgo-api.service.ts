@@ -147,6 +147,9 @@ export const ApiErrorFileNotSelected = 'file-not-selected';
 export const ApiErrorFileUploadError = -50020;
 export const ApiErrorUrlNotSet = -50030;
 export const ApiErrorMessageInternetOrServer = 'Please check your internet or connection to server.';
+export const ApiErrorEmptyUid = -1100;
+export const ApiErrorEmptyPassword = -1110;
+
 
 
 
@@ -460,7 +463,9 @@ export interface ApiChatInfo {
 /**
  * PhilGoApiService
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PhilGoApiService {
     static serverUrl = '';
     static fileServerUrl = '';
@@ -521,6 +526,16 @@ export class PhilGoApiService {
             // console.error(`Error. Server URL is not set.`);
         }
     }
+
+    /**
+     * Returns error object
+     *
+     * @param code error code
+     * @param message error message
+     */
+    error(code: number, message: string): ApiErrorResponse {
+        return { code: code, message: message };
+    }
     /**
      * 서버로 POST request 를 전송하고 결과를 받아서 데이터를 Observable 로 리턴하거나
      * 응답에 에러가 있거나 각종 상황에서 에러가 있으면 그 에러를 Observable 로 리턴한다.
@@ -539,7 +554,7 @@ export class PhilGoApiService {
     post(data): Observable<any> {
         this.validatePost(data);
         if (!this.getServerUrl()) {
-            return throwError({ code: ApiErrorUrlNotSet, message: 'Server url is not set. Set it on App Module constructor().' });
+            return throwError( this.error( ApiErrorUrlNotSet, 'Server url is not set. Set it on App Module constructor().') );
         }
         return this.http.post(this.getServerUrl(), data).pipe(
             map((res: ApiResponse) => {
