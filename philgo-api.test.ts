@@ -6,6 +6,9 @@ import { PhilGoApiService, ApiCurrencyResponse, ApiCurrencyRequest } from './phi
     providedIn: 'root'
 })
 export class PhilGoApiTestService {
+    private memberId = 'test@test.com';
+    private password = '12345a';
+    private sessionId = '';
     constructor(
         public api: PhilGoApiService
     ) {
@@ -16,6 +19,8 @@ export class PhilGoApiTestService {
         console.log('  ****** PhilGoApiTestService::run()');
         this.testQuery();
         this.testRegisterLoginUpdate();
+
+        this.postCreate();
     }
     setUrl(url: string) {
         this.api.setServerUrl(url);
@@ -82,6 +87,12 @@ export class PhilGoApiTestService {
 
 
             });
+    }
+
+    async postCreate() {
+        const re = await this.api.login({ uid: this.memberId, password: this.password}).toPromise();
+        console.log('re: ', re);
+
     }
 
 }
