@@ -69,6 +69,9 @@ export interface ApiCurrencyResponse extends ApiResponse {
     php: string;
     usd: string;
 }
+/**
+ * @see sapcms_1_2::ApiLibrary::getUserProfile()
+ */
 export interface ApiProfileResponse extends ApiResponse {
     idx: string;
     id: string;
@@ -77,7 +80,9 @@ export interface ApiProfileResponse extends ApiResponse {
     nickname: string;
     mobile: string;
     password: string;
-    readonly url_profile_photo?: string;
+    birth_year: string;
+    gender: string;
+    url_profile_photo: string;
     session_id: string;
 }
 
