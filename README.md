@@ -2,6 +2,18 @@
 
 * This philgo api v4.
 
+## TODO
+
+* 새로운 글목록과 글 쓰기/수정 페이지를 만든다.
+  * 글 쓰기(수정)를 버튼을 클릭하면, 모달 팝업창을 띄워서 한다.
+    * 코멘트 쓰기나, 코멘트 수정은 글 목록 페이지에서 모달 팝업창을 띄워서 한다.
+  * 완료 또는 취소를 하면, 목록페이지로 이동해서 맨 처음 부터 다시 로드한다. 중간에 끼워 넣지 않는다.
+  * 중요: 꼭 ... 하나의 페이지에서 이것 저것 다 하려고 하다 보면, 문제가 복잡해 진다.
+
+* capsulate locations of Philipines.
+  * Make it class.
+* Message functionality.
+
 ## Environment
 
 * PhilGo Api is an opinionated service for PhilGo.COM. It uses
@@ -22,18 +34,6 @@ tail -f ~/tmp/sapcms_debug.log
 ### Ionic
 
 * philgo api components will only work with ionic.
-
-## TODO
-
-* 새로운 글목록과 글 쓰기/수정 페이지를 만든다.
-  * 글 쓰기(수정)를 버튼을 클릭하면, 모달 팝업창을 띄워서 한다.
-    * 코멘트 쓰기나, 코멘트 수정은 글 목록 페이지에서 모달 팝업창을 띄워서 한다.
-  * 완료 또는 취소를 하면, 목록페이지로 이동해서 맨 처음 부터 다시 로드한다. 중간에 끼워 넣지 않는다.
-  * 중요: 꼭 ... 하나의 페이지에서 이것 저것 다 하려고 하다 보면, 문제가 복잡해 진다.
-
-* capsulate locations of Philipines.
-  * Make it class.
-* Message functionality.
 
 ## Document
 
@@ -415,3 +415,12 @@ main {
   }
 }
 ````
+
+## Chat
+
+* Simply use `app-chat-all-rooms` component selector and it will begin chat app.
+
+### Chat Room Enter
+
+* When chat room is clicked on chat room list, it will navigate to `/room/:idx`.
+  So, the app must have chat room page on `/room/:idx` route.

@@ -496,10 +496,14 @@ export class PhilGoApiService {
     pushToken = '';
 
     /**
-     * Chat
+     * Chat variables
      */
-    listeningRooms: Array<ApiChatRoom> = [];
+    /**
+     * currentRoomNo is the same as currentRoom.
+     */
     currentRoomNo = 0;
+    currentRoom: ApiChatRoomEnter = null;
+    listeningRooms: Array<ApiChatRoom> = [];
     newMessageOnCurrentRoom = new Subject<ApiChatMessage>();
     newMessageFromOtherRoom = new Subject<ApiChatMessage>();
 
@@ -569,7 +573,7 @@ export class PhilGoApiService {
 
     private validatePost(data) {
         const q = this.httpBuildQuery(data);
-        // console.log('PhilGoApiService::post() url: ', this.getServerUrl() + '?' + q);
+        console.log('PhilGoApiService::post() url: ', this.getServerUrl() + '?' + q);
         if (!this.getServerUrl()) {
             // console.error(`Error. Server URL is not set.`);
         }
@@ -1655,7 +1659,7 @@ export class PhilGoApiService {
      */
     updatePusTokenToServer(token) {
         this.pushToken = token; // Cordova 는 이미 값이 있지만, 웹에는 적용을 해 준다.
-        // console.log('updatePushNotificationTokenToServer(): ', token);
+        console.log('      updatePusTokenToServer(): ', token);
         if (!token) {
             // console.log('token empty. return.');
             return;
@@ -1675,6 +1679,7 @@ export class PhilGoApiService {
      *  이 함수는 앱 처음 실행시 한번만 실행되어야 하며, 기본적으로 PhilGoApi::constructor() 에서 실행되므로 따로 신경 쓰지 않아도 된다.
      */
     updateWebPushToken() {
+        console.log('  ()updateWebPushToken ==>');
         if ( ! AngularLibrary.isCordova() && AngularLibrary.isPushPermissionGranted()) {
             this.requestWebPushPermission();
         }
@@ -1684,7 +1689,7 @@ export class PhilGoApiService {
      * 이 함수는 물어보고 웹 푸시 토큰을 서버에 저장한다.
      */
     requestWebPushPermission() {
-
+        console.log('      ()requestWebPushPermission ==>');
         const messaging = firebase.messaging();
         // console.log('requestPushNotificationPermission()');
         messaging.requestPermission().then(() => {
