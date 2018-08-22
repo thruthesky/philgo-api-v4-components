@@ -13,7 +13,6 @@ import { AngularLibrary } from '../../angular-library/angular-library';
 export class ChatAllRoomsComponent implements OnInit, OnDestroy {
 
   @Output() error = new EventEmitter<ApiErrorResponse>();
-  @Output() enter = new EventEmitter<number>();
   @Input() share = {};
 //   a.requestPushNotificationPermission()
   rooms: Array<ApiChatRoom> = [];

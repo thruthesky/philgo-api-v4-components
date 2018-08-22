@@ -1,1 +1,53 @@
-chat my rooms
+<div class="loader" *ngIf=" show.loader.roomList; else roomListLoaded ">
+    <ion-spinner></ion-spinner>
+    <div>{{ tr.t({ko: '채팅방 목록을 로딩중입니다.', en: 'Loading chat room list.'}) }}</div>
+</div>
+
+<ng-template #roomListLoaded>
+
+    <ion-list lines="full" class="rooms" *ngIf=" rooms.length ">
+        <!-- <ion-item *ngFor="let room of rooms" (click)="enter.emit(room)"> -->
+        <!-- <ion-item *ngFor="let room of rooms" (click)="onClickRoom(room)"> -->
+
+        <ng-container *ngFor="let room of rooms">
+            <ion-item class="name pointer" (click)=" onClickRoom(room.idx) ">
+                <ion-label>
+                    <h3>{{ room.name }}</h3>
+                    <p>{{ room.description }}</p>
+                </ion-label>
+                <ion-icon color="tertiary" name="ribbon" *ngIf=" room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
+                <ion-icon color="primary" name="heart" *ngIf=" room.idx_owner != philgo.myIdx() && room.favorite == 'Y' "></ion-icon>
+
+                <ion-badge slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
+
+            </ion-item>
+
+            <!-- <ion-item class="meta pointer" (click)=" onClickRoom(room.idx) ">
+        <ion-text text-wrap>{{ room.description }}</ion-text>
+        <ng-container *ngIf=" roomType == 'my-rooms' ">
+          <ion-badge slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
+        </ng-container>
+      </ion-item> -->
+
+        </ng-container>
+    </ion-list>
+
+    <div class="no-more" text-center *ngIf=" ! rooms.length ">
+        <ion-img src="/assets/img/chat-icon.png"></ion-img>
+        <ion-text color="danger" class="title">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
+        <ion-text>{{ tr.t({ko: '회원님이 참여한 채팅 방이 없네요.', en: 'You do not have any rooms.'}) }}</ion-text>
+        <ion-text>{{ tr.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text>
+        <ion-button routerLink="/all-rooms">
+            <span>{{ tr.t({ko: '전체 채팅방 목록', en:'All Chat Room List' }) }}</span>
+            <ion-icon name="open"></ion-icon>
+        </ion-button>
+
+
+    </div>
+</ng-template>
+
+<a *ngIf=" isMobileWeb " class="mobileWeb-install-button" href="https://play.google.com/store/apps/details?id=com.sonub.chat"
+    target="_blank">
+    <span>{{ tr.t({ko: '채팅앱 이용하기', en: 'Use chat app'})}}</span>
+    <ion-icon name="appstore"></ion-icon>
+</a>

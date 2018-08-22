@@ -1,0 +1,3 @@
+<div class="uploaded-photo" [ngClass]="{clicked: clicked}" (click)="onClickPhoto()">
+  <img text-wrap [src]="message.url" *ngIf="message.url" (load)="onImageLoad()">
+</div>

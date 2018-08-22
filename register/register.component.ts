@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PhilGoApiService } from '../../philgo-api/philgo-api.module';
 import { LanguageTranslate } from '../../language-translate/language-translate';
 import {
-    ApiErrorEmptyUid, ApiErrorEmptyPassword, ApiErrorResponse, ApiProfileUpdateRequest,
+    ApiErrorResponse, ApiProfileUpdateRequest,
     ApiRegisterResponse, ApiProfileResponse, ApiErrorFileNotSelected, ApiErrorFileUploadError
 } from '../../philgo-api/philgo-api.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit {
         public philgo: PhilGoApiService,
         public tr: LanguageTranslate
     ) {
+        this.resetForm();
     }
     ngOnInit() {
 

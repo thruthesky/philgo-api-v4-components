@@ -42,7 +42,7 @@ export class ChatUpdateComponent implements OnInit {
    */
   get needRequestWebPushPermission(): boolean {
     if (!AngularLibrary.isCordova()) {
-      if (!AngularLibrary.isPushPermissionGranted()) {
+      if (!AngularLibrary.isPushPermissionRequested()) {
         return true;
       }
     }
@@ -73,12 +73,12 @@ export class ChatUpdateComponent implements OnInit {
       // TODO(developer): Retrieve an Instance ID token for use with FCM.
       // Callback fired if Instance ID token is updated.
 
-      messaging.getToken().then(token => this.philgo.updatePushNotificationTokenToServer(token))
+      messaging.getToken().then(token => this.philgo.updatePusTokenToServer(token))
         .catch((err) => {
           // console.log('getToken() error: ', err);
         });
       messaging.onTokenRefresh(() => {
-        messaging.getToken().then((token => this.philgo.updatePushNotificationTokenToServer(token)))
+        messaging.getToken().then((token => this.philgo.updatePusTokenToServer(token)))
           .catch((err) => {
             // console.log('Unable to retrieve refreshed token ', err);
             // showToken('Unable to retrieve refreshed token ', err);

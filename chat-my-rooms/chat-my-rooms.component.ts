@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiChatRoom, PhilGoApiService, ApiErrorResponse } from '../../philgo-api/philgo-api.service';
-
+import { LanguageTranslate } from '../../language-translate/language-translate';
+import { AngularLibrary } from '../../angular-library/angular-library';
 
 @Component({
   selector: 'app-chat-my-rooms-component',
@@ -12,10 +13,11 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
 
   @Output() error = new EventEmitter<ApiErrorResponse>();
   @Input() share = {};
-  roomType: 'my-rooms' | 'all-rooms' = null;
   rooms: Array<ApiChatRoom> = [];
   roomsBackup: Array<ApiChatRoom> = [];
 
+
+  isMobileWeb = AngularLibrary.isMobileWeb();
   show = {
     loader: {
       roomList: true
@@ -23,8 +25,10 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
   };
   constructor(
     private router: Router,
-    public philgo: PhilGoApiService
+    public philgo: PhilGoApiService,
+    public tr: LanguageTranslate
   ) {
+    this.loadMyChatRoomList();
   }
 
   ngOnInit() {
@@ -49,12 +53,11 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
 
   loadMyChatRoomList(callback?) {
     this.show.loader.roomList = true;
-    this.roomType = 'my-rooms';
     this.philgo.chatMyRooms().subscribe(res => {
 
       this.show.loader.roomList = false;
       this.philgo.info = res.info;
-      // console.log('my room list: ', res);
+      console.log('my room list: ', res);
       /**
        * Sort of rooms
        *  - favorite first.
@@ -87,9 +90,9 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
         }
       });
     }, e => {
+      console.log('error:', e);
       this.show.loader.roomList = false;
       this.error.emit(e);
-      // this.a.toast(e);
     });
   }
   // loadAllChatRoomList() {
