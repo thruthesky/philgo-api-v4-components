@@ -24,7 +24,8 @@ export class RegisterComponent implements OnInit {
     };
     percentage = 0;
     constructor(
-        private philgo: PhilGoApiService
+        public philgo: PhilGoApiService,
+        public tr: LanguageTranslate
     ) {
     }
     ngOnInit() {
