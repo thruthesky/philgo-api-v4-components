@@ -3,19 +3,20 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-import { MyRoomsComponent } from './chat-my-room.component';
+import { ChatAllRoomsComponent } from './chat-all-rooms.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
   ],
   declarations: [
-    MyRoomsComponent
+    ChatAllRoomsComponent
   ],
   exports: [
-    MyRoomsComponent
+    ChatAllRoomsComponent
   ]
 })
-export class MyRoomsComponentModule {}
+export class ChatAllRoomsComponentModule {}
+

@@ -3,13 +3,12 @@ import { Router } from '@angular/router';
 import { ApiChatRoom, PhilGoApiService, ApiErrorResponse } from '../../philgo-api/philgo-api.service';
 
 
-
 @Component({
-  selector: 'app-my-rooms-component',
-  templateUrl: './rooms.component.html',
-  styleUrls: ['./rooms.component.scss']
+  selector: 'app-chat-my-rooms-component',
+  templateUrl: './chat-my-rooms.component.html',
+  styleUrls: ['./chat-my-rooms.component.scss']
 })
-export class MyRoomsComponent implements OnInit, OnDestroy {
+export class ChatMyRoomsComponent implements OnInit, OnDestroy {
 
   @Output() error = new EventEmitter<ApiErrorResponse>();
   @Input() share = {};

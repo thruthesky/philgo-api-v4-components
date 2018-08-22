@@ -1,0 +1,44 @@
+<ion-card *ngIf=" needUpdate ">
+    <ion-card-header>
+        <ion-card-subtitle>{{ tr.t({ko: '앱을 업데이트해주세요.', en: 'Update app'}) }}</ion-card-subtitle>
+        <ion-card-title>{{ tr.t({ko: '업데이트 알림', en: 'Update'}) }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <div>{{ tr.t({ko: '앱이 업데이트되었습니다. 업데이트된 앱을 설치해주세요.', en: 'Please update new version'}) }}</div>
+        <ion-button class="install-button" href="https://play.google.com/store/apps/details?id=com.sonub.chat">
+            <span>{{ tr.t({ko: '채팅앱 설치하기', en: 'Install Chat App'}) }}</span>
+            <ion-icon name="appstore"></ion-icon>
+        </ion-button>
+    </ion-card-content>
+</ion-card>
+
+<ion-card *ngIf=" needRequestWebPushPermission ">
+    <ion-card-header>
+        <ion-card-subtitle>{{ tr.t({ko: '채팅 알림을 허용해주세요.', en: 'Please accept Notification'}) }}</ion-card-subtitle>
+        <ion-card-title>{{ tr.t({ko: '채팅 알림', en: 'Allow Chat Notification'}) }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <div>{{ tr.t({ko: '채팅 알림을 허용 해 주셔야 새로운 채팅이 있을 시 알림을 받을 수 있습니다.', en: 'Please allow notification. So we can notify you
+            when your friends talk to you.'}) }}</div>
+        <ion-button color="danger" (click)=" requestWebPushPermission() ">
+            <span>{{ tr.t({ko: '채팅 알림 허용하기', en: 'Allow Notification'}) }}</span>
+            <ion-icon name="notifications"></ion-icon>
+        </ion-button>
+    </ion-card-content>
+</ion-card>
+
+<ion-card *ngIf=" isWebPushPermissionDenied ">
+    <ion-card-header>
+        <ion-card-subtitle>{{ tr.t({ko: '채팅앱을 설치 해 주세요.', en: 'Please install chat app'}) }}</ion-card-subtitle>
+        <ion-card-title>{{ tr.t({ko: '채팅앱 설치', en: 'Install Chat App'}) }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+        <div>{{ tr.t({ko: '채팅 알림을 거절하신 경우 반드시 채팅앱을 사용하시기 바랍니다.', en: 'You have denied chat notification. Please install Chat App
+            to be notified.'}) }}</div>
+        <ion-button routerLink="/">
+            <ion-label>{{ tr.t({ko: '채팅앱 설치하기', en: 'Install Chat App'}) }}</ion-label>
+            <ion-icon name="appstore"></ion-icon>
+        </ion-button>
+    </ion-card-content>
+</ion-card>
