@@ -2,6 +2,22 @@
 
 * This philgo api v4.
 
+## Environment
+
+* PhilGo Api is an opinionated service for PhilGo.COM. It uses
+  * PhilGo Database.
+  * PhilGo Firebase Project.
+
+* To see PhilGo Api log file on Macbook
+
+```` sh
+tail -f ~/tmp/sapcms_debug.log
+````
+
+### Firebase
+
+* `firebsae` node module must be installed and initialized correctly on philgo-api.service.ts
+
 ## TODO
 
 * 새로운 글목록과 글 쓰기/수정 페이지를 만든다.
@@ -25,14 +41,6 @@
   * [Components example of PhilGo API](https://github.com/thruthesky/philgo-api-old/tree/master/components)
 
 * Old version of [PhilGo API v2](https://github.com/thruthesky/philgo-api/tree/8bcd9b53d06e6acec2bb80f2aa0bfbe59f61b881)
-
-## Work Environment
-
-* To see PhilGo Api log file on Macbook
-
-```` sh
-tail -f ~/tmp/sapcms_debug.log
-````
 
 ## Install
 

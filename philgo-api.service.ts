@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaderResponse, HttpEventType } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { map, catchError, filter } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -420,7 +420,7 @@ export interface ApiChatRoom {
 }
 
 export interface ApiChatRooms {
-    info: ApiChatInfo;
+    info: ApiInfo;
     rooms: Array<ApiChatRoom>;
 }
 
@@ -461,10 +461,13 @@ export interface ApiChatRoomEnter extends ApiChatRoom {
     messages: Array<ApiChatMessage>;
 }
 
-export interface ApiChatInfo {
-    version: string;
+export interface ApiInfo {
+    sonub_version: string;
+    chat_version: string;
 }
 
+import * as firebase from 'firebase/app';
+import 'firebase/database';
 /**
  * PhilGoApiService
  */
@@ -476,12 +479,45 @@ export class PhilGoApiService {
     static fileServerUrl = '';
     static newFileServerUrl = '';
 
+    firebaseApp: firebase.app.App;
+    db: firebase.database.Reference;
 
+
+    /**
+     * Philgo Api App information
+     */
+    info: ApiInfo;
+    private firebaseEvent: firebase.database.EventType = 'value';
+
+
+    /**
+     * Chat
+     */
+    listeningRooms: Array<ApiChatRoom> = [];
+    currentRoomNo = 0;
+    newMessageOnCurrentRoom = new Subject<ApiChatMessage>();
+    newMessageFromOtherRoom = new Subject<ApiChatMessage>();
+
+
+    /**
+     *
+     * @param sanitizer
+     * @param http
+     */
     constructor(
         private sanitizer: DomSanitizer,
         public http: HttpClient
     ) {
         // console.log('PhilGoApiService::constructor');
+    }
+
+    /**
+     * Sets firebase app
+     * @param firebaseApp firebase initialized app
+     */
+    setFirebaseApp(firebaseApp) {
+        this.firebaseApp = firebaseApp;
+        this.db = this.firebaseApp.database().ref('/');
     }
 
     setServerUrl(url: string) {
@@ -559,7 +595,7 @@ export class PhilGoApiService {
     post(data): Observable<any> {
         this.validatePost(data);
         if (!this.getServerUrl()) {
-            return throwError( this.error( ApiErrorUrlNotSet, 'Server url is not set. Set it on App Module constructor().') );
+            return throwError(this.error(ApiErrorUrlNotSet, 'Server url is not set. Set it on App Module constructor().'));
         }
         return this.http.post(this.getServerUrl(), data).pipe(
             map((res: ApiResponse) => {
@@ -1432,6 +1468,170 @@ export class PhilGoApiService {
     chatSaveToken(data: { token: string, domain?: string }) {
         return this.query('chat.saveToken', data);
     }
+
+
+
+    /**
+     * It listens new messages of my rooms.
+     *
+     * @description This may be called in many ways.
+     *    - When user first visit my rooms page after app booted.
+     *        Which means, my rooms page is at the bottom of navigation stack.
+     *        In this case, when user visit all rooms page and visit back to my rooms page, this method will be called.
+     *    - Whenever user visit my rooms page when my rooms page is not on the bottom of navigation stack.
+     *        It needs to delete all my room and add new ones.
+     *
+     * @description
+     *
+     *    It may be reasonable to remove and listen all the rooms. Somehow I feel like the app should refresh room listenning.
+     *
+     * @param rooms my rooms
+     */
+    async listenMyRooms(rooms: Array<ApiChatRoom>) {
+        if (!rooms) {
+            return;
+        }
+        /**
+         * Off(remove) all the event of old listening rooms.
+         */
+        for (const room of this.listeningRooms) {
+            // console.log('Off: ', room.name);
+            await this.db.child(`/chat/rooms/${room.idx}/last-message`).off(this.firebaseEvent, room['off']);
+        }
+        this.listeningRooms = [];
+        /**
+         * listen to my rooms
+         */
+        for (const room of rooms) {
+            this.listenRoom(room);
+        }
+    }
+
+
+    /**
+     * Listens a room.
+     *
+     * 비 회원인 경우, 모든 방을 listen 하지 않는다.
+     * 비 회원이 방에 들어가는 경우, listenMyRoomsIfNotListenning() 를 통해서 listen 하지도 않는다.
+     *
+     * If the room is already in listening, it double listens. and this is not good.
+     *
+     * So, do not use this method direcly. use this.addRoomToListen() which does not listen when the room is already listend.
+     *
+     * You can call any room to listen. Even if it's not your room.
+     *
+     * @param room chat room
+     */
+    listenRoom(room: ApiChatRoom) {
+        // console.log('On: ', room.name);
+        room['off'] = this.db.child(`/chat/rooms/${room.idx}/last-message`).on(this.firebaseEvent, snapshot => {
+            const message: ApiChatMessage = snapshot.val();
+
+            // console.log('listenRoom() => got listen: data: ', message);
+            /**
+             * Don't toast if I am opening rooms page ( or listening the room ) for the first time of app running.
+             * If 'firstOpenning' is undefined, it is first message. define it and return it.
+             */
+            if (room['firstOpenning'] === void 0) {
+                // console.log(`First time visiting on listening the room. Do not toast for the first message only. room: ${room.name}.`);
+                room['firstOpenning'] = true;
+                return;
+            }
+
+            if (!message) { // no chage message yet.
+                // console.log('No chat message in the chat room. just return');
+                return;
+            }
+
+            // console.log(`AppService::listennMyRooms() got message in ${room.name} : `, message, ' at ', snapshot.ref.parent.key);
+
+            /**
+             * Don't toast if it's my message.
+             */
+            if (this.isMyChatMessage(message)) {
+                return;
+            }
+            /**
+             * Don't toast if I am in the same room of the message since it will be displayed on chat messgae box.
+             */
+            if (this.isMyCurrentChatRoomMessage(this.currentRoomNo, message)) {
+                // console.log('AppService::listenMyRooms():: got current room No. ', this.currentRoomNo, 'message. next()', message);
+                this.newMessageOnCurrentRoom.next(message);
+                return;
+            }
+
+            /**
+             * 2018년 8월 6일. Firebase 로 방 입장/출장이 오지만 푸시는 되지 않는다.
+             * If the message is one of my rooms' message and If I am not in the room, show it as a toast except
+             *    If the message is not for enter or leave.
+             */
+            if (message.status === CHAT_STATUS_ENTER || message.status === CHAT_STATUS_LEAVE) {
+                // console.log('User is entering or leaving. No toast!!');
+                return;
+            }
+            // this.toastMessage(message);
+            this.newMessageFromOtherRoom.next(message);
+        });
+        this.listeningRooms.push(room);
+    }
+
+    /**
+     * 방에 들어가는 경우, 그 방을 listen 한다.이것은 로그인 회원이든 비 로그인 회원이든 그 방을 listen 한다.
+     * 이미 listen 중에 있으면, 두번 listen 하지 않는다.
+     *
+     * It adds a room for listening new message.
+     *
+     * since it simply don't do anything if the room is already added,
+     *    it is harmless you try to listen a room that is already by listened.
+     *
+     * @description It is needed when a user enters a room that is not his room.
+     * For instance,
+     * Case 1) when a user enters a new room, it needs to listen for new message for that room
+     * but the room is not being listened because it is not listed on my rooms page(in which page, it will listen all the user's rooms )
+     * so, it needs to call this method to add listener for that new room.
+     *
+     * Case 2) when a user directly enters a room without visiting rooms page.
+     * WARNING: in this case, the user only can listen the entered room since he didn't visit my room page.
+     * This is not happening in normal case and not a big problem any way.
+     * This usually happens only on testing.
+     *
+     * @param room chat room
+     */
+    addRoomToListen(room: ApiChatRoom) {
+        const i = this.listeningRooms.findIndex(v => v.idx === room.idx);
+        if (i === -1) { // Not in the listeners array? This may be a new room for the user. Listen it!!
+            // console.log('Going to listen a room: ', room.name);
+            this.listenRoom(room);
+        } else { // the room is already being listened.
+            // console.log('The room is already listened. Maybe it is his old room.');
+        }
+    }
+
+
+    /**
+     * If the user is not listening his rooms, he can call this method.
+     *
+     * 로그인을 한 사용자가, 전체 자기방을 Listen 하지 않았으면, 전체 listen 한다.
+     *
+     * User can call this method when he first access chat room page instead of chat rooms list page.
+     *
+     * If the user has visited before calling this method, then it simply don't listen his rooms.
+     * If the user visits again on room list page, then, app will remove all the listeners and listens again for the user's room.
+     */
+    listenMyRoomsIfNotListenning() {
+        if (this.isLoggedIn()) {
+            if (this.listeningRooms.length === 0) {
+                // console.log('No rooms are listened, I am going to listen my rooms.');
+                this.chatMyRooms().subscribe(res => {
+                    this.listenMyRooms(res.rooms).then(() => {
+                    });
+                });
+            } else {
+                // console.log('My rooms are already listened.');
+            }
+        }
+    }
+
 }
 
 // EOF
