@@ -468,6 +468,7 @@ export interface ApiInfo {
 
 import * as firebase from 'firebase/app';
 import 'firebase/database';
+import { AngularLibrary } from '../angular-library/angular-library';
 /**
  * PhilGoApiService
  */
@@ -489,6 +490,10 @@ export class PhilGoApiService {
     info: ApiInfo;
     private firebaseEvent: firebase.database.EventType = 'value';
 
+    /**
+     * Push notification token. for both web/app.
+     */
+    pushToken = '';
 
     /**
      * Chat
@@ -509,6 +514,8 @@ export class PhilGoApiService {
         public http: HttpClient
     ) {
         // console.log('PhilGoApiService::constructor');
+
+        this.updateWebPushToken();
     }
 
     /**
@@ -1632,6 +1639,86 @@ export class PhilGoApiService {
         }
     }
 
+    /**
+     *
+     * 앱 또는 웹 토큰을 실제로 서버에 저장한다.
+     *
+     * 앱이든 웹이든 반드시 실행을 하면 이 함수가 호출된다.
+     *
+     * 그냥 매우 간단하게 !!!! 접속 할 때 마다 항상 서버에 저장한다.
+     *
+     * 맨 처음 접속할 때, 로그인을 한 다음에 접속하는 것이 좋다.
+     *
+     * @param token push notification token
+     *
+     * @todo domain 옵션을 수정 할 수 있도록 한다.
+     */
+    updatePusTokenToServer(token) {
+        this.pushToken = token; // Cordova 는 이미 값이 있지만, 웹에는 적용을 해 준다.
+        // console.log('updatePushNotificationTokenToServer(): ', token);
+        if (!token) {
+            // console.log('token empty. return.');
+            return;
+        }
+        this.chatSaveToken({ token: token, domain: 'chat' }).subscribe(res => {
+            // console.log('chat.saveToken', res);
+        }, e => {
+            // console.log('Error on chat.saveToken(): If the token exists, just ignore. It is not an error. ', e);
+        });
+    }
+
+
+    /**
+     * 이 함수는 앱 실행 시( 또는 consturctor() )에서 또는 필요할 때 매번 실행을 하면 된다.
+     *
+     * @desc 푸시 퍼미션이 허용되었는지 물어보고, 허용되었으면 토큰을 업데이트한다.
+     *  이 함수는 앱 처음 실행시 한번만 실행되어야 하며, 기본적으로 PhilGoApi::constructor() 에서 실행되므로 따로 신경 쓰지 않아도 된다.
+     */
+    updateWebPushToken() {
+        if ( ! AngularLibrary.isCordova() && AngularLibrary.isPushPermissionGranted()) {
+            this.requestWebPushPermission();
+        }
+    }
+
+    /**
+     * 이 함수는 물어보고 웹 푸시 토큰을 서버에 저장한다.
+     */
+    requestWebPushPermission() {
+
+        const messaging = firebase.messaging();
+        // console.log('requestPushNotificationPermission()');
+        messaging.requestPermission().then(() => {
+            // console.log('   ===> Notification permission granted.');
+            // TODO(developer): Retrieve an Instance ID token for use with FCM.
+            // Callback fired if Instance ID token is updated.
+
+            messaging.getToken().then(token => this.updatePusTokenToServer(token))
+                .catch((err) => {
+                    // console.log('getToken() error: ', err);
+                });
+            messaging.onTokenRefresh(() => {
+                messaging.getToken().then((token => this.updatePusTokenToServer(token)))
+                    .catch((err) => {
+                        // console.log('Unable to retrieve refreshed token ', err);
+                        // showToken('Unable to retrieve refreshed token ', err);
+                    });
+            });
+        }).catch((err) => {
+            // console.log('Unable to get permission to notify. User may have denied permission!', err);
+        });
+    }
+
+    /**
+     * Returns number from string.
+     * @param v value of number
+     */
+    parseNumber(v) {
+        if (isNaN(v)) {
+            return 0;
+        } else {
+            return parseInt(v, 10);
+        }
+    }
 }
 
 // EOF

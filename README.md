@@ -7,6 +7,7 @@
 * PhilGo Api is an opinionated service for PhilGo.COM. It uses
   * PhilGo Database.
   * PhilGo Firebase Project.
+  * PhilGo push notification system.
 
 * To see PhilGo Api log file on Macbook
 
@@ -17,6 +18,10 @@ tail -f ~/tmp/sapcms_debug.log
 ### Firebase
 
 * `firebsae` node module must be installed and initialized correctly on philgo-api.service.ts
+
+### Ionic
+
+* philgo api components will only work with ionic.
 
 ## TODO
 
