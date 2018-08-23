@@ -1,10 +1,9 @@
 import { Component, OnInit, NgZone, ViewChild, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { LanguageTranslate } from '../../language-translate/language-translate';
-import { PhilGoApiService } from '../../philgo-api/philgo-api.module';
 
 import * as firebase from 'firebase/app';
 import 'firebase/messaging';
-import { ApiChatMessage, CHAT_STATUS_ENTER, ApiChatRoomEnter, ApiChatRoom, ApiErrorResponse } from '../../philgo-api/philgo-api.service';
+import { ApiChatMessage, CHAT_STATUS_ENTER, ApiChatRoom, ApiErrorResponse, PhilGoApiService } from '../../philgo-api/philgo-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularLibrary } from '../../angular-library/angular-library';
 

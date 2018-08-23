@@ -1,0 +1,27 @@
+<section data-role="create-room-component">
+  <h2>{{ tr.t({ko: '새로운 채팅방을 개설합니다.', en: 'Creating a new chat room'}) }}</h2>
+  <ion-list class="form">
+    <ion-item>
+      <ion-label position="floating">{{ tr.t({ko:'이름', en: 'Name'})}}</ion-label>
+      <ion-input name="name" [(ngModel)]="form.name" (keyup.enter)="onSubmit()"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">{{ tr.t({ko: '채팅방 설명', en: 'Chat room description'}) }}</ion-label>
+      <ion-input name="description" type="type" [(ngModel)]="form.description" (keyup.enter)="onSubmit()"></ion-input>
+    </ion-item>
+    <ion-item text-wrap>
+      <ion-label class="desc-small">
+        {{ tr.t({ko: '채팅방의 성격, 설명 등을 적어주세요.', en: 'Please input the description of chat room.' })}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-button class="create-button" color="primary" expand="full" type="button" (click)="onSubmit()">
+    {{ tr.t({ko: '방 만들기', en: 'Create Room'})}}
+    <ion-icon slot="end" name="checkmark"></ion-icon>
+  </ion-button>
+  <ion-button class="cancel-button" margin-vertical color="light" expand="full" type="button" (click)="onCancel()">
+    {{ tr.t({ko: '취소하기', en: 'Cancel'})}}
+    <ion-icon slot="end" color="dark" name="close"></ion-icon>
+  </ion-button>
+</section>

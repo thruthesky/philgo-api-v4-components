@@ -14,7 +14,7 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
 
   @Output() error = new EventEmitter<ApiErrorResponse>();
   @Input() share = {};
-//   a.requestPushNotificationPermission()
+  //   a.requestPushNotificationPermission()
   rooms: Array<ApiChatRoom> = [];
   roomsBackup: Array<ApiChatRoom> = [];
 
@@ -30,7 +30,7 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
     public philgo: PhilGoApiService,
     public tr: LanguageTranslate
   ) {
-      this.loadAllChatRoomList();
+    this.loadAllChatRoomList();
     //   this.needUpdate = a.platform == 'cordova' && philgo.info && appVersion < philgo.info.chat_version;
   }
 
@@ -74,7 +74,10 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
       this.onCancelSearch();
       return;
     }
-    this.roomsBackup = this.rooms;
+    if (this.roomsBackup.length === 0) {
+      this.roomsBackup = this.rooms;
+    }
+    this.rooms = this.roomsBackup;
     this.rooms = this.rooms.filter(room => {
       if (room.name.indexOf(value) !== -1) {
         return true;

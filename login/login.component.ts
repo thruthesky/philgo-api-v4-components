@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { PhilGoApiService } from '../../philgo-api/philgo-api.module';
 import { LanguageTranslate } from '../../language-translate/language-translate';
-import { ApiErrorEmptyUid, ApiErrorEmptyPassword, ApiErrorResponse } from '../../philgo-api/philgo-api.service';
+import { ApiErrorEmptyUid, ApiErrorEmptyPassword, ApiErrorResponse, PhilGoApiService } from '../../philgo-api/philgo-api.service';
+
 
 @Component({
   selector: 'app-login-component',
