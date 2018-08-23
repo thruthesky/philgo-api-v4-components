@@ -27,9 +27,9 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
     ) {
 
         /**
-         * @desc 채팅 방 부터 먼저 접속한 경우, 로비로 갔다가 다시 오면, life cyle 이벤트가 발생하지 않는다.
-         *  이것은 기존 컴포넌트 인스턴스 어딘가에 살아 있다는 뜻이다.
-         *  따라서, 기존 subscription 사용하고 새로 만들지 않는다.
+         * @desc (Ionic Life Cycle 을 따르는 경우) 채팅 방 부터 먼저 접속한 경우, 로비로 갔다가 다시 오면,
+         *          life cyle 이벤트가 발생하지 않는다. 이것은 기존 컴포넌트 인스턴스 어딘가에 살아 있다는 뜻이다.
+         *          따라서, 기존 subscription 사용하고 새로 만들지 않는다.
          */
         if (this.subscriptionNewMessage) {
             // console.log(' ==> Unsubscribing new message');
@@ -114,6 +114,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
             this.activatedRoute.paramMap.subscribe(params => {
                 const idx = params.get('idx_chat_room');
                 if (idx) {
+                    this.philgo.chatResetNoOfNewMessageOfRoom( idx );
                     /**
                      * idx_chat_room in route may be string.
                      */

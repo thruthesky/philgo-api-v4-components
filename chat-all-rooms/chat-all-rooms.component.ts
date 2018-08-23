@@ -14,7 +14,6 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
 
   @Output() error = new EventEmitter<ApiErrorResponse>();
   @Input() share = {};
-  //   a.requestPushNotificationPermission()
   rooms: Array<ApiChatRoom> = [];
   roomsBackup: Array<ApiChatRoom> = [];
 
@@ -42,17 +41,17 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
     // console.log('RoomsComponent::ngOnDestroy()');
   }
 
-  updateShare() {
-    if (this.rooms && this.rooms.length) {
-      let no = 0;
-      for (const room of this.rooms) {
-        if (!isNaN(<any>room.no_of_unread_messages)) {
-          no += parseInt(room.no_of_unread_messages, 10);
-        }
-      }
-      this.share['totalNoOfNewMessages'] = no;
-    }
-  }
+  // updateShare() {
+  //   if (this.rooms && this.rooms.length) {
+  //     let no = 0;
+  //     for (const room of this.rooms) {
+  //       if (!isNaN(<any>room.no_of_unread_messages)) {
+  //         no += parseInt(room.no_of_unread_messages, 10);
+  //       }
+  //     }
+  //     this.share['totalNoOfNewMessages'] = no;
+  //   }
+  // }
 
   loadAllChatRoomList() {
     this.show.loader.roomList = true;
@@ -61,7 +60,7 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
       this.philgo.info = res.info;
       // console.log('list: ', res);
       this.rooms = res.rooms;
-      this.updateShare();
+      // this.updateShare();
     }, e => {
       this.show.loader.roomList = false;
       this.error.emit(e);
