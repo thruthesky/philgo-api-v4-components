@@ -413,3 +413,14 @@ main {
 
 * When chat room is clicked/created, it will navigate to `/room/:idx`.
   So, the app must have chat room page on `/room/:idx` route.
+
+### New Chat Message from other room
+
+* 현재 방이 아닌 다른 방의 새 채팅 메세지는 토스트로 보여주면 된다.
+* 다른 방의 채팅 메시지를 들으려면 먼저 내 방 목록을 listen 해야 한다. 내 방 목록 listen 은 내 방 목록 페이지와 아무 방이나 들어가면 할 수 있도록 한다.
+
+```` typescript
+philgo.newMessageFromOtherRoom.subscribe(message => {
+  this.toastMessage(message);
+});
+````

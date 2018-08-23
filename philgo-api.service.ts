@@ -485,7 +485,7 @@ export class PhilGoApiService {
 
 
     /**
-     * Philgo Api App information
+     * Api information. This is not an information of a one app. It is Api information.
      */
     info: ApiInfo;
     private firebaseEvent: firebase.database.EventType = 'value';
@@ -506,6 +506,19 @@ export class PhilGoApiService {
     listeningRooms: Array<ApiChatRoom> = [];
     newMessageOnCurrentRoom = new Subject<ApiChatMessage>();
     newMessageFromOtherRoom = new Subject<ApiChatMessage>();
+
+    /**
+     * myRooms 는 내 방 목록 리스를 담고 있다.
+     *      - 새로운 채팅 메시지가 있으면, 새 메시지 수
+     *      - 즐겨찾기 추가/삭제
+     * 등을 업데이트 할 수 있다.
+     */
+    myRooms: Array<ApiChatRoom> = [];
+    /**
+     * 내 방들의 새로운 메시지 총 합. 내 방 목록 페이지에서 새 메시지 개 수로 보여주면된다.
+     */
+    noOfNewMessageInMyRoom = 0;
+    roomsBackup: Array<ApiChatRoom> = [];
 
 
     /**
@@ -1419,8 +1432,107 @@ export class PhilGoApiService {
     chatOtherRooms(): Observable<ApiChatRooms> {
         return this.query('chat.otherRooms');
     }
+
     chatMyRooms(): Observable<ApiChatRooms> {
         return this.query('chat.myRooms');
+    }
+
+    /**
+     * 내 방 목록을 하고,
+     *      - 정렬을 하고
+     *      - 새 메시지 수를 구하고
+     *      - 방을 listen 한다.
+     *
+     * chatMyRooms() 는 내 방 목록을 그냥 리턴하는데,
+     * chatDoMyRooms() 는 내 방 목록을 읽어, 정렬하고, 새로운 메시지 수를 세고, 등등 ... 필요한 작업을 하고, philgo api 객체에 저장을 한다.
+     */
+    chatDoMyRooms(): Observable<ApiChatRooms> {
+        return this.chatMyRooms().pipe(
+            map(res => {
+                console.log(res);
+                /**
+                 * Save api information
+                 */
+                this.info = res.info;
+                if (res.rooms && res.rooms.length) {
+
+                    /**
+                     * Sort of rooms by
+                     *  - favorite first.
+                     *  - Alphabet list for others.
+                     */
+                    res.rooms.sort((a, b) => {
+                        if (a.favorite === 'Y' && b.favorite === 'Y') {
+                            return 0;
+                        } else if (a.favorite === 'Y') {
+                            return -1;
+                        } else if (b.favorite === 'Y') {
+                            return 1;
+                        } else {
+                            const nameA = a.name.toUpperCase();
+                            const nameB = b.name.toUpperCase();
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0;
+                        }
+                    });
+                    this.myRooms = res.rooms;
+                    this.chatCountNoOfNewMessages();
+                    this.listenMyRooms(this.myRooms).then(() => { });
+                }
+                return res;
+            })
+        );
+    }
+
+    /**
+     * 로딩된 내 방목록에서 새 메시지를 하나 증가한다.
+     * @param idx_chat_room
+     */
+    chatIncreaseNoOfNewMessage(idx_chat_room) {
+        this.myRooms.map(room => {
+            if (room.idx_chat_room === idx_chat_room) {
+                console.log('parseNumber: ', this.parseNumber(room.no_of_unread_messages));
+                room.no_of_unread_messages = (this.parseNumber(room.no_of_unread_messages) + 1).toString();
+                this.noOfNewMessageInMyRoom += 1;
+            }
+        });
+    }
+
+    /**
+     * 특정 방의 새 메시지 수를 0 으로 만들고, 전체 새 메시지 갯수에서 해당 방의 새 메시지 개 수 만큼 차감을 한다.
+     *
+     * 즉, 특정 방에 들어갈 때, 그 방의 새메시지 수를 0 으로 하는 것이다.
+     *
+     * @example 특정 방에 들어가 할 때, 이 함수를 사용하면 된다.
+     *
+     * @param idx_chat_room room idx
+     */
+    chatResetNoOfNewMessageOfRoom(idx_chat_room) {
+        this.myRooms.map(room => {
+            if (room.idx_chat_room === idx_chat_room) {
+                const no = this.parseNumber(room.no_of_unread_messages);
+                this.noOfNewMessageInMyRoom -= no;
+                room.no_of_unread_messages = '';
+            }
+        });
+    }
+
+
+    /**
+     * 내 방목록의 새 메시지 수를 카운트한다.
+     *
+     *  - 방 목록을 하거나, 방에 입장을 하거나 할 때, 이 함수를 사용하여 총 메시지 수를 조정하면 된다.
+     */
+    chatCountNoOfNewMessages() {
+        this.noOfNewMessageInMyRoom = 0;
+        for (const room of this.myRooms) {
+            this.noOfNewMessageInMyRoom += this.parseNumber(room.no_of_unread_messages);
+        }
     }
     /**
      * Get a chat room info. Only 1.
@@ -1491,16 +1603,17 @@ export class PhilGoApiService {
     /**
      * It listens new messages of my rooms.
      *
+     * @logic
+     *      - Unsubscribe all subscribed rooms.
+     *      - Subscribe rooms again.
+     *
+     *
      * @description This may be called in many ways.
      *    - When user first visit my rooms page after app booted.
      *        Which means, my rooms page is at the bottom of navigation stack.
      *        In this case, when user visit all rooms page and visit back to my rooms page, this method will be called.
      *    - Whenever user visit my rooms page when my rooms page is not on the bottom of navigation stack.
      *        It needs to delete all my room and add new ones.
-     *
-     * @description
-     *
-     *    It may be reasonable to remove and listen all the rooms. Somehow I feel like the app should refresh room listenning.
      *
      * @param rooms my rooms
      */
@@ -1724,11 +1837,7 @@ export class PhilGoApiService {
      * @param v value of number
      */
     parseNumber(v) {
-        if (isNaN(v)) {
-            return 0;
-        } else {
-            return parseInt(v, 10);
-        }
+        return AngularLibrary.parseNumber(v);
     }
 }
 
