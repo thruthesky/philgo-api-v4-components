@@ -987,6 +987,12 @@ export class PhilGoApiService {
     nickname(): string {
         return localStorage.getItem(NICKNAME);
     }
+    /**
+     * alias of nickname
+     */
+    name(): string {
+        return this.nickname();
+    }
 
     uploadPrimaryPhotoWeb(files: FileList) {
         return this.fileUploadOnWeb(files, {
@@ -1680,7 +1686,7 @@ export class PhilGoApiService {
      */
     updateWebPushToken() {
         console.log('  ()updateWebPushToken ==>');
-        if ( ! AngularLibrary.isCordova() && AngularLibrary.isPushPermissionGranted()) {
+        if (!AngularLibrary.isCordova() && AngularLibrary.isPushPermissionGranted()) {
             this.requestWebPushPermission();
         }
     }

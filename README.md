@@ -42,6 +42,10 @@ tail -f ~/tmp/sapcms_debug.log
 * [PhilGo API](https://docs.google.com/document/d/1DbGXezNIVoOgFmjhnnZBZjrsx9vEwSVv-BzSJHB3C2s/edit#heading=h.wuw5os21mdy)
 * [PhilGo Family Github](https://github.com/thruthesky/philgo-family) which uses this project.
 
+## Examples
+
+* [PhilGo Chat App Example](https://github.com/thruthesky/philgo-chat/tree/philgo-api-chat-example)
+
 * [Examples of PhilGo API](https://github.com/thruthesky/philgo-api-old)
   * [Components example of PhilGo API](https://github.com/thruthesky/philgo-api-old/tree/master/components)
 
@@ -59,22 +63,7 @@ git submodule add https://github.com/thruthesky/philgo-api src/app/modules/philg
 
 ### Initializing Philgo Api
 
-* You need to import `PhilGoApiModule` to use Philgo Api.
-* Consider not to import `PhilGoApiComponentModule` since it is only holding exmaples of components. Or you may update it and use it in production.
-
-```` typescript
-import { PhilGoApiModule, PhilGoApiService } from './module/philgo-api/philgo-api.module';
-
-@NgModule({
-  imports: [
-    PhilGoApiModule
-  ],
-})
-export class AppModule { }
-
-````
-
-* And then, you will need to set philgo site api URL and file server url.
+* You can inject `PhilGoApiService` without module importing because it is providedIn root.
 
 ```` typescript
 export class AppModule {
@@ -420,7 +409,7 @@ main {
 
 * Simply use `app-chat-all-rooms` component selector and it will begin chat app.
 
-### Chat Room Enter
+### Chat Room Route
 
-* When chat room is clicked on chat room list, it will navigate to `/room/:idx`.
+* When chat room is clicked/created, it will navigate to `/room/:idx`.
   So, the app must have chat room page on `/room/:idx` route.
