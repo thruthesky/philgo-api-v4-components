@@ -1428,8 +1428,8 @@ export class PhilGoApiService {
     /**
      * Create a chat room
      */
-    chatRoomCreate(option: ApiChatRoomCreateRequest): Observable<ApiChatRoomCreateResponse> {
-        return this.query('chat.createRoom', option);
+    chatRoomCreate(options: ApiChatRoomCreateRequest): Observable<ApiChatRoomCreateResponse> {
+        return this.query('chat.createRoom', options);
     }
 
     /**
@@ -1439,8 +1439,27 @@ export class PhilGoApiService {
         return this.query('chat.otherRooms');
     }
 
-    chatMyRooms(): Observable<ApiChatRooms> {
-        return this.query('chat.myRooms');
+    /**
+     *
+     * @param options
+     *  'cacheCallback' - if cacheCallback is set, then it will cache and return it with the callback.
+     *      note: there are not simple ways to return twice or emit twice for the observables. so, it simply uses callback.
+     */
+    chatMyRooms(options: { cacheCallback: (res: ApiChatRooms) => void; } = <any>{}): Observable<ApiChatRooms> {
+        const cacheKey = 'cacheChatMyRooms';
+        let cache = false;
+        if (options.cacheCallback) {
+            cache = true;
+            options.cacheCallback(AngularLibrary.get(cacheKey));
+        }
+        return this.query<ApiChatRooms>('chat.myRooms').pipe(
+            map(res => {
+                if (cache) {
+                    AngularLibrary.set(cacheKey, res);
+                }
+                return res;
+            })
+        );
     }
 
     /**
@@ -1453,7 +1472,23 @@ export class PhilGoApiService {
      * chatDoMyRooms() 는 내 방 목록을 읽어, 정렬하고, 새로운 메시지 수를 세고, 등등 ... 필요한 작업을 하고, philgo api 객체에 저장을 한다.
      */
     chatDoMyRooms(): Observable<ApiChatRooms> {
-        return this.chatMyRooms().pipe(
+        return this.chatMyRooms({
+            cacheCallback: res => {
+                console.log('cache callback; res: ', res);
+
+                /**
+                 * Save api information
+                 */
+                this.info = res.info;
+                if (res.rooms && res.rooms.length) {
+                    this.myRooms = res.rooms;
+                    this.sortMyRooms();
+                    this.chatCountNoOfNewMessages();
+                    this.listenMyRooms(this.myRooms).then(() => { });
+                }
+                return res;
+            }
+        }).pipe(
             map(res => {
                 console.log(res);
                 /**
