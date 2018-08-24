@@ -15,7 +15,6 @@
                             <span class="date fs-sm">{{message.stamp | date:'short'}}</span>
                         </div>
                         <div class="content">
-                            <ion-spinner *ngIf=" ! message.idx "></ion-spinner>
                             <div class="text" [innerHTML]="message.message" *ngIf="message.message"></div>
                             <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll() "></app-show-file>
                         </div>

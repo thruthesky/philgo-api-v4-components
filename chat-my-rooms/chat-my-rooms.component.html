@@ -16,18 +16,11 @@
                     <p>{{ room.description }}</p>
                 </ion-label>
                 <ion-icon color="tertiary" name="ribbon" *ngIf=" room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
-                <ion-icon color="primary" name="heart" *ngIf=" room.idx_owner != philgo.myIdx() && room.favorite == 'Y' "></ion-icon>
+                <ion-icon color="primary" name="heart" *ngIf=" room.favorite == 'Y' "></ion-icon>
 
                 <ion-badge slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
 
             </ion-item>
-
-            <!-- <ion-item class="meta pointer" (click)=" onClickRoom(room.idx) ">
-        <ion-text text-wrap>{{ room.description }}</ion-text>
-        <ng-container *ngIf=" roomType == 'my-rooms' ">
-          <ion-badge slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
-        </ng-container>
-      </ion-item> -->
 
         </ng-container>
     </ion-list>

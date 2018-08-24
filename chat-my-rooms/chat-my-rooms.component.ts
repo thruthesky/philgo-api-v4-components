@@ -12,7 +12,6 @@ import { AngularLibrary } from '../../angular-library/angular-library';
 export class ChatMyRoomsComponent implements OnInit, OnDestroy {
 
   @Output() error = new EventEmitter<ApiErrorResponse>();
-  @Input() share = {};
   rooms: Array<ApiChatRoom> = [];
   roomsBackup: Array<ApiChatRoom> = [];
 

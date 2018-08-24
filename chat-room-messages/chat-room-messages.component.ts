@@ -1,9 +1,10 @@
 import { Component, OnInit, NgZone, ViewChild, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { LanguageTranslate } from '../../language-translate/language-translate';
 
-import * as firebase from 'firebase/app';
-import 'firebase/messaging';
-import { ApiChatMessage, CHAT_STATUS_ENTER, ApiChatRoom, ApiErrorResponse, PhilGoApiService } from '../../philgo-api/philgo-api.service';
+
+import {
+    ApiChatMessage, CHAT_STATUS_ENTER, ApiChatRoom, ApiErrorResponse, PhilGoApiService, ApiChatRoomUsers
+} from '../../philgo-api/philgo-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularLibrary } from '../../angular-library/angular-library';
 
@@ -114,7 +115,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
             this.activatedRoute.paramMap.subscribe(params => {
                 const idx = params.get('idx_chat_room');
                 if (idx) {
-                    this.philgo.chatResetNoOfNewMessageOfRoom( idx );
+                    this.philgo.chatResetNoOfNewMessageOfRoom(idx);
                     /**
                      * idx_chat_room in route may be string.
                      */
@@ -166,6 +167,18 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
         if (i !== -1) {
             this.messages.splice(i, 1);
         }
+    }
+
+    displayUsers(users: ApiChatRoomUsers) {
+        const message: ApiChatMessage = <any>{};
+        message.idx_member = '0';
+        message.name = this.tr.t({ ko: '방 인원 목록 총 ' + users.length + ' 명', en: 'Room user list. No: ' + users.length });
+        message.stamp = Math.round((new Date).getTime() / 1000).toString();
+        message.message = '';
+        for (const user of users) {
+            message.message += ' ' + user.nickname;
+        }
+        this.displayMessage(message);
     }
 }
 
