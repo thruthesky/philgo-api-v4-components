@@ -465,6 +465,12 @@ export interface ApiInfo {
     sonub_version: string;
     chat_version: string;
 }
+export interface ApiChatRoomUser {
+    idx: string;
+    nickname: string;
+}
+export type ApiChatRoomUsers = Array<ApiChatRoomUser>;
+
 
 import * as firebase from 'firebase/app';
 import 'firebase/database';
@@ -1455,38 +1461,58 @@ export class PhilGoApiService {
                  */
                 this.info = res.info;
                 if (res.rooms && res.rooms.length) {
-
-                    /**
-                     * Sort of rooms by
-                     *  - favorite first.
-                     *  - Alphabet list for others.
-                     */
-                    res.rooms.sort((a, b) => {
-                        if (a.favorite === 'Y' && b.favorite === 'Y') {
-                            return 0;
-                        } else if (a.favorite === 'Y') {
-                            return -1;
-                        } else if (b.favorite === 'Y') {
-                            return 1;
-                        } else {
-                            const nameA = a.name.toUpperCase();
-                            const nameB = b.name.toUpperCase();
-                            if (nameA < nameB) {
-                                return -1;
-                            }
-                            if (nameA > nameB) {
-                                return 1;
-                            }
-                            return 0;
-                        }
-                    });
                     this.myRooms = res.rooms;
+                    this.sortMyRooms();
                     this.chatCountNoOfNewMessages();
                     this.listenMyRooms(this.myRooms).then(() => { });
                 }
                 return res;
             })
         );
+    }
+
+    sortMyRooms() {
+        if (!this.myRooms && !this.myRooms.length) {
+            return;
+        }
+        /**
+         * Sort of rooms by
+         *  - favorite first.
+         *  - Alphabet list for others.
+         */
+        this.myRooms.sort((a, b) => {
+            if (a.favorite === 'Y' && b.favorite === 'Y') {
+                return 0;
+            } else if (a.favorite === 'Y') {
+                return -1;
+            } else if (b.favorite === 'Y') {
+                return 1;
+            } else {
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+    }
+    sortMyRoomsByMessage() {
+        if (!this.myRooms && !this.myRooms.length) {
+            return;
+        }
+        this.myRooms.sort((a, b) => {
+            const aNo = this.parseNumber(a.no_of_unread_messages);
+            const bNo = this.parseNumber(b.no_of_unread_messages);
+            if (aNo < bNo) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
     }
 
     /**
@@ -1596,6 +1622,10 @@ export class PhilGoApiService {
      */
     chatSaveToken(data: { token: string, domain?: string }) {
         return this.query('chat.saveToken', data);
+    }
+
+    chatRoomUsers(idx_chat_room: any): Observable<ApiChatRoomUsers> {
+        return this.query('chat.roomUsers', { idx_chat_room: idx_chat_room });
     }
 
 
@@ -1831,6 +1861,8 @@ export class PhilGoApiService {
             // console.log('Unable to get permission to notify. User may have denied permission!', err);
         });
     }
+
+
 
     /**
      * Returns number from string.
