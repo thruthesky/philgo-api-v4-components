@@ -1475,6 +1475,9 @@ export class PhilGoApiService {
         return this.chatMyRooms({
             cacheCallback: res => {
                 console.log('cache callback; res: ', res);
+                if ( ! res ) {
+                    return;
+                }
 
                 /**
                  * Save api information
