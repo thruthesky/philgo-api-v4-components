@@ -1467,17 +1467,11 @@ export class PhilGoApiService {
      * chatMyRooms() 는 내 방 목록을 그냥 리턴하는데,
      * chatDoMyRooms() 는 내 방 목록을 읽어, 정렬하고, 새로운 메시지 수를 세고,
      * 등등 ... 필요한 작업을 하고, philgo api 객체에 저장을 한다.
+     *
+     * @todo 여기서부터 chatMyRooms() 를 업데이트해서, 마지막 글 30개를 가져오도록 한다.
      */
-    chatDoMyRooms(): Observable<ApiChatRooms> {
-        return this.chatMyRooms({
-            cacheCallback: res => {
-                console.log('cache callback; res: ', res);
-                if (res) {
-                    this.chatArrangeMyRooms(res);
-                    return res;
-                }
-            }
-        }).pipe(
+    chatloadMyRooms(): Observable<ApiChatRooms> {
+        return this.chatMyRooms().pipe(
             map(res => {
                 this.chatArrangeMyRooms(res);
                 return res;
@@ -1625,20 +1619,29 @@ export class PhilGoApiService {
             })
         );
     }
-    chatLoadMyRooms(): Observable<Array<ApiChatRoomEnter>> {
-        const cacheKeyPrefix = 'chatRoom';
-        return this.query('chat.loadMyRooms').pipe(
-            map((res: Array<ApiChatRoomEnter>) => {
-                if (res && res.length) {
-                    for (const room of res) {
-                        const key = cacheKeyPrefix + room.idx_chat_room;
-                        AngularLibrary.set(key, room);
-                    }
-                }
-                return res;
-            })
-        );
+
+    /**
+     * 내 방 목록들을 가져와 캐시한다.
+     */
+    // chatLoadMyRooms(): Observable<Array<ApiChatRoomEnter>> {
+    //     const cacheKeyPrefix = 'chatRoom';
+    //     return this.query('chat.loadMyRooms').pipe(
+    //         map((res: Array<ApiChatRoomEnter>) => {
+    //             if (res && res.length) {
+    //                 for (const room of res) {
+    //                     const key = cacheKeyPrefix + room.idx_chat_room;
+    //                     AngularLibrary.set(key, room);
+    //                 }
+    //             }
+    //             return res;
+    //         })
+    //     );
+    // }
+
+    chatRoomCacheKey(idx) {
+        return 'chatRoom' + idx;
     }
+
     chatLeaveRoom(idx: string): Observable<ApiChatRoom> {
         const data: ApiChatRoomLeaveRequest = {
             idx: idx
