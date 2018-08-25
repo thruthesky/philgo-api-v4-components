@@ -1464,49 +1464,48 @@ export class PhilGoApiService {
 
     /**
      * 내 방 목록을 하고,
-     *      - 정렬을 하고
-     *      - 새 메시지 수를 구하고
-     *      - 방을 listen 한다.
-     *
      * chatMyRooms() 는 내 방 목록을 그냥 리턴하는데,
-     * chatDoMyRooms() 는 내 방 목록을 읽어, 정렬하고, 새로운 메시지 수를 세고, 등등 ... 필요한 작업을 하고, philgo api 객체에 저장을 한다.
+     * chatDoMyRooms() 는 내 방 목록을 읽어, 정렬하고, 새로운 메시지 수를 세고,
+     * 등등 ... 필요한 작업을 하고, philgo api 객체에 저장을 한다.
      */
     chatDoMyRooms(): Observable<ApiChatRooms> {
         return this.chatMyRooms({
             cacheCallback: res => {
                 console.log('cache callback; res: ', res);
-                if ( ! res ) {
-                    return;
+                if (res) {
+                    this.chatArrangeMyRooms(res);
+                    return res;
                 }
-
-                /**
-                 * Save api information
-                 */
-                this.info = res.info;
-                if (res.rooms && res.rooms.length) {
-                    this.myRooms = res.rooms;
-                    this.sortMyRooms();
-                    this.chatCountNoOfNewMessages();
-                    this.listenMyRooms(this.myRooms).then(() => { });
-                }
-                return res;
             }
         }).pipe(
             map(res => {
-                console.log(res);
-                /**
-                 * Save api information
-                 */
-                this.info = res.info;
-                if (res.rooms && res.rooms.length) {
-                    this.myRooms = res.rooms;
-                    this.sortMyRooms();
-                    this.chatCountNoOfNewMessages();
-                    this.listenMyRooms(this.myRooms).then(() => { });
-                }
+                this.chatArrangeMyRooms(res);
                 return res;
             })
         );
+    }
+
+
+    /**
+     * 나의 채팅 방을 일고 나서, 방 정보를 전달 받아, 잘 보여 줄 수 있도록 각종 처리 작업을 한다.
+     * 
+     *      - 정렬을 하고
+     *      - 새 메시지 수를 구하고
+     *      - 방을 listen 한다.
+     *
+     * @param res ApiChatRooms
+     */
+    chatArrangeMyRooms(res: ApiChatRooms) {
+        /**
+         * Save api information
+         */
+        this.info = res.info;
+        if (res.rooms && res.rooms.length) {
+            this.myRooms = res.rooms;
+            this.sortMyRooms();
+            this.chatCountNoOfNewMessages();
+            this.listenMyRooms(this.myRooms).then(() => { });
+        }
     }
 
     sortMyRooms() {
@@ -1599,10 +1598,25 @@ export class PhilGoApiService {
         }
     }
     /**
-     * Get a chat room info. Only 1.
+     * Enters into a chat room and get the room info.
+     * @param options
+     *      'cacheCallback' - if it is set, then it does cache saving and cache callbacks.
      */
-    chatEnterRoom(data: ApiChatRoomEnterRequest): Observable<ApiChatRoomEnter> {
-        return this.query('chat.enterRoom', data);
+    chatEnterRoom(data: ApiChatRoomEnterRequest, options: { cacheCallback: (res: ApiChatRoomEnter) => void } = <any>{}): Observable<ApiChatRoomEnter> {
+        const cacheKey = 'cachechatEnterRoom' + data.idx;
+        let cache = false;
+        if (options.cacheCallback) {
+            cache = true;
+            options.cacheCallback(AngularLibrary.get(cacheKey));
+        }
+        return this.query('chat.enterRoom', data).pipe(
+            map(res => {
+                if (cache) {
+                    AngularLibrary.set(cacheKey, res);
+                }
+                return res;
+            })
+        );
     }
     chatLeaveRoom(idx: string): Observable<ApiChatRoom> {
         const data: ApiChatRoomLeaveRequest = {
@@ -1666,6 +1680,15 @@ export class PhilGoApiService {
         return this.query('chat.roomUsers', { idx_chat_room: idx_chat_room });
     }
 
+    /**
+     * Reset ( init ) to enter a room. 새로운 방에 들어가기 위해서 방에서 사용되는 정보들을 리셋한다.
+     * 
+     * @use just before entering a new room. 
+     */
+    chatResetRoom() {
+        this.currentRoomNo = 0;
+        this.currentRoom = null;
+    }
 
 
     /**
