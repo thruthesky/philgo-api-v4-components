@@ -1488,7 +1488,7 @@ export class PhilGoApiService {
 
     /**
      * 나의 채팅 방을 일고 나서, 방 정보를 전달 받아, 잘 보여 줄 수 있도록 각종 처리 작업을 한다.
-     * 
+     *
      *      - 정렬을 하고
      *      - 새 메시지 수를 구하고
      *      - 방을 listen 한다.
@@ -1601,15 +1601,16 @@ export class PhilGoApiService {
      * Enters into a chat room and get the room info.
      * @param options
      *      'cacheCallback' - if it is set, then it does cache saving and cache callbacks.
-     * 
-     * 
-     * @note 캐시의 문제점. 방 입장을 할 때, 캐시를 하므로, 다음 입장을 할 때, 마지막 채팅이 아닌, 이전 방 입장을 할 때 정보가 캐시콜백으로 리턴된다.
-     *      이거 큰 문제는 아니다.
-     *      해결을 하기 위해서는 각 채팅을 최대 100개 까지 localStorage 보관을 해야한다. 하지만, 매우 번거로운 작업이 될 수 있다.
      *
+     *
+     * @note 캐시 이용의 고려 할 점.
+     *      방 입장을 할 때, 캐시를 하므로, 다음 입장을 할 때, 가장 마지막 채팅이 아닌, 이전 방 입장을 할 때 정보가 캐시콜백으로 리턴된다.
+     *      하지만 이 캐시 데이터는, chatLoadMyRooms() 와 공유되며, chatLoadMyRooms() 는 50분 마다 한번씩 업데이트를 한다.
+     *      즉, 이 함수가 리턴하는 방 정보는 이전 입장을 할 때, 캐시 한 것일 수도 있고, chatLoadMyRooms() 에 의해서 캐시된 것 일 수 도 있다.
      */
-    chatEnterRoom(data: ApiChatRoomEnterRequest, options: { cacheCallback: (res: ApiChatRoomEnter) => void } = <any>{}): Observable<ApiChatRoomEnter> {
-        const cacheKey = 'cachechatEnterRoom' + data.idx;
+    chatEnterRoom(data: ApiChatRoomEnterRequest,
+        options: { cacheCallback: (res: ApiChatRoomEnter) => void } = <any>{}): Observable<ApiChatRoomEnter> {
+        const cacheKey = 'chatRoom' + data.idx;
         let cache = false;
         if (options.cacheCallback) {
             cache = true;
