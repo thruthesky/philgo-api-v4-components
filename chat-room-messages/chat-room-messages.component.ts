@@ -2,9 +2,14 @@ import { Component, OnInit, NgZone, ViewChild, OnDestroy, Output, EventEmitter, 
 import { LanguageTranslate } from '../../language-translate/language-translate';
 
 
+
+
+
 import {
-    ApiChatMessage, CHAT_STATUS_ENTER, ApiChatRoom, ApiErrorResponse, PhilGoApiService, ApiChatRoomUsers, ApiChatRoomEnter
+    ApiChatMessage, CHAT_STATUS_ENTER, ApiChatRoom, ApiErrorResponse,
+    PhilGoApiService, ApiChatRoomUsers, ApiChatRoomEnter
 } from '../../philgo-api/philgo-api.service';
+
 import { ActivatedRoute } from '@angular/router';
 import { AngularLibrary } from '../../angular-library/angular-library';
 
@@ -25,7 +30,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
         status: {
             loadingLatestMessages: false
         }
-    }
+    };
 
     constructor(
         public tr: LanguageTranslate,
@@ -128,30 +133,30 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
     loadChatRoomEnter() {
         this.show.status.loadingLatestMessages = true;
         // setTimeout(() => {
-            // console.log('loadChatRoomEnter() setTimeout()');
-            this.activatedRoute.paramMap.subscribe(params => {
-                const idx = params.get('idx_chat_room');
-                if (idx) {
-                    this.philgo.chatResetNoOfNewMessageOfRoom(idx);
-                    /**
-                     * idx_chat_room in route may be string.
-                     */
-                    //   this.form.idx_chat_room = idx;
-                    this.philgo.currentRoomNo = AngularLibrary.parseNumber(idx);
-                    // this.a.currentRoomNo = parseInt(this.form.idx_chat_room, 10);
-                    this.philgo.chatEnterRoom({ idx: idx }, { cacheCallback: res => this.arrangeRoomEnter(res) }).subscribe(res => {
-                        this.show.status.loadingLatestMessages = false;
-                        this.arrangeRoomEnter(res);
-                    }, e => {
-                        console.log(e.code);
-                        this.error.emit(e);
-                    });
-                } else {
-                    // this error will not happens.
-                    // this.a.toast('Chat room number was not provided.');
-                    console.error('Chat room number was not provided in route.');
-                }
-            });
+        // console.log('loadChatRoomEnter() setTimeout()');
+        this.activatedRoute.paramMap.subscribe(params => {
+            const idx = params.get('idx_chat_room');
+            if (idx) {
+                this.philgo.chatResetNoOfNewMessageOfRoom(idx);
+                /**
+                 * idx_chat_room in route may be string.
+                 */
+                //   this.form.idx_chat_room = idx;
+                this.philgo.currentRoomNo = AngularLibrary.parseNumber(idx);
+                // this.a.currentRoomNo = parseInt(this.form.idx_chat_room, 10);
+                this.philgo.chatEnterRoom({ idx: idx }, { cacheCallback: res => this.arrangeRoomEnter(res) }).subscribe(res => {
+                    this.show.status.loadingLatestMessages = false;
+                    this.arrangeRoomEnter(res);
+                }, e => {
+                    console.log(e.code);
+                    this.error.emit(e);
+                });
+            } else {
+                // this error will not happens.
+                // this.a.toast('Chat room number was not provided.');
+                console.error('Chat room number was not provided in route.');
+            }
+        });
         // }, 100);
     }
 

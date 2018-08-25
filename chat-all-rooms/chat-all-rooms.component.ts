@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiChatRoom, PhilGoApiService, ApiErrorResponse } from '../../philgo-api/philgo-api.service';
 import { LanguageTranslate } from '../../language-translate/language-translate';
@@ -25,10 +25,12 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
 
   isMobileWeb = AngularLibrary.isMobileWeb();
   constructor(
+    private ngZone: NgZone,
     private router: Router,
     public philgo: PhilGoApiService,
     public tr: LanguageTranslate
   ) {
+    console.log('ChatAllRoomsComponent::constructor()');
     this.loadAllChatRoomList();
     //   this.needUpdate = a.platform == 'cordova' && philgo.info && appVersion < philgo.info.chat_version;
   }
@@ -54,13 +56,14 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
   // }
 
   loadAllChatRoomList() {
+    console.log('  ==> loadAllChatRoomList()');
     this.show.loader.roomList = true;
     this.philgo.chatOtherRooms().subscribe(res => {
       this.show.loader.roomList = false;
       this.philgo.info = res.info;
-      // console.log('list: ', res);
+      console.log('   ===> other room list: ', res);
       this.rooms = res.rooms;
-      // this.updateShare();
+      this.render();
     }, e => {
       this.show.loader.roomList = false;
       this.error.emit(e);
@@ -97,6 +100,13 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
   onClickRoom(idx) {
     this.onCancelSearch();
     this.router.navigateByUrl('/room/' + idx);
+  }
+
+
+  render() {
+    setTimeout(() => {
+      this.ngZone.run(() => { });
+    }, 2000);
   }
 
 }
