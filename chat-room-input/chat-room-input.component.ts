@@ -56,6 +56,13 @@ export class ChatRoomInputComponent implements OnInit {
     }
 
     sendMessage() {
+        /**
+         * 새 방에 입장하는 경우, 초기화가 좀 느리다. 따라서 초기화 전에 들어가면 그냥 리턴.
+         */
+        if ( ! this.philgo.currentRoom ) {
+            console.log('wait. you cannot type until room is initialized.');
+            return false;
+        }
         this.form.idx_chat_room = this.philgo.currentRoom.idx;
         this.form.idx_member = this.philgo.idx().toString();
         this.form.retvar = ++this.countMessageSent;
