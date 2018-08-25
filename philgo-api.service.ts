@@ -1601,6 +1601,12 @@ export class PhilGoApiService {
      * Enters into a chat room and get the room info.
      * @param options
      *      'cacheCallback' - if it is set, then it does cache saving and cache callbacks.
+     * 
+     * 
+     * @note 캐시의 문제점. 방 입장을 할 때, 캐시를 하므로, 다음 입장을 할 때, 마지막 채팅이 아닌, 이전 방 입장을 할 때 정보가 캐시콜백으로 리턴된다.
+     *      이거 큰 문제는 아니다.
+     *      해결을 하기 위해서는 각 채팅을 최대 100개 까지 localStorage 보관을 해야한다. 하지만, 매우 번거로운 작업이 될 수 있다.
+     *
      */
     chatEnterRoom(data: ApiChatRoomEnterRequest, options: { cacheCallback: (res: ApiChatRoomEnter) => void } = <any>{}): Observable<ApiChatRoomEnter> {
         const cacheKey = 'cachechatEnterRoom' + data.idx;
