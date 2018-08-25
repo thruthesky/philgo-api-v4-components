@@ -1625,6 +1625,20 @@ export class PhilGoApiService {
             })
         );
     }
+    chatLoadMyRooms(): Observable<Array<ApiChatRoomEnter>> {
+        const cacheKeyPrefix = 'chatRoom';
+        return this.query('chat.loadMyRooms').pipe(
+            map((res: Array<ApiChatRoomEnter>) => {
+                if (res && res.length) {
+                    for (const room of res) {
+                        const key = cacheKeyPrefix + room.idx_chat_room;
+                        AngularLibrary.set(key, room);
+                    }
+                }
+                return res;
+            })
+        );
+    }
     chatLeaveRoom(idx: string): Observable<ApiChatRoom> {
         const data: ApiChatRoomLeaveRequest = {
             idx: idx
@@ -1689,8 +1703,8 @@ export class PhilGoApiService {
 
     /**
      * Reset ( init ) to enter a room. 새로운 방에 들어가기 위해서 방에서 사용되는 정보들을 리셋한다.
-     * 
-     * @use just before entering a new room. 
+     *
+     * @use just before entering a new room.
      */
     chatResetRoom() {
         this.currentRoomNo = 0;
