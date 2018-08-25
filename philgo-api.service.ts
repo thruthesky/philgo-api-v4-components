@@ -20,6 +20,7 @@ export const ERROR_WRONG_SESSION_ID = -290;
 export const ERROR_WRONG_IDX_MEMBER = -280;
 export const ERROR_CHAT_ANONYMOUS_CANNOT_ENTER_ROOM = -640;
 
+export const CACHE_CHAT_MY_ROOM = 'cache-chat-my-room';
 
 interface ApiOptionalRequest {
     method?: string;
@@ -417,6 +418,8 @@ export interface ApiChatRoom {
     favorite?: 'Y' | '';          // 'Y' | '' if it's in favorite list.
     idx_message_last_read?: string;     // api_chat_message.idx which lastly read by the user for that chat room.
     no_of_unread_messages?: string;     // no of unread messages for this room.
+    messages?: Array<ApiChatMessage>;   // 내 방 입장한 경우 또는 내 방 목록인 경우에만 이 값이 존재한다.
+    just_entered?: 'Y' | '';            //
 }
 
 export interface ApiChatRooms {
@@ -1443,19 +1446,20 @@ export class PhilGoApiService {
      *
      * @param options
      *  'cacheCallback' - if cacheCallback is set, then it will cache and return it with the callback.
-     *      note: there are not simple ways to return twice or emit twice for the observables. so, it simply uses callback.
+     * @desc there are not simple ways to return twice or emit twice for the observables. so, it simply uses callback.
+     * @see readme#chat room cache
+     * 
      */
     chatMyRooms(options: { cacheCallback: (res: ApiChatRooms) => void; } = <any>{}): Observable<ApiChatRooms> {
-        const cacheKey = 'cacheChatMyRooms';
         let cache = false;
         if (options.cacheCallback) {
             cache = true;
-            options.cacheCallback(AngularLibrary.get(cacheKey));
+            options.cacheCallback(AngularLibrary.get(CACHE_CHAT_MY_ROOM));
         }
         return this.query<ApiChatRooms>('chat.myRooms').pipe(
             map(res => {
                 if (cache) {
-                    AngularLibrary.set(cacheKey, res);
+                    AngularLibrary.set(CACHE_CHAT_MY_ROOM, res);
                 }
                 return res;
             })
@@ -1471,7 +1475,15 @@ export class PhilGoApiService {
      * @todo 여기서부터 chatMyRooms() 를 업데이트해서, 마지막 글 30개를 가져오도록 한다.
      */
     chatloadMyRooms(): Observable<ApiChatRooms> {
-        return this.chatMyRooms().pipe(
+        return this.chatMyRooms({
+            cacheCallback: res => {
+                console.log('cache callback; res: ', res);
+                if (res) {
+                    this.chatArrangeMyRooms(res);
+                    return res;
+                }
+            }
+        }).pipe(
             map(res => {
                 this.chatArrangeMyRooms(res);
                 return res;
@@ -1597,24 +1609,26 @@ export class PhilGoApiService {
      *      'cacheCallback' - if it is set, then it does cache saving and cache callbacks.
      *
      *
-     * @note 캐시 이용의 고려 할 점.
-     *      방 입장을 할 때, 캐시를 하므로, 다음 입장을 할 때, 가장 마지막 채팅이 아닌, 이전 방 입장을 할 때 정보가 캐시콜백으로 리턴된다.
-     *      하지만 이 캐시 데이터는, chatLoadMyRooms() 와 공유되며, chatLoadMyRooms() 는 50분 마다 한번씩 업데이트를 한다.
-     *      즉, 이 함수가 리턴하는 방 정보는 이전 입장을 할 때, 캐시 한 것일 수도 있고, chatLoadMyRooms() 에 의해서 캐시된 것 일 수 도 있다.
+     * @see philao api v4 readme#chat cache 캐시 이용의 고려 할 점.
+     * 
      */
     chatEnterRoom(data: ApiChatRoomEnterRequest,
         options: { cacheCallback: (res: ApiChatRoomEnter) => void } = <any>{}): Observable<ApiChatRoomEnter> {
-        const cacheKey = 'chatRoom' + data.idx;
-        let cache = false;
+
         if (options.cacheCallback) {
-            cache = true;
-            options.cacheCallback(AngularLibrary.get(cacheKey));
+            const rooms: ApiChatRooms = AngularLibrary.get(CACHE_CHAT_MY_ROOM);
+            if (rooms && rooms.rooms.length) {
+                const res = rooms.rooms.find(room => room.idx_room === data.idx);
+                if (res) {
+                    options.cacheCallback(<ApiChatRoomEnter>res);
+                }
+            }
         }
         return this.query('chat.enterRoom', data).pipe(
             map(res => {
-                if (cache) {
-                    AngularLibrary.set(cacheKey, res);
-                }
+                // if (cache) {
+                //     AngularLibrary.set(cacheKey, res);
+                // }
                 return res;
             })
         );
@@ -1638,9 +1652,9 @@ export class PhilGoApiService {
     //     );
     // }
 
-    chatRoomCacheKey(idx) {
-        return 'chatRoom' + idx;
-    }
+    // chatRoomCacheKey(idx) {
+    //     return 'chatRoom' + idx;
+    // }
 
     chatLeaveRoom(idx: string): Observable<ApiChatRoom> {
         const data: ApiChatRoomLeaveRequest = {
