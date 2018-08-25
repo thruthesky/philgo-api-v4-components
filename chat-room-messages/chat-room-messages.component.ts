@@ -148,6 +148,14 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
                 // this.a.currentRoomNo = parseInt(this.form.idx_chat_room, 10);
                 this.philgo.chatEnterRoom({ idx: idx }, { cacheCallback: res => this.arrangeRoomEnter(res) }).subscribe(res => {
                     this.show.status.loadingLatestMessages = false;
+                    /**
+                     * 새로 방에 입장했으면, 전체 방 목록을 다시 로드한다.
+                     */
+                    if (res.just_entered === 'Y') {
+                        this.philgo.chatloadMyRooms().subscribe(res => {
+                            console.log('ChatAllRoomsComponent::onClickRoom()', res);
+                        });
+                    }
                     this.arrangeRoomEnter(res);
                 }, e => {
                     console.log(e.code);

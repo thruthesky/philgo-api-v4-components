@@ -14,6 +14,7 @@
                 <ion-label>
                     <h3>{{ room.name }}</h3>
                     <p>{{ room.description }}</p>
+                    <p>{{ lastMessage( room ) }}</p>
                 </ion-label>
                 <ion-icon color="tertiary" name="ribbon" *ngIf=" room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
                 <ion-icon color="primary" name="heart" *ngIf=" room.favorite == 'Y' "></ion-icon>
