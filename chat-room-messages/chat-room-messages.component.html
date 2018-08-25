@@ -37,4 +37,8 @@
             <app-send-file text-right *ngIf=" message.type == 'sending-file' " [message]="message"></app-send-file>
         </div>
     </div>
+    <div class="status loading-latest-messages" *ngIf=" show.status.loadingLatestMessages ">
+        <ion-spinner></ion-spinner>
+        {{ tr.t({ko: '최근 메시지를 로딩 중입니다.', en: 'Loading messages.'}) }}
+    </div>
 </ion-scroll>

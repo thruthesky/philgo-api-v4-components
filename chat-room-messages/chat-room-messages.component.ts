@@ -3,7 +3,7 @@ import { LanguageTranslate } from '../../language-translate/language-translate';
 
 
 import {
-    ApiChatMessage, CHAT_STATUS_ENTER, ApiChatRoom, ApiErrorResponse, PhilGoApiService, ApiChatRoomUsers
+    ApiChatMessage, CHAT_STATUS_ENTER, ApiChatRoom, ApiErrorResponse, PhilGoApiService, ApiChatRoomUsers, ApiChatRoomEnter
 } from '../../philgo-api/philgo-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularLibrary } from '../../angular-library/angular-library';
@@ -20,6 +20,13 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
 
     messages: Array<ApiChatMessage> = [];
     subscriptionNewMessage = null;
+
+    show = {
+        status: {
+            loadingLatestMessages: false
+        }
+    }
+
     constructor(
         public tr: LanguageTranslate,
         public philgo: PhilGoApiService,
@@ -50,7 +57,12 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.messages = [];
-        this.loadChatRoomEnter();
+        /**
+         * 타임아웃으로 호출하는 하는 이유는 부모 컴포넌트에서 enter room 을 할 때, 변화하는 값을 사용하기 때문에,
+         * expression changed after it has been checked 와 같은 에러가 발생한다.
+         * 이것은 room enter 를 부모 컴포넌트에서 하지 않아 발생하는 복잡함이다.
+         */
+        setTimeout(() => this.loadChatRoomEnter(), 100);
     }
 
 
@@ -109,8 +121,13 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
         });
     }
 
+    /**
+     * 방 입장
+     * @todo 채팅 방에 진입하는 것은 상단의 부모 컴포넌트에서 해야하는 것이 맞지 않을까?
+     */
     loadChatRoomEnter() {
-        setTimeout(() => {
+        this.show.status.loadingLatestMessages = true;
+        // setTimeout(() => {
             // console.log('loadChatRoomEnter() setTimeout()');
             this.activatedRoute.paramMap.subscribe(params => {
                 const idx = params.get('idx_chat_room');
@@ -122,26 +139,9 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
                     //   this.form.idx_chat_room = idx;
                     this.philgo.currentRoomNo = AngularLibrary.parseNumber(idx);
                     // this.a.currentRoomNo = parseInt(this.form.idx_chat_room, 10);
-                    this.philgo.chatEnterRoom({ idx: idx }).subscribe(res => {
-                        console.log('roomInfo: ', res);
-                        this.philgo.currentRoom = res;
-                        /**
-                         * get real idx_chat_room
-                         */
-                        // this.form.idx_chat_room = this.roomInfo.idx_chat_room;
-                        this.philgo.currentRoomNo = AngularLibrary.parseNumber(this.philgo.currentRoom.idx_chat_room);
-
-                        if (this.philgo.currentRoom.messages && this.philgo.currentRoom.messages.length) {
-                            this.philgo.currentRoom.messages.reverse().map(v => {
-                                this.displayMessage(v);
-                            });
-                        }
-                        // this.messages = this.roomInfo.messages.reverse();
-                        // this.scroll();
-                        const room: ApiChatRoom = <any>this.philgo.currentRoom;
-                        delete room['messages'];
-                        this.philgo.addRoomToListen(room);
-                        this.scroll();
+                    this.philgo.chatEnterRoom({ idx: idx }, { cacheCallback: res => this.arrangeRoomEnter(res) }).subscribe(res => {
+                        this.show.status.loadingLatestMessages = false;
+                        this.arrangeRoomEnter(res);
                     }, e => {
                         console.log(e.code);
                         this.error.emit(e);
@@ -152,7 +152,33 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
                     console.error('Chat room number was not provided in route.');
                 }
             });
-        }, 100);
+        // }, 100);
+    }
+
+    arrangeRoomEnter(res: ApiChatRoomEnter) {
+        console.log('roomInfo: ', res);
+        if (!res) {
+            return;
+        }
+        this.messages = [];
+        this.philgo.currentRoom = res;
+        /**
+         * get real idx_chat_room
+         */
+        // this.form.idx_chat_room = this.roomInfo.idx_chat_room;
+        this.philgo.currentRoomNo = AngularLibrary.parseNumber(this.philgo.currentRoom.idx_chat_room);
+
+        if (this.philgo.currentRoom.messages && this.philgo.currentRoom.messages.length) {
+            this.philgo.currentRoom.messages.reverse().map(v => {
+                this.displayMessage(v);
+            });
+        }
+        // this.messages = this.roomInfo.messages.reverse();
+        // this.scroll();
+        const room: ApiChatRoom = <any>this.philgo.currentRoom;
+        delete room['messages'];
+        this.philgo.addRoomToListen(room);
+        this.scroll();
     }
 
 
