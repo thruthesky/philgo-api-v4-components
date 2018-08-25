@@ -38,7 +38,7 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
   loadMyChatRoomList() {
     this.show.loader.roomList = true;
 
-    this.philgo.chatDoMyRooms().subscribe( res => {
+    this.philgo.chatloadMyRooms().subscribe( res => {
       this.show.loader.roomList = false;
     }, e => {
       this.show.loader.roomList = false;

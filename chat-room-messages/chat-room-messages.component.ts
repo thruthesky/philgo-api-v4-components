@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ViewChild, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, NgZone, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { LanguageTranslate } from '../../language-translate/language-translate';
 
 
@@ -20,8 +20,9 @@ import { AngularLibrary } from '../../angular-library/angular-library';
 })
 export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
 
-    @ViewChild('ionScroll') ionScroll;
+    // @ViewChild(Content) ionContent: Content;
     @Output() error = new EventEmitter<ApiErrorResponse>();
+    @Output() scroll = new EventEmitter();
 
     messages: Array<ApiChatMessage> = [];
     subscriptionNewMessage = null;
@@ -71,18 +72,19 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
     }
 
 
-    scroll() {
-        this.renderMessageDisplay();
-        setTimeout(() => {
-            this.ionScroll.nativeElement.scrollToBottom(30);
-            this.renderMessageDisplay();
-        }, 100);
-    }
-    renderMessageDisplay() {
-        setTimeout(() => {
-            this.ngZone.run(() => { });
-        }, 30);
-    }
+    // scroll() {
+    //     this.renderMessageDisplay();
+    //     setTimeout(() => {
+    //         // this.ionScroll.nativeElement.scrollToBottom(30);
+    //         this.ionContent.scrollToBottom(30);
+    //         this.renderMessageDisplay();
+    //     }, 100);
+    // }
+    // renderMessageDisplay() {
+    //     setTimeout(() => {
+    //         this.ngZone.run(() => { });
+    //     }, 30);
+    // }
 
 
     ngOnDestroy() {
@@ -109,7 +111,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
         } else {
             this.messages.push(message);
         }
-        this.scroll();
+        this.scroll.emit();
     }
     updateLastRead(idx_message: string) {
         if (!idx_message) {
@@ -183,13 +185,13 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
         const room: ApiChatRoom = <any>this.philgo.currentRoom;
         delete room['messages'];
         this.philgo.addRoomToListen(room);
-        this.scroll();
+        this.scroll.emit();
     }
 
 
     sendNewMessage(message: ApiChatMessage) {
         this.messages.push(message);
-        this.scroll();
+        this.scroll.emit();
     }
 
 

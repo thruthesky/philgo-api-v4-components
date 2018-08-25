@@ -63,7 +63,6 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
       this.philgo.info = res.info;
       console.log('   ===> other room list: ', res);
       this.rooms = res.rooms;
-      this.render();
     }, e => {
       this.show.loader.roomList = false;
       this.error.emit(e);
@@ -103,10 +102,5 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
   }
 
 
-  render() {
-    setTimeout(() => {
-      this.ngZone.run(() => { });
-    }, 2000);
-  }
 
 }
