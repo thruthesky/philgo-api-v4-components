@@ -1474,7 +1474,7 @@ export class PhilGoApiService {
      *
      * @todo 여기서부터 chatMyRooms() 를 업데이트해서, 마지막 글 30개를 가져오도록 한다.
      */
-    chatloadMyRooms(): Observable<ApiChatRooms> {
+    chatLoadMyRooms(): Observable<ApiChatRooms> {
         return this.chatMyRooms({
             cacheCallback: res => {
                 console.log('cache callback; res: ', res);
@@ -1485,6 +1485,7 @@ export class PhilGoApiService {
             }
         }).pipe(
             map(res => {
+                console.log('chatLoadMyRooms() server data: ', res);
                 this.chatArrangeMyRooms(res);
                 return res;
             })
@@ -1780,6 +1781,9 @@ export class PhilGoApiService {
      * You can call any room to listen. Even if it's not your room.
      *
      * @param room chat room
+     * 
+     * @desc 방의 새 메시지를 listen 할 때, 새 메시지가 있으면 philgo.myRooms 의 메시지 목록에 추가를 해 준다.
+     *      이 것은 앱에서 방의 마지막 메시지를 표현하고자 할 때 도움이된다.
      */
     listenRoom(room: ApiChatRoom) {
         // console.log('On: ', room.name);
@@ -1788,7 +1792,7 @@ export class PhilGoApiService {
 
             // console.log('listenRoom() => got listen: data: ', message);
             /**
-             * Don't toast if I am opening rooms page ( or listening the room ) for the first time of app running.
+             * Don't toast if I am opening rooms page ( or running app or listening the room ) for the first time of app running.
              * If 'firstOpenning' is undefined, it is first message. define it and return it.
              */
             if (room['firstOpenning'] === void 0) {
@@ -1800,6 +1804,21 @@ export class PhilGoApiService {
             if (!message) { // no chage message yet.
                 // console.log('No chat message in the chat room. just return');
                 return;
+            }
+
+            /**
+             * Update last message on myRooms.room.messages.
+             */
+            // console.log(message);
+            if (message.idx_chat_room && this.myRooms && this.myRooms.length) {
+                this.myRooms.map(room => {
+                    if (room.idx_chat_room === message.idx_chat_room) {
+                        if (!room.messages || !room.messages.length) {
+                            room.messages = [];
+                        }
+                        room.messages.unshift(message);
+                    }
+                })
             }
 
             // console.log(`AppService::listennMyRooms() got message in ${room.name} : `, message, ' at ', snapshot.ref.parent.key);
