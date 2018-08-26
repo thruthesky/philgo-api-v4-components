@@ -413,6 +413,7 @@ export interface ApiChatRoom {
     description: string;
     reminder: string;
     stamp_create: string;
+    stamp_update: string;
     idx_room?: string;          // api_chat_room.idx
     idx_my_room?: string;       // api_chat_my_room.idx
     idx_chat_room?: string;     // api_chat_room.idx
@@ -1597,6 +1598,9 @@ export class PhilGoApiService {
     }
 
     /**
+     * 
+     * 메모리에 있는 내방 myRooms 목록에서 특정 방의 새 메시지 수를 0으로 한다.
+     *
      * 특정 방의 새 메시지 수를 0 으로 만들고, 전체 새 메시지 갯수에서 해당 방의 새 메시지 개 수 만큼 차감을 한다.
      *
      * 즉, 특정 방에 들어갈 때, 그 방의 새메시지 수를 0 으로 하는 것이다.
