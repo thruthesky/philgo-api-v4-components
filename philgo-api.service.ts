@@ -405,12 +405,13 @@ export interface ApiCommentEditResponse extends ApiVersion2Response {
  */
 
 export interface ApiChatRoom {
-    idx: string;                // always api_chat_room.idx
+    idx: string;                // always api_chat_room.idx. This value is same as idx_chat_room and idx_room
     idx_member: string;         // is the owner of the chat room.
     idx_owner?: string;         // is the owner of the chat room.
     no_of_member: string;
     name: string;
     description: string;
+    reminder: string;
     stamp_create: string;
     idx_room?: string;          // api_chat_room.idx
     idx_my_room?: string;       // api_chat_my_room.idx
@@ -474,6 +475,13 @@ export interface ApiChatRoomUser {
 }
 export type ApiChatRoomUsers = Array<ApiChatRoomUser>;
 
+export interface ApiChatRoomUpdate {
+    idx: string;
+    name: string;
+    description: string;
+    reminder: string;
+}
+
 
 import * as firebase from 'firebase/app';
 import 'firebase/database';
@@ -510,7 +518,7 @@ export class PhilGoApiService {
     /**
      * currentRoomNo is the same as currentRoom.
      */
-    currentRoomNo = 0;
+    // currentRoomNo = 0;
     currentRoom: ApiChatRoomEnter = null;
     listeningRooms: Array<ApiChatRoom> = [];
     newMessageOnCurrentRoom = new Subject<ApiChatMessage>();
@@ -1714,11 +1722,11 @@ export class PhilGoApiService {
     }
     /**
      * Returns true if the input 'message' is belong to the room that I am in right now.
-     * @param currentRoomNo currentRoomNo
+     * @param idx_chat_room currentRoomNo
      * @param message chat message
      */
-    isMyCurrentChatRoomMessage(currentRoomNo: number, message: ApiChatMessage) {
-        return message && message.idx_chat_room && message.idx_chat_room === currentRoomNo.toString();
+    isMyCurrentChatRoomMessage(idx_chat_room, message: ApiChatMessage) {
+        return message && message.idx_chat_room && message.idx_chat_room === idx_chat_room;
     }
 
 
@@ -1740,8 +1748,15 @@ export class PhilGoApiService {
      * @use just before entering a new room.
      */
     chatResetRoom() {
-        this.currentRoomNo = 0;
+        // this.currentRoomNo = 0;
         this.currentRoom = null;
+    }
+
+    chatUpdateRoomSetting(form: ApiChatRoomUpdate): Observable<number> {
+        return this.query('chat.updateRoomSetting', form);
+    }
+    chatGetRoomSetting(idx: string): Observable<ApiChatRoom> {
+        return this.query('chat.getRoomSetting', { idx: idx });
     }
 
 
@@ -1847,7 +1862,7 @@ export class PhilGoApiService {
             /**
              * Don't toast if I am in the same room of the message since it will be displayed on chat messgae box.
              */
-            if (this.isMyCurrentChatRoomMessage(this.currentRoomNo, message)) {
+            if (this.isMyCurrentChatRoomMessage(this.currentRoom.idx, message)) {
                 // console.log('AppService::listenMyRooms():: got current room No. ', this.currentRoomNo, 'message. next()', message);
                 this.newMessageOnCurrentRoom.next(message);
                 return;
@@ -2018,9 +2033,9 @@ export class PhilGoApiService {
      * @param ln 2 letter language code
      */
     setLanguage(ln) {
-        return this.query('setLanguage', {ln: ln}).pipe(
-            map( res => {
-                AngularLibrary.setUserLanguage( ln );
+        return this.query('setLanguage', { ln: ln }).pipe(
+            map(res => {
+                AngularLibrary.setUserLanguage(ln);
                 this.ln = ln;
                 return res;
             })
