@@ -96,7 +96,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
         if (this.messages && this.messages.length) {
             this.messages = [];
         }
-        this.philgo.currentRoomNo = 0;
+        // this.philgo.currentRoomNo = 0;
         if (this.subscriptionNewMessage) {
             // console.log(' ==> New message unsubscribed !!');
             this.subscriptionNewMessage.unsubscribe();
@@ -144,7 +144,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
                  * idx_chat_room in route may be string.
                  */
                 //   this.form.idx_chat_room = idx;
-                this.philgo.currentRoomNo = AngularLibrary.parseNumber(idx);
+                // this.philgo.currentRoom.idx = idx;
                 // this.a.currentRoomNo = parseInt(this.form.idx_chat_room, 10);
                 this.philgo.chatEnterRoom({ idx: idx }, { cacheCallback: res => this.arrangeRoomEnter(res) }).subscribe(res => {
                     this.show.status.loadingLatestMessages = false;
@@ -181,7 +181,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
          * get real idx_chat_room
          */
         // this.form.idx_chat_room = this.roomInfo.idx_chat_room;
-        this.philgo.currentRoomNo = AngularLibrary.parseNumber(this.philgo.currentRoom.idx_chat_room);
+        // this.philgo.currentRoomNo = AngularLibrary.parseNumber(this.philgo.currentRoom.idx_chat_room);
 
         if (this.philgo.currentRoom.messages && this.philgo.currentRoom.messages.length) {
             this.philgo.currentRoom.messages.reverse().map(v => {
