@@ -152,7 +152,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
                      * 새로 방에 입장했으면, 전체 방 목록을 다시 로드한다.
                      */
                     if (res.just_entered === 'Y') {
-                        this.philgo.chatloadMyRooms().subscribe(res => {
+                        this.philgo.chatLoadMyRooms().subscribe(res => {
                             console.log('ChatAllRoomsComponent::onClickRoom()', res);
                         });
                     }

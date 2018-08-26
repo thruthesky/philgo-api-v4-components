@@ -38,7 +38,7 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
   loadMyChatRoomList() {
     this.show.loader.roomList = true;
 
-    this.philgo.chatloadMyRooms().subscribe(res => {
+    this.philgo.chatLoadMyRooms().subscribe(res => {
       this.show.loader.roomList = false;
     }, e => {
       this.show.loader.roomList = false;
@@ -51,11 +51,21 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/room/' + idx);
   }
 
+  /**
+   * 방의 마지막 메시지를 리턴한다.
+   * 
+   * @desc 방 메시지는 역순으로 정렬되어져 있다.
+   * 
+   * @param room 방 정보
+   */
   lastMessage(room: ApiChatRoom) {
-    const message: ApiChatMessage = AngularLibrary.last(room.messages);
-    if (message) {
-      return message.message;
+    if ( room && room.messages && room.messages.length ) {
+      return room.messages[0].message;
     }
+    // const message: ApiChatMessage = AngularLibrary.last(room.messages);
+    // if (message) {
+    //   return message.message;
+    // }
   }
 
 }
