@@ -1756,6 +1756,15 @@ export class PhilGoApiService {
         this.currentRoom = null;
     }
 
+    /**
+     * 로그아웃 등을 하면 이 함수를 통해서 채팅 정보를 리셋한다.
+     */
+    chatResetMyRooms() {
+        this.chatResetRoom();
+        this.myRooms = [];
+        AngularLibrary.set(CACHE_CHAT_MY_ROOM, []);
+    }
+
     chatUpdateRoomSetting(form: ApiChatRoomUpdate): Observable<number> {
         return this.query('chat.updateRoomSetting', form);
     }
@@ -2014,6 +2023,19 @@ export class PhilGoApiService {
         });
     }
 
+
+    /**
+     * 방의 마지막 메시지를 리턴한다.
+     * 
+     * @desc 방 메시지는 역순으로 정렬되어져 있다.
+     * 
+     * @param room 방 정보
+     */
+    lastMessage(room: ApiChatRoom) {
+        if (room && room.messages && room.messages.length) {
+            return room.messages[0].message;
+        }
+    }
 
 
     /**
