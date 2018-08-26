@@ -496,7 +496,7 @@ export class PhilGoApiService {
     /**
      * Api information. This is not an information of a one app. It is Api information.
      */
-    info: ApiInfo;
+    info: ApiInfo = null;
     private firebaseEvent: firebase.database.EventType = 'value';
 
     /**
@@ -529,6 +529,20 @@ export class PhilGoApiService {
     noOfNewMessageInMyRoom = 0;
     roomsBackup: Array<ApiChatRoom> = [];
 
+
+    /**
+     * Philgo Api user language.
+     * Get cached ln code or web browser ln code.
+     * 
+     * localStorage 에 저장된(또는 웹브라우저의) lang code 를 앱이 사작할 때 (또는 PhilgoApiService 가 inject 될 때) 로드를 한다.
+     * 그리고 클라이언트에서 philgo.setLanguage().subscribe() 를 하면,
+     *  1. 서버에 lang code 를 저장하고
+     *  2. localStorage 에 저장하고
+     *  3. 이 변수에 업데이트를 한다.
+     * 즉, 별도로 코딩은 필요하지 않고, philgo.setLanguage('ko').subscribe() 만 하면 된다.
+     * 만약, LanguageTranslate 를 사용하면 LanguageTranslate.languageCode 을 업데이트하면 된다.
+     */
+    ln = AngularLibrary.getUserLanguage();
 
     /**
      *
@@ -1458,6 +1472,7 @@ export class PhilGoApiService {
         }
         return this.query<ApiChatRooms>('chat.myRooms').pipe(
             map(res => {
+                // this.info = res.info; // 이것은 arrangeMyRooms() 에서 됨.
                 if (cache) {
                     AngularLibrary.set(CACHE_CHAT_MY_ROOM, res);
                 }
@@ -1988,6 +2003,28 @@ export class PhilGoApiService {
      */
     parseNumber(v) {
         return AngularLibrary.parseNumber(v);
+    }
+
+
+    /**
+     * Saves user language code into philgo server.
+     *
+     * @desc 서버에 저장하고
+     *      - 자동으로 캐시하고
+     *      - this.ln 을 업데이트한다.
+     *
+     * 즉, 클라이언트에서 많은 코딩을 하지 않도록 한다. 실제로 클라이언트 코딩에서 별도로 할 것이 없다. 그냥 subscribe() 정도만 하면된다.
+     *
+     * @param ln 2 letter language code
+     */
+    setLanguage(ln) {
+        return this.query('setLanguage', {ln: ln}).pipe(
+            map( res => {
+                AngularLibrary.setUserLanguage( ln );
+                this.ln = ln;
+                return res;
+            })
+        )
     }
 }
 
