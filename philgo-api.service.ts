@@ -486,9 +486,10 @@ export interface ApiChatRoomUpdate {
 }
 
 export interface ApiChatDisableAlarm {
-    idx: string;
+    idx_member?: string;
+    idx_chat_room: string;
     disable: 'Y' | '';
-    result?: string; // This is only available on the response from the server.
+    result?: 'on' | 'off'; // This is only available on the response from the server.
 }
 
 
