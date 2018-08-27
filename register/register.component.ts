@@ -105,20 +105,21 @@ export class RegisterComponent implements OnInit {
                 this.percentage = 0;
             }
         }, (e: HttpErrorResponse) => {
-            // console.log('error subscribe: ', e);
+            console.log('error subscribe: ', e);
             if (e.error instanceof Error) {
-                // console.log('Client-side error occurred.');
+                console.log('Client-side error occurred.');
             } else {
                 // console.log(err);
                 if (e.message === ApiErrorFileNotSelected) {
-                    // console.log('file is not selected');
+                    console.log('file is not selected');
                 } else if (e['code'] !== void 0 && e['code'] === ApiErrorFileUploadError) {
-                    // console.log('File upload error:', e.message);
+                    console.log('File upload error:', e.message);
                 } else {
-                    // console.log('FILE TOO LARGE' + e.message);
+                    console.log('Other error. May be FILE TOO LARGE. See error message on network tab. ' + e.message);
                 }
             }
-            // console.log('file upload failed');
+            console.log('file upload failed');
+            this.error.emit( this.philgo.error( ApiErrorFileUploadError, 'File upload failed') );
         });
     }
 

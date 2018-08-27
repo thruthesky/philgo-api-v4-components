@@ -15,7 +15,7 @@
                     </div>
                     <div class="content">
                         <div class="text" [innerHTML]="message.message" *ngIf="message.message"></div>
-                        <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll() "></app-show-file>
+                        <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll.emit() "></app-show-file>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
 
                         <ion-spinner name="bubbles" *ngIf=" ! message.idx "></ion-spinner>
                         <div class="text" [innerHTML]="message.message" *ngIf="message.message"></div>
-                        <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll() "></app-show-file>
+                        <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll.emit() "></app-show-file>
 
                         <div class="fs-sm" *ngIf=" message['percentage'] ">{{ message['percentage'] }}%</div>
                     </div>
