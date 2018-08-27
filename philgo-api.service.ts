@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaderResponse, HttpEventType } from '@angular/common/http';
-import { Observable, throwError, Subject } from 'rxjs';
+import { Observable, throwError, Subject, of } from 'rxjs';
 import { map, catchError, filter } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -152,6 +152,7 @@ export interface ApiFileUploadResponse extends ApiResponse {
 export const ApiErrorFileNotSelected = 'file-not-selected';
 export const ApiErrorFileUploadError = -50020;
 export const ApiErrorUrlNotSet = -50030;
+export const ApiErrorJsonParse = -50040;
 export const ApiErrorMessageInternetOrServer = 'Please check your internet or connection to server.';
 export const ApiErrorEmptyUid = -1100;
 export const ApiErrorEmptyPassword = -1110;
@@ -418,6 +419,7 @@ export interface ApiChatRoom {
     idx_my_room?: string;       // api_chat_my_room.idx
     idx_chat_room?: string;     // api_chat_room.idx
     favorite?: 'Y' | '';          // 'Y' | '' if it's in favorite list.
+    disable_alarm?: 'Y' | '';       // disable chat alarm
     idx_message_last_read?: string;     // api_chat_message.idx which lastly read by the user for that chat room.
     no_of_unread_messages?: string;     // no of unread messages for this room.
     messages?: Array<ApiChatMessage>;   // 내 방 입장한 경우 또는 내 방 목록인 경우에만 이 값이 존재한다.
@@ -481,6 +483,12 @@ export interface ApiChatRoomUpdate {
     name: string;
     description: string;
     reminder: string;
+}
+
+export interface ApiChatDisableAlarm {
+    idx: string;
+    disable: 'Y' | '';
+    result?: string; // This is only available on the response from the server.
 }
 
 
@@ -1087,15 +1095,16 @@ export class PhilGoApiService {
             responseType: 'json'
         });
 
-        // console.log('file upload: ', this.getFileServerUrl());
+        console.log('file upload: ', this.getFileServerUrl());
         return this.http.request(req).pipe(
             map(e => {
+                // console.log('map: ', e);
                 if (e instanceof HttpResponse) { // success event.
                     if (e.status === 200) {
                         if (e.body) {
                             // upload success now.
-                            // console.log('success: ', e);
-                            // console.log('e.body.data', e.body['data']);
+                            console.log('success: ', e);
+                            console.log('e.body.data', e.body['data']);
                             if (e.body['data']['result'] === 0) {
                                 return e.body['data'];
                             } else {
@@ -1117,6 +1126,11 @@ export class PhilGoApiService {
                     }
                 }
                 return e; // other events
+            }),
+            catchError( e => {
+                console.log('catchError : ', e);
+                // return of( e );
+                throw { code: ApiErrorJsonParse, message: e.body };
             })
         );
 
@@ -1772,6 +1786,9 @@ export class PhilGoApiService {
         return this.query('chat.getRoomSetting', { idx: idx });
     }
 
+    chatDisableAlarm(data: ApiChatDisableAlarm): Observable<ApiChatDisableAlarm> {
+        return this.query('chat.disableAlarm', data);
+    }
 
     /**
      * It listens new messages of my rooms.
@@ -1927,6 +1944,9 @@ export class PhilGoApiService {
             // console.log('The room is already listened. Maybe it is his old room.');
         }
     }
+
+
+
 
 
     /**
