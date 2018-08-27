@@ -550,7 +550,7 @@ export class PhilGoApiService {
     /**
      * Philgo Api user language.
      * Get cached ln code or web browser ln code.
-     * 
+     *
      * localStorage 에 저장된(또는 웹브라우저의) lang code 를 앱이 사작할 때 (또는 PhilgoApiService 가 inject 될 때) 로드를 한다.
      * 그리고 클라이언트에서 philgo.setLanguage().subscribe() 를 하면,
      *  1. 서버에 lang code 를 저장하고
@@ -1127,7 +1127,7 @@ export class PhilGoApiService {
                 }
                 return e; // other events
             }),
-            catchError( e => {
+            catchError(e => {
                 console.log('catchError : ', e);
                 // return of( e );
                 throw { code: ApiErrorJsonParse, message: e.body };
@@ -1485,7 +1485,7 @@ export class PhilGoApiService {
      *  'cacheCallback' - if cacheCallback is set, then it will cache and return it with the callback.
      * @desc there are not simple ways to return twice or emit twice for the observables. so, it simply uses callback.
      * @see readme#chat room cache
-     * 
+     *
      */
     chatMyRooms(options: { cacheCallback: (res: ApiChatRooms) => void; } = <any>{}): Observable<ApiChatRooms> {
         let cache = false;
@@ -1612,7 +1612,7 @@ export class PhilGoApiService {
     }
 
     /**
-     * 
+     *
      * 메모리에 있는 내방 myRooms 목록에서 특정 방의 새 메시지 수를 0으로 한다.
      *
      * 특정 방의 새 메시지 수를 0 으로 만들고, 전체 새 메시지 갯수에서 해당 방의 새 메시지 개 수 만큼 차감을 한다.
@@ -1652,7 +1652,7 @@ export class PhilGoApiService {
      *
      *
      * @see philao api v4 readme#chat cache 캐시 이용의 고려 할 점.
-     * 
+     *
      */
     chatEnterRoom(data: ApiChatRoomEnterRequest,
         options: { cacheCallback: (res: ApiChatRoomEnter) => void } = <any>{}): Observable<ApiChatRoomEnter> {
@@ -1841,7 +1841,7 @@ export class PhilGoApiService {
      * You can call any room to listen. Even if it's not your room.
      *
      * @param room chat room
-     * 
+     *
      * @desc 방의 새 메시지를 listen 할 때, 새 메시지가 있으면 philgo.myRooms 의 메시지 목록에 추가를 해 준다.
      *      이 것은 앱에서 방의 마지막 메시지를 표현하고자 할 때 도움이된다.
      */
@@ -1871,14 +1871,14 @@ export class PhilGoApiService {
              */
             // console.log(message);
             if (message.idx_chat_room && this.myRooms && this.myRooms.length) {
-                this.myRooms.map(room => {
-                    if (room.idx_chat_room === message.idx_chat_room) {
-                        if (!room.messages || !room.messages.length) {
-                            room.messages = [];
+                this.myRooms.map(_room => {
+                    if (_room.idx_chat_room === message.idx_chat_room) {
+                        if (!_room.messages || !_room.messages.length) {
+                            _room.messages = [];
                         }
-                        room.messages.unshift(message);
+                        _room.messages.unshift(message);
                     }
-                })
+                });
             }
 
             // console.log(`AppService::listennMyRooms() got message in ${room.name} : `, message, ' at ', snapshot.ref.parent.key);
@@ -1892,7 +1892,7 @@ export class PhilGoApiService {
             /**
              * Don't toast if I am in the same room of the message since it will be displayed on chat messgae box.
              */
-            if (this.isMyCurrentChatRoomMessage(this.currentRoom.idx, message)) {
+            if ( this.currentRoom && this.isMyCurrentChatRoomMessage(this.currentRoom.idx, message)) {
                 // console.log('AppService::listenMyRooms():: got current room No. ', this.currentRoomNo, 'message. next()', message);
                 this.newMessageOnCurrentRoom.next(message);
                 return;
@@ -2046,9 +2046,9 @@ export class PhilGoApiService {
 
     /**
      * 방의 마지막 메시지를 리턴한다.
-     * 
+     *
      * @desc 방 메시지는 역순으로 정렬되어져 있다.
-     * 
+     *
      * @param room 방 정보
      */
     lastMessage(room: ApiChatRoom) {
@@ -2085,7 +2085,7 @@ export class PhilGoApiService {
                 this.ln = ln;
                 return res;
             })
-        )
+        );
     }
 }
 
