@@ -18,7 +18,7 @@
         <ng-container *ngFor="let room of rooms">
             <ion-item class="name pointer" (click)=" onClickRoom(room.idx) ">
                 <ion-label>
-                    <h3>{{ room.name }}</h3>
+                    <h3 class="fs-md">{{ room.name }}</h3>
                     <p>{{ room.description }}</p>
                     <p class="d-none d-md-block">{{ tr.t({ ko: '총 인원: ', en: 'No of users: ' }) }} {{ room.no_of_member }}</p>
                 </ion-label>
