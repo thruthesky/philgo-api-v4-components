@@ -38,12 +38,15 @@
         </ng-container>
     </ion-list>
 
-    <div class="no-more" text-center *ngIf=" ! rooms.length ">
-        <ion-img src="/assets/img/chat-icon.png"></ion-img>
-        <ion-text color="danger" class="title">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
+
+    <div class="no-other-rooms d-flex flex-column justify-content-center mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
+        <ion-img class="mt-5 mx-5 px-5 mw-300px align-self-center" src="/assets/img/chat-icon.png"></ion-img>
+        <ion-text class="title my-2" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
         <ion-text>{{ tr.t({ko: '채팅방이 검색되지 않습니다. 다른 단어로 검색해 보세요.', en: 'There is no chat room by the serarch. Try other words.'}) }}</ion-text>
 
     </div>
+
+    
 </ng-template>
 
 <a *ngIf=" isMobileWeb " class="mobileWeb-install-button" href="https://play.google.com/store/apps/details?id=com.sonub.chat"

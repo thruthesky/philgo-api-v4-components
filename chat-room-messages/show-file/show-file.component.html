@@ -1,3 +1,9 @@
-<div class="uploaded-photo" [ngClass]="{clicked: clicked}" (click)="onClickPhoto()">
-  <img text-wrap [src]="message.url" *ngIf="message.url" (load)="onImageLoad()">
+<div *ngIf=" philgo.isImageType( message.type ) " class="uploaded-photo" [ngClass]="{'w-100': clicked, 'mw-200px': !clicked }"
+  (click)="onClickPhoto()">
+  <img class="w-100" [src]="message.url" *ngIf="message.url" (load)="onImageLoad()">
 </div>
+<div *ngIf=" !philgo.isImageType( message.type ) " class="uploaded-file" (click)="onClickFile()">
+  <img class="w-100" [src]="message.url" *ngIf="message.url" (load)="onImageLoad()">
+</div>
+
+{{ message | json }}
