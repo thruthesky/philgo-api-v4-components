@@ -1140,10 +1140,10 @@ export class PhilGoApiService {
 
     /**
      * New File Upload
-     * 
+     *
      * @since 2018-08-03 새로운 파일 서버에 파일을 업로드한다.
      * 이 파일 서버는 Philgo API 와는 상관이 없는 파일 서버이다.
-     * 
+     *
      * @desc This upload file into a new server.
      *
      */
@@ -1788,7 +1788,7 @@ export class PhilGoApiService {
     chatResetMyRooms() {
         this.chatResetRoom();
         this.myRooms = [];
-        AngularLibrary.set(CACHE_CHAT_MY_ROOM, []);
+        AngularLibrary.set(CACHE_CHAT_MY_ROOM, null);
     }
 
     chatUpdateRoomSetting(form: ApiChatRoomUpdate): Observable<number> {
