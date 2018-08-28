@@ -1,6 +1,6 @@
 <section data-role="create-room-component">
   <h2>{{ tr.t({ko: '새로운 채팅방을 개설합니다.', en: 'Creating a new chat room'}) }}</h2>
-  <ion-list class="form">
+  <ion-list class="mb-4">
     <ion-item>
       <ion-label position="floating">{{ tr.t({ko:'이름', en: 'Name'})}}</ion-label>
       <ion-input name="name" [(ngModel)]="form.name" (keyup.enter)="onSubmit()"></ion-input>
@@ -16,11 +16,11 @@
     </ion-item>
   </ion-list>
 
-  <ion-button class="create-button" color="primary" expand="full" type="button" (click)="onSubmit()">
+  <ion-button class="ion-btn-large" color="primary" expand="full" type="button" (click)="onSubmit()">
     {{ tr.t({ko: '방 만들기', en: 'Create Room'})}}
     <ion-icon slot="end" name="checkmark"></ion-icon>
   </ion-button>
-  <ion-button class="cancel-button" margin-vertical color="light" expand="full" type="button" (click)="onCancel()">
+  <ion-button class="ion-btn-normal" margin-vertical color="light" expand="full" type="button" (click)="onCancel()">
     {{ tr.t({ko: '취소하기', en: 'Cancel'})}}
     <ion-icon slot="end" color="dark" name="close"></ion-icon>
   </ion-button>

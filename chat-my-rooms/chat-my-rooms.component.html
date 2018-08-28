@@ -1,5 +1,5 @@
-<div class="loader" *ngIf=" show.loader.roomList; else roomListLoaded ">
-    <ion-spinner></ion-spinner>
+<div class="text-center p-5" *ngIf=" show.loader.roomList; else roomListLoaded ">
+    <ion-spinner class="mb-4"></ion-spinner>
     <div>{{ tr.t({ko: '채팅방 목록을 로딩중입니다.', en: 'Loading chat room list.'}) }}</div>
 </div>
 
@@ -16,26 +16,26 @@
                 <ion-icon color="tertiary" name="ribbon" *ngIf=" room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
                 <ion-icon color="primary" name="heart" *ngIf=" room.favorite == 'Y' "></ion-icon>
                 <ion-icon name="notifications" *ngIf=" room.disable_alarm != 'Y' "></ion-icon>
-                <ion-badge slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
+                <ion-badge class="border-radius-45px" slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
             </ion-item>
         </ng-container>
     </ion-list>
 
 
-    <div class="no-my-rooms d-flex flex-column justify-content-center mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
+    <div class="d-flex flex-column justify-content-center mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
         <ion-img class="mt-5 mx-5 px-5 mw-300px align-self-center" src="/assets/img/chat-icon.png"></ion-img>
-        <ion-text class="title my-2" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
+        <ion-text class="my-2" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
         <ion-text>{{ tr.t({ko: '회원님이 참여한 채팅 방이 없네요.', en: 'You do not have any philgo.myRooms.'}) }}</ion-text>
         <ion-text>{{ tr.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text>
         <ion-button class="my-1">
             <span>{{ tr.t({ko: '전체 채팅방 목록', en:'All Chat Room List' }) }}</span>
-            <ion-icon name="open"></ion-icon>
+            <ion-icon class="ml-1" name="open"></ion-icon>
         </ion-button>
     </div>
     
 </ng-template>
 
-<a *ngIf=" isMobileWeb " class="mobileWeb-install-button" href="https://play.google.com/store/apps/details?id=com.sonub.chat"
+<a class="playstore-button" *ngIf=" isMobileWeb " href="https://play.google.com/store/apps/details?id=com.sonub.chat"
     target="_blank">
     <span>{{ tr.t({ko: '채팅앱 이용하기', en: 'Use chat app'})}}</span>
     <ion-icon name="appstore"></ion-icon>

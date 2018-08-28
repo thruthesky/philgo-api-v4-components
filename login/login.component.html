@@ -1,4 +1,4 @@
-<ion-list>
+<ion-list class="mb-5">
 
     <ion-item>
         <ion-label position="floating">{{ tr.t({ko: '로그인 아이디. 아이디 또는 닉네임, 이메일로 로그인 가능합니다.', en: 'Login ID. You can login with one of Member ID, Nickname or Email.'})}}</ion-label>
@@ -13,7 +13,7 @@
 </ion-list>
 
 
-<ion-button class="login-submit-button" type="button" color="warning" expand="full" (click)="onSubmit()">
+<ion-button class="ion-btn-large" type="button" color="warning" expand="full" (click)="onSubmit()">
     {{ tr.t({ko: '로그인', en: 'Login' }) }}
     <ion-icon slot="end" name="send"></ion-icon>
 </ion-button>
