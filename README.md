@@ -53,13 +53,23 @@ tail -f ~/tmp/sapcms_debug.log
 
 ## Install
 
-### Adding PhilGo API as submodule
+### Adding PhilGo API as subtree
 
 * You can add philgo-api as submodule of any angualr/ionic project under src/app/module/philgo-api.
 
 ```` sh
 git submodule add https://github.com/thruthesky/philgo-api src/app/modules/philgo-api
 ````
+
+### External Dependency
+
+* It needs
+  * Bootstrap v4 utilities.
+  * Defaut CSS code
+  ```` css
+    .mw-200px { max-width: 200px!important; }
+    .mw-300px { max-width: 300px!important; }
+  ````
 
 ### Initializing Philgo Api
 

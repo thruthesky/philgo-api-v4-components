@@ -1140,9 +1140,11 @@ export class PhilGoApiService {
 
     /**
      * New File Upload
-     *
+     * 
      * @since 2018-08-03 새로운 파일 서버에 파일을 업로드한다.
      * 이 파일 서버는 Philgo API 와는 상관이 없는 파일 서버이다.
+     * 
+     * @desc This upload file into a new server.
      *
      */
     fileUpload(files: FileList, options: ApiNewFileServerUploadOptions): Observable<ApiNewFileServerUpload> {
@@ -1204,6 +1206,15 @@ export class PhilGoApiService {
         );
 
     }
+
+    // fileInfo(url: string): Observable<any> {
+    //     return this.http.get( url ).pipe(
+    //         map( res => {
+    //             console.log('info: ', res);
+    //         })
+    //     );
+    // }
+
 
 
     /**
@@ -2087,6 +2098,14 @@ export class PhilGoApiService {
                 return res;
             })
         );
+    }
+
+    /**
+     * @see AngularLibrary.isImageType
+     * @param type Mime type
+     */
+    isImageType( type ) {
+        return AngularLibrary.isImageType( type );
     }
 }
 
