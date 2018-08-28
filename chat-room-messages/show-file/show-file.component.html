@@ -3,7 +3,8 @@
   <img class="w-100" [src]="message.url" *ngIf="message.url" (load)="onImageLoad()">
 </div>
 <div *ngIf=" !philgo.isImageType( message.type ) " class="uploaded-file" (click)="onClickFile()">
-  <img class="w-100" [src]="message.url" *ngIf="message.url" (load)="onImageLoad()">
+  <a href="{{ message.url }}" *ngIf="message.url">Download: {{ fileName() }} {{ fileSize() }}</a>
 </div>
+
 
 {{ message | json }}
