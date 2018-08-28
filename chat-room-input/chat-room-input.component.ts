@@ -54,6 +54,9 @@ export class ChatRoomInputComponent implements OnInit {
         this.sendMessage();
     }
 
+    /**
+     * 사용자가 채팅 창에 입력한 메시지 뿐만아니라 첨부 파일 등을 보낼 때, 이 함수를 사용한다.
+     */
     sendMessage() {
         /**
          * 새 방에 입장하는 경우, 초기화가 좀 느리다. 따라서 초기화 전에 들어가면 그냥 리턴.
