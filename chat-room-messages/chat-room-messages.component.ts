@@ -13,8 +13,7 @@ import { AngularLibrary } from '../../angular-library/angular-library';
 
 @Component({
     selector: 'app-chat-room-messages-component',
-    templateUrl: './chat-room-messages.component.html',
-    styleUrls: ['./chat-room-messages.component.scss']
+    templateUrl: './chat-room-messages.component.html'
 })
 export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
 

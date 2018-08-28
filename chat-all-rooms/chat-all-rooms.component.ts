@@ -7,8 +7,7 @@ import { AngularLibrary } from '../../angular-library/angular-library';
 
 @Component({
   selector: 'app-chat-all-rooms-component',
-  templateUrl: './chat-all-rooms.component.html',
-  styleUrls: ['./chat-all-rooms.component.scss']
+  templateUrl: './chat-all-rooms.component.html'
 })
 export class ChatAllRoomsComponent implements OnInit, OnDestroy {
 
