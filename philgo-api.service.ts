@@ -1904,7 +1904,7 @@ export class PhilGoApiService {
             /**
              * Don't toast if I am in the same room of the message since it will be displayed on chat messgae box.
              */
-            if ( this.currentRoom && this.isMyCurrentChatRoomMessage(this.currentRoom.idx, message)) {
+            if (this.currentRoom && this.isMyCurrentChatRoomMessage(this.currentRoom.idx, message)) {
                 // console.log('AppService::listenMyRooms():: got current room No. ', this.currentRoomNo, 'message. next()', message);
                 this.newMessageOnCurrentRoom.next(message);
                 return;
@@ -2065,7 +2065,8 @@ export class PhilGoApiService {
      */
     lastMessage(room: ApiChatRoom) {
         if (room && room.messages && room.messages.length) {
-            return room.messages[0].message;
+            const message = room.messages[0].message;
+            return AngularLibrary.stripTags( message );
         }
     }
 
@@ -2101,11 +2102,34 @@ export class PhilGoApiService {
     }
 
     /**
+     * MIME 타입의 값을 바탕으로 이미지 파일인지 아니지 검사한다.
      * @see AngularLibrary.isImageType
      * @param type Mime type
      */
-    isImageType( type ) {
-        return AngularLibrary.isImageType( type );
+    isImageType(type) {
+        return AngularLibrary.isImageType(type);
+    }
+
+    /**
+     * 
+     * @param url 
+     */
+    getFileInfo(url: string): { name: string, size: string } {
+        const re = {
+            name: '',
+            size: ''
+        };
+        if (url) {
+            const filename = url.split('/').pop().split('-').pop();
+            const li = filename.lastIndexOf('.');
+            const v = filename.substr(0, li);
+            if (v) {
+                re.name = v.substr(0, v.lastIndexOf(' '));
+                re.size = AngularLibrary.humanFileSize( v.substr(v.lastIndexOf(' ') + 1) );
+                console.log('info name: ', re);
+            }
+        }
+        return re;
     }
 }
 
