@@ -242,8 +242,9 @@ export interface ApiComment {
 
 
 /**
- * Post data structure for create/update
- * @deprecated. Do not use this. Use ApiPost
+ * Post data structure for list/create/update etc.
+ * 
+ * @desc Do not use this. Use ApiPost
  */
 export interface ApiPostData {
     module?: string; // for crate/update
@@ -345,7 +346,7 @@ export interface ApiPostData {
 
     comments: Array<ApiComment>;
     member?: ApiMember;
-    config_subject: string; // forum name. 게시판 이름.
+    config_subject: string; // forum name. 게시판 이름. 쿼리를 할 때, post_id 를 fields 에 기록해야 이 값을 얻을 수 있다.
 }
 
 /**
@@ -399,6 +400,21 @@ export interface ApiCommentEditResponse extends ApiVersion2Response {
     parents: Array<number>;
     post: ApiComment;
 }
+
+export interface ApiPostSearch {
+    post_id?: string;           // post_id. the same value will be returned from server. it can be '', 'id1,id2,id3'
+    category?: string;          // category. the same value will be return from server.
+    fields?: string;            // fields to select. the same value will be return from server.
+    type?: string;              // post type. the same value will be return from server.
+    comment?: '' | '0';         // whether to get comments of posts or not. '0' mean don't get it. the same value will be return from server.
+    limit_comment?: number;     // limit no of comments to get.  the same value will be return from server.
+    page_no?: number;           // page no.  the same value will be return from server.
+    limit?: number;             // limit no of posts.  the same value will be return from server.
+    uid?: string;               // user id, nickname, email. to search posts of the user. the same value will be return from server.
+    posts?: Array<ApiPost>;
+}
+
+
 
 /**
  * Chat interface
@@ -2066,7 +2082,7 @@ export class PhilGoApiService {
     lastMessage(room: ApiChatRoom) {
         if (room && room.messages && room.messages.length) {
             const message = room.messages[0].message;
-            return AngularLibrary.stripTags( message );
+            return AngularLibrary.stripTags(message);
         }
     }
 
@@ -2125,11 +2141,16 @@ export class PhilGoApiService {
             const v = filename.substr(0, li);
             if (v) {
                 re.name = v.substr(0, v.lastIndexOf(' '));
-                re.size = AngularLibrary.humanFileSize( v.substr(v.lastIndexOf(' ') + 1) );
+                re.size = AngularLibrary.humanFileSize(v.substr(v.lastIndexOf(' ') + 1));
                 console.log('info name: ', re);
             }
         }
         return re;
+    }
+
+
+    postSearch(data: ApiPostSearch = {}): Observable<ApiPostSearch> {
+        return this.query('post.search', data);
     }
 }
 
