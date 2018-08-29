@@ -4,8 +4,7 @@ import { LanguageTranslate } from '../../../language-translate/language-translat
 
 @Component({
   selector: 'app-send-file',
-  templateUrl: './send-file.component.html',
-  styleUrls: ['./send-file.component.scss']
+  templateUrl: './send-file.component.html'
 })
 export class ChatRoomSendFileComponent implements OnInit {
 

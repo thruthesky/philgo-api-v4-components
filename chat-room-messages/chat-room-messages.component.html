@@ -1,42 +1,39 @@
-<div class="messages" *ngIf=" messages.length ">
-    <div class="message" *ngFor=" let message of messages " [ngClass]="{ file: message.url }">
-        <ng-container *ngIf=" message.type != 'sending-file' ">
 
-            <div class="other" text-left *ngIf="message.idx_member != philgo.myIdx(); ">
-                <div class="photo" *ngIf=" message.photoUrl ">
-                    <ion-thumbnail>
-                        <img src="{{ message.photoUrl }}">
-                    </ion-thumbnail>
+<div class="messages position-relative" *ngIf=" messages.length ">
+
+
+    <div class="message" *ngFor=" let message of messages " [ngClass]="{ file: message.type }">
+        <ng-container *ngIf=" message.type != 'sending-file' ">
+            <div class="chat-room-message-other" *ngIf="message.idx_member != philgo.myIdx(); ">
+                <div class="chat-profile" *ngIf=" message.photoUrl ">
+                    <img class="chat-message-avatar" src="{{ message.photoUrl }}">
                 </div>
                 <div class="text">
                     <div class="meta">
                         <span class="name">{{message.name}}</span>
                         <span class="date fs-sm">{{message.stamp | date:'short'}}</span>
                     </div>
-                    <div class="content">
+                    <div class="other-message-content">
                         <div [innerHTML]="message.message" *ngIf="message.message"></div>
                         <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll.emit() "></app-show-file>
                     </div>
                 </div>
             </div>
-
-            <div class="my" text-right *ngIf="message.idx_member == philgo.myIdx(); ">
-                <div class="container">
-                    <div class="content">
-
-                        <ion-spinner name="bubbles" *ngIf=" ! message.idx "></ion-spinner>
-                        <div [innerHTML]="message.message" *ngIf="message.message"></div>
-                        <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll.emit() "></app-show-file>
-
-                        <div class="fs-sm" *ngIf=" message['percentage'] ">{{ message['percentage'] }}%</div>
-                    </div>
+            <div class="chat-room-message-my" *ngIf="message.idx_member == philgo.myIdx(); ">
+                <div class="my-message-content d-flex align-items-center">
+                    <ion-spinner class="mr-2" name="bubbles" *ngIf=" ! message.idx "></ion-spinner>
+                    <div [innerHTML]="message.message" *ngIf="message.message"></div>
+                    <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll.emit() "></app-show-file>
+                    <div class="fs-sm ml-3" *ngIf=" message['percentage'] ">{{ message['percentage'] }}%</div>
                 </div>
             </div>
         </ng-container>
         <app-send-file text-right *ngIf=" message.type == 'sending-file' " [message]="message"></app-send-file>
     </div>
-</div>
-<div class="text-center p-5" *ngIf=" show.status.loadingLatestMessages ">
-    <ion-spinner class="mb-4"></ion-spinner>
-    <div>{{ tr.t({ko: '최근 메시지를 로딩 중입니다.', en: 'Loading messages.'}) }}</div>
+
+    <div class="chat-room-message-loader py-3"  *ngIf="show.status.loadingLatestMessages ">
+        <ion-spinner class="mr-3"></ion-spinner>
+        <div>{{ tr.t({ko: '최근 메시지를 로딩 중입니다.', en: 'Loading messages.'}) }}</div>
+    </div>
+
 </div>
