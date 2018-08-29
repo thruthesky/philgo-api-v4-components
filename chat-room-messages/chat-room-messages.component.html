@@ -1,4 +1,7 @@
+
 <div class="messages position-relative" *ngIf=" messages.length ">
+
+
     <div class="message" *ngFor=" let message of messages " [ngClass]="{ file: message.type }">
         <ng-container *ngIf=" message.type != 'sending-file' ">
             <div class="chat-room-message-other" text-left *ngIf="message.idx_member != philgo.myIdx(); ">

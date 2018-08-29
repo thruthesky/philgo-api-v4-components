@@ -9,7 +9,6 @@ import {
 } from '../../philgo-api/philgo-api.service';
 
 import { ActivatedRoute } from '@angular/router';
-import { AngularLibrary } from '../../angular-library/angular-library';
 
 @Component({
     selector: 'app-chat-room-messages-component',
@@ -64,7 +63,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
          * 타임아웃으로 호출하는 하는 이유는 부모 컴포넌트에서 enter room 을 할 때, 변화하는 값을 사용하기 때문에,
          * expression changed after it has been checked 와 같은 에러가 발생한다.
          * 이것은 room enter 를 부모 컴포넌트에서 하지 않아 발생하는 복잡함이다.
-         * 
+         *
          * 이 외에도 문제가 계속 발생하고 있다. loadChatRoomEnter() 는 부모 컴포넌트에 들어가야 한다.
          */
         // setTimeout(() => this.loadChatRoomEnter(), 100);
@@ -109,8 +108,8 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
             // if it's a greeting message for my entering, then no need to show it to myself.
         } else {
             this.messages.push(message);
+            this.scroll.emit();
         }
-        this.scroll.emit();
     }
     updateLastRead(idx_message: string) {
         if (!idx_message) {
@@ -127,47 +126,6 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
         });
     }
 
-    /**
-     * 방 입장
-     * @todo 채팅 방에 진입하는 것은 상단의 부모 컴포넌트에서 해야하는 것이 맞지 않을까?
-     */
-    // loadChatRoomEnter() {
-        // this.show.status.loadingLatestMessages = true;
-        // setTimeout(() => {
-        // console.log('loadChatRoomEnter() setTimeout()');
-        // this.activatedRoute.paramMap.subscribe(params => {
-        //     const idx = params.get('idx_chat_room');
-        //     if (idx) {
-        //         this.philgo.chatResetNoOfNewMessageOfRoom(idx);
-        //         /**
-        //          * idx_chat_room in route may be string.
-        //          */
-        //         //   this.form.idx_chat_room = idx;
-        //         // this.philgo.currentRoom.idx = idx;
-        //         // this.a.currentRoomNo = parseInt(this.form.idx_chat_room, 10);
-        //         this.philgo.chatEnterRoom({ idx: idx }, { cacheCallback: res => this.arrangeRoomEnter(res) }).subscribe(res => {
-        //             this.show.status.loadingLatestMessages = false;
-        //             /**
-        //              * 새로 방에 입장했으면, 전체 방 목록을 다시 로드한다.
-        //              */
-        //             if (res.just_entered === 'Y') {
-        //                 this.philgo.chatLoadMyRooms().subscribe(res => {
-        //                     console.log('ChatAllRoomsComponent::onClickRoom()', res);
-        //                 });
-        //             }
-        //             this.arrangeRoomEnter(res);
-        //         }, e => {
-        //             console.log(e.code);
-        //             this.error.emit(e);
-        //         });
-        //     } else {
-        //         // this error will not happens.
-        //         // this.a.toast('Chat room number was not provided.');
-        //         console.error('Chat room number was not provided in route.');
-        //     }
-        // });
-        // }, 100);
-    // }
 
     arrangeRoomEnter(res: ApiChatRoomEnter) {
         console.log('roomInfo: ', res);
@@ -220,5 +178,6 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
         }
         this.displayMessage(message);
     }
+
 }
 
