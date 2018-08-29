@@ -17,11 +17,11 @@
                 </div>
             </div>
             <div class="chat-room-message-my" *ngIf="message.idx_member == philgo.myIdx(); ">
-                <div class="my-message-content">
-                    <ion-spinner class="ml-3" name="bubbles" *ngIf=" ! message.idx "></ion-spinner>
+                <div class="my-message-content d-flex align-items-center">
+                    <ion-spinner class="mr-2" name="bubbles" *ngIf=" ! message.idx "></ion-spinner>
                     <div [innerHTML]="message.message" *ngIf="message.message"></div>
                     <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll.emit() "></app-show-file>
-                    <div class="fs-sm" *ngIf=" message['percentage'] ">{{ message['percentage'] }}%</div>
+                    <div class="fs-sm ml-3" *ngIf=" message['percentage'] ">{{ message['percentage'] }}%</div>
                 </div>
             </div>
         </ng-container>
