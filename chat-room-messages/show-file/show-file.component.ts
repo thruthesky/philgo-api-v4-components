@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiChatMessage, PhilGoApiService } from '../../../philgo-api/philgo-api.service';
+import { LanguageTranslate } from '../../../language-translate/language-translate';
 
 @Component({
   selector: 'app-show-file',
@@ -16,7 +17,8 @@ export class ChatRoomShowFileComponent implements OnInit {
   size = '';
 
   constructor(
-    public philgo: PhilGoApiService
+    public philgo: PhilGoApiService,
+    public tr: LanguageTranslate
   ) { }
 
   ngOnInit() {
@@ -25,15 +27,9 @@ export class ChatRoomShowFileComponent implements OnInit {
 
     } else {
       if (this.message.url) {
-        const filename = this.message.url.split('/').pop().split('-').pop();
-        const li = filename.lastIndexOf('.');
-        const v = filename.substr(0, li);
-        if (v) {
-          this.name = v.substr(0, v.lastIndexOf(' '));
-          this.size = v.substr(v.lastIndexOf(' ') + 1);
-          console.log('info name: ', this.name);
-          console.log('info size: ', this.size);
-        }
+        const re = this.philgo.getFileInfo(this.message.url);
+        this.name = re.name;
+        this.size = re.size;
       }
     }
   }
