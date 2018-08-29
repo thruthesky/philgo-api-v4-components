@@ -11,11 +11,7 @@
         </ion-buttons>
     </div>
 
-
-    <div text-center>
-        <ion-text class=" my-1 fs-sm" color="primary" *ngIf="percentage">{{ percentage }}%</ion-text>
-    </div>
-
+    <ion-text class=" my-1 fs-sm" text-center color="primary" *ngIf="percentage">{{ percentage }}%</ion-text>
 
     <label class="register-upload-photo-button">
         <input type="file" name="file" (change)="onChangePrimaryPhoto($event)">
