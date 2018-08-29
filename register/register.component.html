@@ -1,26 +1,31 @@
-<section class="profile-photo-upload" *ngIf=" philgo.isLoggedIn() ">
-    <div class="top">
-        <div class="profile-photo">
+<section class="d-flex flex-column align-items-center" *ngIf=" philgo.isLoggedIn() ">
+
+    <div class="position-relative">
+        <div class="register-profile-photo my-2">
             <img src="{{ philgo.thumbnailUrl({ width: 100, height: 120, path: form.url_profile_photo }) }}" *ngIf=" form.url_profile_photo ">
         </div>
-        <ion-buttons class="delete-button">
+        <ion-buttons class="register-delete-button">
             <ion-button (click)=" onClickDeletePrimaryPhoto() ">
                 <ion-icon slot="icon-only" color="danger" name="close-circle"></ion-icon>
             </ion-button>
         </ion-buttons>
     </div>
-    <div class="bottom">
-        <div text-center>
-            <ion-text class="fs-sm" color="primary" *ngIf="percentage">{{ percentage }}%</ion-text>
-        </div>
-        <label class="upload-photo-button">
-            <input type="file" name="file" (change)="onChangePrimaryPhoto($event)">
-            <div class="button fs-sm">
-                <ion-icon slot="end" name="camera"></ion-icon>
-                {{ tr.t({ko: '사진 업로드', en: 'Upload Photo' }) }}
-            </div>
-        </label>
+
+
+    <div text-center>
+        <ion-text class=" my-1 fs-sm" color="primary" *ngIf="percentage">{{ percentage }}%</ion-text>
     </div>
+
+
+    <label class="register-upload-photo-button">
+        <input type="file" name="file" (change)="onChangePrimaryPhoto($event)">
+        <div class="button fs-sm py-2 px-3 mb-3">
+            <ion-icon slot="end" name="camera"></ion-icon>
+            {{ tr.t({ko: '사진 업로드', en: 'Upload Photo' }) }}
+        </div>
+    </label>
+
+
 </section>
 
 
