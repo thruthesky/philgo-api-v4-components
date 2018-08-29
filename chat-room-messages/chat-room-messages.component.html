@@ -1,9 +1,9 @@
 <div class="messages position-relative" *ngIf=" messages.length ">
     <div class="message" *ngFor=" let message of messages " [ngClass]="{ file: message.type }">
         <ng-container *ngIf=" message.type != 'sending-file' ">
-            <div class="chat-room-message-other" text-left *ngIf="message.idx_member != philgo.myIdx(); ">
+            <div class="chat-room-message-other" *ngIf="message.idx_member != philgo.myIdx(); ">
                 <div class="chat-profile" *ngIf=" message.photoUrl ">
-                    <img class="chat-massage-avatar" src="{{ message.photoUrl }}">
+                    <img class="chat-message-avatar" src="{{ message.photoUrl }}">
                 </div>
                 <div class="text">
                     <div class="meta">
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="chat-room-message-my" text-right *ngIf="message.idx_member == philgo.myIdx(); ">
+            <div class="chat-room-message-my" *ngIf="message.idx_member == philgo.myIdx(); ">
                 <div class="my-message-content">
                     <ion-spinner class="ml-3" name="bubbles" *ngIf=" ! message.idx "></ion-spinner>
                     <div [innerHTML]="message.message" *ngIf="message.message"></div>
@@ -28,11 +28,9 @@
         <app-send-file text-right *ngIf=" message.type == 'sending-file' " [message]="message"></app-send-file>
     </div>
 
-    <div style="position: absolute; bottom: 0; left: 0; right: 0;">
-        <div class="d-flex justify-content-center py-2" style="background-color: rgba(255, 254, 233, 0.5);" *ngIf=" show.status.loadingLatestMessages ">
-            <ion-spinner class=""></ion-spinner>
-            <div class="pl-3 pt-1">{{ tr.t({ko: '최근 메시지를 로딩 중입니다.', en: 'Loading messages.'}) }}</div>
-        </div>
+    <div class="chat-room-message-loader py-3"  *ngIf="show.status.loadingLatestMessages ">
+        <ion-spinner class="mr-3"></ion-spinner>
+        <div>{{ tr.t({ko: '최근 메시지를 로딩 중입니다.', en: 'Loading messages.'}) }}</div>
     </div>
 
 </div>
