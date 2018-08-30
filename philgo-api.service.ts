@@ -407,7 +407,7 @@ export interface ApiPostSearch {
     fields?: string;            // fields to select. the same value will be return from server.
     type?: string;              // post type. the same value will be return from server.
     comment?: '' | '0';         // whether to get comments of posts or not. '0' mean don't get it.
-                                // the same value will be return from server.
+    // the same value will be return from server.
     limit_comment?: number;     // limit no of comments to get.  the same value will be return from server.
     page_no?: number;           // page no.  the same value will be return from server.
     limit?: number;             // limit no of posts.  the same value will be return from server.
@@ -1824,7 +1824,7 @@ export class PhilGoApiService {
         return this.query('chat.disableAlarm', data);
     }
 
-    chatSearch(data: ApiChatSearch): Observable<Array<ApiChatMessage>> {
+    chatSearch(data: ApiChatSearch = {}): Observable<Array<ApiChatMessage>> {
         return this.query('chat.search', data);
     }
 
