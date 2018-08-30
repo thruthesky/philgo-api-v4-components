@@ -19,7 +19,6 @@ export class PhilGoApiTestService {
         console.log('  ****** PhilGoApiTestService::run()');
         this.testQuery();
         this.testRegisterLoginUpdate();
-
         this.postCreate();
     }
     setUrl(url: string) {
@@ -93,6 +92,26 @@ export class PhilGoApiTestService {
         const re = await this.api.login({ uid: this.memberId, password: this.password}).toPromise();
         console.log('re: ', re);
 
+    }
+
+
+    postSearch() {
+        this.api.postSearch({ fields: 'idx, subject'}).subscribe(re => {
+            console.log('re: ', re);
+            this.test( ! re.posts[0].idx_member, 'No idx member' );
+            this.test( ! re.posts[0].content, 'No content' );
+            this.test( ! re.posts[0].config_subject, 'No config subject' );
+        }, e => {
+            this.bad( e.message );
+        });
+        this.api.postSearch({ fields: 'idx, idx_member, post_id, subject, content'}).subscribe(re => {
+            console.log('re: ', re);
+            this.test( re.posts[0].idx_member, 'No idx member: ' + re.posts[0].idx_member);
+            this.test( re.posts[0].content, 'No content' + re.posts[0].content );
+            this.test( re.posts[0].config_subject, 'No config subject' + re.posts[0].config_subject);
+        }, e => {
+            this.bad( e.message );
+        });
     }
 
 }
