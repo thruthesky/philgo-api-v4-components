@@ -25,8 +25,8 @@
     </ion-list>
 
 
-    <div class="d-flex flex-column justify-content-center mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
-        <ion-img class="mt-5 mx-5 px-5 mw-300px align-self-center" src="/assets/img/chat-icon.png"></ion-img>
+    <div class="flex-center flex-column mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
+        <ion-img class="mt-5 mx-5 px-5 mw-300px" src="/assets/img/chat-icon.png"></ion-img>
         <ion-text class="my-2" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
         <ion-text>{{ tr.t({ko: '회원님이 참여한 채팅 방이 없네요.', en: 'You do not have any philgo.myRooms.'}) }}</ion-text>
         <ion-text>{{ tr.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text>

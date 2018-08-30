@@ -39,8 +39,8 @@
     </ion-list>
 
 
-    <div class="d-flex flex-column justify-content-center mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
-        <ion-img class="mt-5 mx-5 px-5 mw-300px align-self-center" src="/assets/img/chat-icon.png"></ion-img>
+    <div class="flex-center flex-column mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
+        <ion-img class="mt-5 mx-5 px-5 mw-300px" src="/assets/img/chat-icon.png"></ion-img>
         <ion-text class="fs-lg my-2" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
         <ion-text>{{ tr.t({ko: '채팅방이 검색되지 않습니다. 다른 단어로 검색해 보세요.', en: 'There is no chat room by the serarch. Try other words.'}) }}</ion-text>
     </div>
