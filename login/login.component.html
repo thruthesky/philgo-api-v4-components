@@ -1,19 +1,26 @@
-<ion-list class="mb-5">
+<form class=" mx-auto mt-4 mt-md-5 w-md-50" text-center>
+    <div class="flex-center mb-4 p-3 border">
+        <img class="" src="../../../../assets/icon/favicon.png" alt="">
+        <h2 class="m-0 ml-4 fs-xl fw-light">PhilGo Chat</h2>
+    </div>
 
-    <ion-item>
-        <ion-label position="floating">{{ tr.t({ko: '로그인 아이디. 아이디 또는 닉네임, 이메일로 로그인 가능합니다.', en: 'Login ID. You can login with one of Member ID, Nickname or Email.'})}}</ion-label>
-        <ion-input autocomplete clear-input name="uid" [(ngModel)]="uid" (keyup.enter)="onSubmit()"></ion-input>
-    </ion-item>
+    <ion-list class="mb-5 ">
 
-    <ion-item>
-        <ion-label position="floating">{{ tr.t({ko: '비밀번호', en: 'Password' }) }}</ion-label>
-        <ion-input name="password" type="password" [(ngModel)]="password" (keyup.enter)="onSubmit()"></ion-input>
-    </ion-item>
-
-</ion-list>
-
-
-<ion-button class="ion-btn-large" type="button" color="warning" expand="full" (click)="onSubmit()">
-    {{ tr.t({ko: '로그인', en: 'Login' }) }}
-    <ion-icon slot="end" name="send"></ion-icon>
-</ion-button>
+        <ion-item>
+            <ion-label position="floating">{{ tr.t({ko: '로그인 아이디. 아이디 또는 닉네임, 이메일로 로그인 가능합니다.', en: 'Login ID ( Member ID / Nickname / Email )'})}}</ion-label>
+            <ion-input clear-input name="uid" [(ngModel)]="uid" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+            <ion-label position="floating">{{ tr.t({ko: '비밀번호', en: 'Password' }) }}</ion-label>
+            <ion-input name="password" type="password" [(ngModel)]="password" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+    
+    </ion-list>
+    
+    
+    <ion-button class="ion-btn-large" type="button" color="warning" expand="full" (click)="onSubmit()">
+        {{ tr.t({ko: '로그인', en: 'Login' }) }}
+        <ion-icon slot="end" name="send"></ion-icon>
+    </ion-button>
+</form>

@@ -12,7 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-chat-room-messages-component',
-    templateUrl: './chat-room-messages.component.html'
+    templateUrl: './chat-room-messages.component.html',
+    styleUrls: ['./chat-room-messages.component.scss']
 })
 export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
 

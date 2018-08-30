@@ -1,8 +1,8 @@
 
-<div class="messages position-relative" *ngIf=" messages.length ">
+<div class="message position-relative" *ngIf=" messages.length ">
 
 
-    <div class="message" *ngFor=" let message of messages " [ngClass]="{ file: message.type }">
+    <div *ngFor=" let message of messages " [ngClass]="{ file: message.type }">
         <ng-container *ngIf=" message.type != 'sending-file' ">
             <div class="chat-room-message-other" *ngIf="message.idx_member != philgo.myIdx(); ">
                 <div class="chat-profile" *ngIf=" message.photoUrl ">
@@ -11,7 +11,7 @@
                 <div class="text">
                     <div class="meta">
                         <span class="name">{{message.name}}</span>
-                        <span class="date fs-sm">{{message.stamp | date:'short'}}</span>
+                        <span class="date fs-sm ml-5">{{message.stamp | date:'short'}}</span>
                     </div>
                     <div class="other-message-content">
                         <div [innerHTML]="message.message" *ngIf="message.message"></div>
