@@ -16,9 +16,9 @@
                         <span>{{ tr.t({ ko: '총 인원: ', en: 'No of users: ' }) }}{{ room.no_of_member }}</span>
                     </p>
                 </ion-label>
-                <ion-icon color="tertiary" name="ribbon" *ngIf=" room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
+                <ion-icon color="dark" name="ribbon" *ngIf="room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
                 <ion-icon color="primary" name="heart" *ngIf=" room.favorite == 'Y' "></ion-icon>
-                <ion-icon name="notifications" *ngIf=" room.disable_alarm != 'Y' "></ion-icon>
+                <ion-icon color="tertiary" name="notifications" *ngIf=" room.disable_alarm != 'Y' "></ion-icon>
                 <ion-badge class="border-radius-45px" slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
             </ion-item>
         </ng-container>

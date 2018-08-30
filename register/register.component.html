@@ -1,12 +1,12 @@
 <section class="d-flex flex-column align-items-center mt-4" *ngIf=" philgo.isLoggedIn() ">
 
     <div class="position-relative">
-        <div class="size-md-120px of-hidden">
+        <div class="size-120px of-hidden">
             <img class="w-100" src="{{ philgo.thumbnailUrl({ width: 100, height: 120, path: form.url_profile_photo }) }}"
                 *ngIf=" form.url_profile_photo ">
         </div>
 
-        <ion-icon class="position-top-right p-1 size-32px" slot="icon-only" color="danger" name="close-circle" (click)=" onClickDeletePrimaryPhoto() "></ion-icon>
+        <ion-icon class="position-top-right p-1 size-32px pointer" color="danger" name="close-circle" (click)=" onClickDeletePrimaryPhoto() "></ion-icon>
 
     </div>
 
@@ -27,7 +27,12 @@
 
 
 
-<form (ngSubmit)="onSubmit( $event )">
+<form class="w-md-50 m-auto" (ngSubmit)="onSubmit( $event )">
+
+    <div class="flex-center my-4 mt-md-5"  *ngIf="! philgo.isLoggedIn() ">
+        <img class="" src="../../../../assets/icon/favicon.png" alt="">
+        <h2 class=" ml-4 fs-xl fw-light">PhilGo Chat</h2>
+    </div>
 
     <ion-list class="mb-5">
 
