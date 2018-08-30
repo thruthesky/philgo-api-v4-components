@@ -243,7 +243,7 @@ export interface ApiComment {
 
 /**
  * Post data structure for list/create/update etc.
- * 
+ *
  * @desc Do not use this. Use ApiPost
  */
 export interface ApiPostData {
@@ -406,7 +406,8 @@ export interface ApiPostSearch {
     category?: string;          // category. the same value will be return from server.
     fields?: string;            // fields to select. the same value will be return from server.
     type?: string;              // post type. the same value will be return from server.
-    comment?: '' | '0';         // whether to get comments of posts or not. '0' mean don't get it. the same value will be return from server.
+    comment?: '' | '0';         // whether to get comments of posts or not. '0' mean don't get it.
+                                // the same value will be return from server.
     limit_comment?: number;     // limit no of comments to get.  the same value will be return from server.
     page_no?: number;           // page no.  the same value will be return from server.
     limit?: number;             // limit no of posts.  the same value will be return from server.
@@ -507,6 +508,15 @@ export interface ApiChatDisableAlarm {
     disable: 'Y' | '';
     result?: 'on' | 'off'; // This is only available on the response from the server.
 }
+
+export interface ApiChatSearch {
+    idx_chat_room?: any;
+    idx_member?: any;
+    page_no?: number;
+    limit?: number;
+}
+
+
 
 
 import * as firebase from 'firebase/app';
@@ -1814,6 +1824,10 @@ export class PhilGoApiService {
         return this.query('chat.disableAlarm', data);
     }
 
+    chatSearch(data: ApiChatSearch): Observable<Array<ApiChatMessage>> {
+        return this.query('chat.search', data);
+    }
+
     /**
      * It listens new messages of my rooms.
      *
@@ -2123,8 +2137,8 @@ export class PhilGoApiService {
     }
 
     /**
-     * 
-     * @param url 
+     *
+     * @param url
      */
     getFileInfo(url: string): { name: string, size: string } {
         const re = {
@@ -2145,6 +2159,15 @@ export class PhilGoApiService {
     }
 
 
+    ///
+    ///
+    /// NEW POST APIS
+    ///
+    ///
+    /**
+     *
+     * @param data post search condition.
+     */
     postSearch(data: ApiPostSearch = {}): Observable<ApiPostSearch> {
         return this.query('post.search', data);
     }
