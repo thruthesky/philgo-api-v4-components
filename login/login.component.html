@@ -1,4 +1,4 @@
-<form class="w-md-50 mx-auto mt-4 mt-md-5" text-center>
+<form class=" mx-auto mt-4 mt-md-5 w-md-50" text-center>
     <div class="flex-center mb-4">
         <img class="" src="../../../../assets/icon/favicon.png" alt="">
         <h2 class=" ml-4 fs-xl fw-light">PhilGo Chat</h2>
@@ -7,7 +7,7 @@
     <ion-list class="mb-5 ">
 
         <ion-item>
-            <ion-label position="floating">{{ tr.t({ko: '로그인 아이디. 아이디 또는 닉네임, 이메일로 로그인 가능합니다.', en: 'Login ID. You can login with one of Member ID, Nickname or Email.'})}}</ion-label>
+            <ion-label position="floating">{{ tr.t({ko: '로그인 아이디. 아이디 또는 닉네임, 이메일로 로그인 가능합니다.', en: 'Login ID ( Member ID / Nickname / Email )'})}}</ion-label>
             <ion-input clear-input name="uid" [(ngModel)]="uid" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
     
