@@ -1,4 +1,4 @@
-<section class="d-flex flex-column align-items-center" *ngIf=" philgo.isLoggedIn() ">
+<section class="d-flex flex-column align-items-center mt-4" *ngIf=" philgo.isLoggedIn() ">
 
     <div class="position-relative">
         <div class="size-md-120px of-hidden">
@@ -12,10 +12,10 @@
 
     <ion-text class=" my-1 fs-sm" text-center color="primary" *ngIf="percentage">{{ percentage }}%</ion-text>
 
-    <label class="register-upload-photo-button mt-2">
-        <input type="file" name="file" (change)="onChangePrimaryPhoto($event)">
-        <div class="button fs-sm py-2 px-3 mb-3">
-            <ion-icon slot="end" name="camera"></ion-icon>
+    <label class="mt-2">
+        <input class="input-hidden" type="file" name="file" (change)="onChangePrimaryPhoto($event)">
+        <div class="imitate-ion-button  mb-3  py-2 px-3 fs-sm z-index-1">
+            <ion-icon class="mr-2 fs-lg" slot="end" name="camera"></ion-icon>
             {{ tr.t({ko: '사진 업로드', en: 'Upload Photo' }) }}
         </div>
     </label>

@@ -1,0 +1,11 @@
+.chat-room-input {
+    label {
+        padding: .5rem;
+        padding-right: .25em;
+        cursor: pointer;
+    }
+    .filebox {
+        position: absolute;
+        opacity: 0;
+    }
+}
