@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PhilGoApiService } from '../../philgo-api/philgo-api.service';
 
 @Component({
   selector: 'app-post-list',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostListComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public philgo: PhilGoApiService
+  ) {
+    philgo.forumPage({ post_id: 'freetalk', page_no: 1, limit: 10 }).subscribe(res => {
+      console.log('res: ', res);
+    });
+  }
 
   ngOnInit() {
   }
