@@ -1139,7 +1139,7 @@ export class PhilGoApiService {
 
 
     /**
-     * New File Upload
+     * New File Upload Method with New File Server.
      *
      * @since 2018-08-03 새로운 파일 서버에 파일을 업로드한다.
      * 이 파일 서버는 Philgo API 와는 상관이 없는 파일 서버이다.
@@ -1207,14 +1207,6 @@ export class PhilGoApiService {
 
     }
 
-    // fileInfo(url: string): Observable<any> {
-    //     return this.http.get( url ).pipe(
-    //         map( res => {
-    //             console.log('info: ', res);
-    //         })
-    //     );
-    // }
-
 
 
     /**
@@ -1242,6 +1234,10 @@ export class PhilGoApiService {
         return this.queryVersion2({ action: 'data_delete_submit', idx: idx });
     }
 
+    /**
+     * returns a forum page
+     * @param option options
+     */
     forumPage(option: ApiForumPageRequest): Observable<ApiForumPageResponse> {
         return this.query<ApiForumPageRequest, ApiForumPageResponse>('forumPage', option)
             .pipe(
