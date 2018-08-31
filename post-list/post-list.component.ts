@@ -16,7 +16,7 @@ export class PostListComponent implements OnInit {
     // philgo.forumPage({ post_id: 'freetalk', page_no: 1, limit: 10 }).subscribe(res => {
     //   console.log('res: ', res);
     // });
-
+    
     activatedRoute.paramMap.subscribe(params => {
       console.log('params: ', params);
 
