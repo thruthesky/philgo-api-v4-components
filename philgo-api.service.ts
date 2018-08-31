@@ -90,6 +90,9 @@ export interface ApiProfileResponse extends ApiResponse {
 export interface ApiRegisterResponse extends ApiProfileResponse {
     session_id: string;
 }
+export interface ApiProfile extends ApiProfileResponse {
+    session_id: string;
+}
 export interface ApiLoginResponse extends ApiRegisterResponse {
     session_id: string;
 }
