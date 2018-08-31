@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { PhilGoApiService, ApiPost } from '../../../philgo-api/philgo-api.service';
+import { PhilGoApiService, ApiPost, ApiPostSearch } from '../../../philgo-api/philgo-api.service';
 import { EditService } from '../edit/edit.component.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -12,14 +13,18 @@ export class PostListComponent implements OnInit, AfterViewInit {
 
 
 
+  search: ApiPostSearch = null;
   posts: Array<ApiPost> = [];
   constructor(
-    public philgo: PhilGoApiService,
-    public edit: EditService
+    private readonly activatedRoute: ActivatedRoute,
+    public readonly philgo: PhilGoApiService,
+    public readonly edit: EditService
   ) {
-    philgo.postSearch({ post_id: 'freetalk', page_no: 1, limit: 10 }).subscribe(res => {
-      console.log('res: ', res);
-      this.posts = res.posts;
+
+    philgo.postSearch({ post_id: 'freetalk', page_no: 1, limit: 10 }).subscribe(search => {
+      console.log('search: ', search);
+      this.search = search;
+      this.posts = search.posts;
     });
   }
 
