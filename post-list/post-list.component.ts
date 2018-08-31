@@ -11,9 +11,9 @@ export class PostListComponent implements OnInit {
   constructor(
     public philgo: PhilGoApiService
   ) {
-    philgo.forumPage({ post_id: 'freetalk', page_no: 1, limit: 10 }).subscribe(res => {
-      console.log('res: ', res);
-    });
+    // philgo.forumPage({ post_id: 'freetalk', page_no: 1, limit: 10 }).subscribe(res => {
+    //   console.log('res: ', res);
+    // });
   }
 
   ngOnInit() {
