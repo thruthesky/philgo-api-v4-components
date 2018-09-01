@@ -1,16 +1,29 @@
 <p>
-  FORUM NAME: 
+    FORUM > {{ philgo.forumName(forum?.post_id)}}
 </p>
 
 <ion-button (click)="onClickPost()">POST</ion-button>
 
-<ion-list>
-  <ion-item *ngFor="let post of posts">
-    <ion-text>
-      {{ post.subject }}
-    </ion-text>
-    <ion-text>
-      {{ post?.member?.nickname }}
-    </ion-text>
-  </ion-item>
-</ion-list>
+<ion-card *ngFor="let post of posts">
+    <ion-item>
+        <ion-avatar slot="start">
+            <img [src]="philgo.photoUrl('')">
+        </ion-avatar>
+        <ion-label>
+            <ion-text>
+                <div>{{ post?.member?.nickname }}</div>
+                <div>{{ philgo.shortDate(post.stamp) }}</div>
+            </ion-text>
+        </ion-label>
+        <ion-button fill="outline" slot="end" (click)="post['showMore']=!post['showMore']">
+            <ion-icon name="arrow-dropdown" *ngIf="!post['showMore']"></ion-icon>
+            <ion-icon name="arrow-dropup" *ngIf="post['showMore']"></ion-icon>
+        </ion-button>
+    </ion-item>
+    <ion-card-header>
+        <ion-card-title>{{ post.subject }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="post['showMore']">
+        {{ post?.content }}
+    </ion-card-content>
+</ion-card>
