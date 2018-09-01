@@ -1263,6 +1263,15 @@ export class PhilGoApiService {
 
     }
 
+    // fileInfo(url: string): Observable<any> {
+    //     return this.http.get( url ).pipe(
+    //         map( res => {
+    //             console.log('info: ', res);
+    //         })
+    //     );
+    // }
+
+
 
 
     /**
@@ -1720,6 +1729,7 @@ export class PhilGoApiService {
             this.noOfNewMessageInMyRoom += this.parseNumber(room.no_of_unread_messages);
         }
     }
+
     /**
      * Enters into a chat room and get the room info.
      * @param options
