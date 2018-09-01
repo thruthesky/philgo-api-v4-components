@@ -104,10 +104,11 @@ export interface ApiUserInformation extends ApiRegisterResponse {
 }
 
 interface ApiThumbnailOption {
+    idx?: string;   // data.idx
+    path?: string;
     height?: number;
     width?: number;
-    path: string;
-    percentage: number;
+    percentage?: number;
     quality?: number;
     type?: 'adaptive' | 'crop';
 }
@@ -358,9 +359,13 @@ export interface ApiPostData {
 /**
  * Rename ApiPostData
  */
-export interface ApiPost extends ApiPostData {
-    idx?: string;
+export type ApiPost = ApiPostData;
+
+export interface ApiPostDelete {
+    idx: string | number;
+    user_password?: string;
 }
+
 
 interface ApiBanner {
     src: string; // banner image url
@@ -608,15 +613,15 @@ export class PhilGoApiService {
      */
     ln = AngularLibrary.getUserLanguage();
 
+
+
+
+
     /**
      *
      * @param sanitizer
      * @param http
      */
-
-
-    anonymousPhotoURL = 'assets/img/anonymous.png';
-
     constructor(
         private sanitizer: DomSanitizer,
         public http: HttpClient,
@@ -1265,6 +1270,10 @@ export class PhilGoApiService {
      * @see sapcms_1_2/etc/resize_image.php for detail.
      * @example
      *  <img src="{{ api.thumbnailUrl({ width: 100, height: 100, path: form.url_profile_photo }) }}" *ngIf=" form.url_profile_photo ">
+     *  <img src="{{ api.thumbnailUrl({ width: 100, height: 100, idx: 1234 }) }}" *ngIf=" form.data.idx ">
+     * 
+     * @example
+     *  this.thumbnailUrl({ idx: idx, width: 64, height: 64 });
      */
     thumbnailUrl(option: ApiThumbnailOption): string {
         let url = this.getFileServerUrl().replace('index.php', '');
@@ -1272,7 +1281,13 @@ export class PhilGoApiService {
         if (option.type) {
             type = option.type;
         }
-        const path = '../' + option.path.substr(option.path.indexOf('data/upload'));
+        let path = '';
+        if (option.idx !== void 0 && option.idx) {
+            const d = option.idx.split('').pop();
+            path = `../data/upload/${d}/${option.idx}`;
+        } else {
+            path = '../' + option.path.substr(option.path.indexOf('data/upload'));
+        }
         let quality = 100;
         if (option.quality) {
             quality = option.quality;
@@ -2204,6 +2219,14 @@ export class PhilGoApiService {
     postCreate(post: ApiPost): Observable<ApiPost> {
         return this.query('post.create', post);
     }
+    postEdit(post: ApiPost): Observable<ApiPost> {
+        return this.query('post.edit', post);
+    }
+    postDelete(data: ApiPostDelete): Observable<ApiPostDelete> {
+        return this.query('post.delete', data);
+    }
+
+
 
     forumName(post_id) {
         switch (post_id) {
@@ -2212,15 +2235,36 @@ export class PhilGoApiService {
             default: return '';
         }
     }
+    textDeleted() {
+        return this.t({
+            en: 'Deleted',
+            ko: '삭제되었습니다.'
+        });
+    }
 
     /**
      * Returns user photo URL or default photo url.
-     * @param url user photo URL
+     * @param idx data.idx for the user's primary photo
+     * 
+     * @example <img [src]="philgo.primaryPhotoUrl( post?.member?.idx_primary_photo )">
      */
-    photoUrl(url) {
-        if (url) return url;
-        else return this.anonymousPhotoURL;
+    primaryPhotoUrl(idx): string {
+        if (idx) {
+            return this.thumbnailUrl({ idx: idx, width: 64, height: 64 });
+        }
+        else {
+            return this.anonymousPhotoURL;
+        }
     }
+
+
+    /**
+     * 
+     */
+    get anonymousPhotoURL(): string {
+        return this.getServerUrl().replace('api.php', '') + 'etc/img/anonymous.gif';
+    }
+
 
 }
 
