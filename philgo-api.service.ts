@@ -61,6 +61,9 @@ export interface ApiErrorResponse {
     code: number;
     message?: string;
 }
+export interface ApiError extends ApiErrorResponse {
+    code: number;
+}
 interface ApiVersionResponse {
     version: string;
 }
@@ -405,18 +408,31 @@ export interface ApiCommentEditResponse extends ApiVersion2Response {
 }
 
 export interface ApiPostSearch {
-    post_id?: string;           // post_id. the same value will be returned from server. it can be '', 'id1,id2,id3'
-    category?: string;          // category. the same value will be return from server.
-    fields?: string;            // fields to select. the same value will be return from server.
-    type?: string;              // post type. the same value will be return from server.
+
+    // Input conditions for searching.
+    // These input will be returned as it was from server.
+    post_id?: string;           // post_id. it can be '', 'id1,id2,id3'
+    category?: string;          // category.
+    fields?: string;            // fields to select.
+    type?: string;              // post type.
     comment?: '' | '0';         // whether to get comments of posts or not. '0' mean don't get it.
-    // the same value will be return from server.
-    limit_comment?: number;     // limit no of comments to get.  the same value will be return from server.
-    page_no?: number;           // page no.  the same value will be return from server.
-    limit?: number;             // limit no of posts.  the same value will be return from server.
-    uid?: string;               // user id, nickname, email. to search posts of the user. the same value will be return from server.
+    //
+    limit_comment?: number;     // limit no of comments to get. 
+    page_no?: number;           // page no. 
+    limit?: number;             // limit no of posts. 
+    uid?: string;               // user id, nickname, email. to search posts of the user.
+    order_by?: string;          // to order the result. default 'stamp DESC'.
+
+
+
+    // Below are only available on server response.
+    forum_name?: string;        // forum name. @note only if one 'post_id' is given as input, this will be availble.
     posts?: Array<ApiPost>;
+
 }
+
+// alias of ApiPostSearch
+export type ApiForum = ApiPostSearch;
 
 
 
@@ -525,6 +541,7 @@ export interface ApiChatSearch {
 import * as firebase from 'firebase/app';
 import 'firebase/database';
 import { AngularLibrary } from '../angular-library/angular-library';
+import { LanguageTranslate, LanguageText } from '../language-translate/language-translate';
 /**
  * PhilGoApiService
  */
@@ -598,7 +615,8 @@ export class PhilGoApiService {
      */
     constructor(
         private sanitizer: DomSanitizer,
-        public http: HttpClient
+        public http: HttpClient,
+        public tr: LanguageTranslate
     ) {
         // console.log('PhilGoApiService::constructor');
 
@@ -1366,15 +1384,16 @@ export class PhilGoApiService {
     }
 
 
-    postWrite(req: ApiPostEditRequest): Observable<ApiPostEditResponse> {
+    postWriteV2(req: ApiPostEditRequest): Observable<ApiPostEditResponse> {
         req.action = 'post_write_submit';
         return this.queryVersion2(req);
     }
-    postEdit(req: ApiPostEditRequest): Observable<ApiPostEditResponse> {
+
+    postEditV2(req: ApiPostEditRequest): Observable<ApiPostEditResponse> {
         req.action = 'post_edit_submit';
         return this.queryVersion2(req);
     }
-    postDelete(idx: string): Observable<ApiPostEditResponse> {
+    postDeleteV2(idx: string): Observable<ApiPostEditResponse> {
         const req = {
             action: 'post_delete_submit',
             idx: parseInt(idx, 10)
@@ -1390,7 +1409,7 @@ export class PhilGoApiService {
         post.content_original = DELETED;
         post.deleted = '1';
     }
-    commentWrite(req: ApiCommentEditRequest): Observable<ApiCommentEditResponse> {
+    commentWriteV2(req: ApiCommentEditRequest): Observable<ApiCommentEditResponse> {
         req.action = 'comment_write_submit';
         return this.queryVersion2(req);
     }
@@ -2161,6 +2180,9 @@ export class PhilGoApiService {
         return re;
     }
 
+    t(code: LanguageText, info?: any): string {
+        return this.tr.t(code, info);
+    }
 
     ///
     ///
@@ -2174,6 +2196,19 @@ export class PhilGoApiService {
     postSearch(data: ApiPostSearch = {}): Observable<ApiPostSearch> {
         return this.query('post.search', data);
     }
+
+    postCreate(post: ApiPost): Observable<ApiPost> {
+        return this.query('post.create', post);
+    }
+
+    forumName(post_id) {
+        switch (post_id) {
+            case 'freetalk': return this.tr.t({ en: 'Discussion', ko: 'Freetalk' });
+            case 'qna': return this.tr.t({ en: 'QnA', ko: '질문과답변' });
+            default: return '';
+        }
+    }
+
 }
 
 // EOF
