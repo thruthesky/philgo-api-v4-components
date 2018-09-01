@@ -1,29 +1,55 @@
 <p>
-    FORUM > {{ philgo.forumName(forum?.post_id)}}
+  FORUM > {{ philgo.forumName(forum?.post_id)}}
 </p>
 
 <ion-button (click)="onClickPost()">POST</ion-button>
 
 <ion-card *ngFor="let post of posts">
-    <ion-item>
-        <ion-avatar slot="start">
-            <img [src]="philgo.photoUrl('')">
-        </ion-avatar>
-        <ion-label>
-            <ion-text>
-                <div>{{ post?.member?.nickname }}</div>
-                <div>{{ philgo.shortDate(post.stamp) }}</div>
-            </ion-text>
-        </ion-label>
-        <ion-button fill="outline" slot="end" (click)="post['showMore']=!post['showMore']">
-            <ion-icon name="arrow-dropdown" *ngIf="!post['showMore']"></ion-icon>
-            <ion-icon name="arrow-dropup" *ngIf="post['showMore']"></ion-icon>
-        </ion-button>
-    </ion-item>
-    <ion-card-header>
-        <ion-card-title>{{ post.subject }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content *ngIf="post['showMore']">
-        {{ post?.content }}
-    </ion-card-content>
+
+  <ion-item>
+    <ion-avatar slot="start">
+      <img [src]="philgo.primaryPhotoUrl( post?.member?.idx_primary_photo )">
+    </ion-avatar>
+    <ion-list>
+      <ion-item style="height: 24px;" *ngIf=" post?.member ">
+        <ion-text>{{ post?.member?.nickname }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-text>No.: {{ post.idx }}</ion-text>
+        <ion-text class="ml-2">Date: {{ philgo.shortDate(post.stamp) }}</ion-text>
+      </ion-item>
+    </ion-list>
+    <ion-icon name="arrow-dropdown-circle" slot="end" (click)=" onClickMenu( $event, post ) "></ion-icon>
+  </ion-item>
+
+  <ion-card-header (click)=" onView( post ) ">
+    <ion-card-title>{{ post.subject }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content *ngIf="post['showMore']">
+    <div [innerHTML]="post?.content"></div>
+
+    <ion-buttons>
+      <ion-button (click)=" onClickReply( post ) ">
+        <ion-icon name="quote"></ion-icon>
+        <ion-text class="pl-2">Reply</ion-text>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-list *ngIf=" post?.comments?.length ">
+      <ion-item *ngFor=" let comment of post.comments ">
+        <div>
+          <div [innerHTML]="comment.content"></div>
+          <ion-buttons>
+            Like(3)
+            <ion-button (click)=" onClickCommentEdit( comment ) ">
+              <ion-icon name="create"></ion-icon>
+              <ion-text>Edit</ion-text>
+            </ion-button>
+            Reply Delete Report
+          </ion-buttons>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
 </ion-card>

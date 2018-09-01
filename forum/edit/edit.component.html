@@ -1,14 +1,25 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ philgo.forumName( forum.post_id ) }} Create</ion-title>
+    <ion-title>{{ pageTitle }}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
 
-  <div>Post Create</div>
 
   <ion-list>
-    <ion-item>
+    <ion-item *ngIf=" philgo.isLoggedOut() ">
+      <ion-label position="floating">{{ philgo.t({en: 'Please input name', ko: '이름을 입력하세요.' }) }}</ion-label>
+      <ion-input [(ngModel)]="form.user_name"></ion-input>
+    </ion-item>
+    <ion-item *ngIf=" philgo.isLoggedOut() ">
+      <ion-label position="floating">{{ philgo.t({en: 'Please input email', ko: '이메일을 입력하세요.' }) }}</ion-label>
+      <ion-input [(ngModel)]="form.user_email"></ion-input>
+    </ion-item>
+    <ion-item *ngIf=" philgo.isLoggedOut() ">
+      <ion-label position="floating">{{ philgo.t({en: 'Please input passowrd.', ko: '비밀번호를 입력하세요.' }) }}</ion-label>
+      <ion-input [(ngModel)]="form.user_password"></ion-input>
+    </ion-item>
+    <ion-item *ngIf=" data.role != 'reply' && data.role != 'comment-edit' ">
       <ion-label position="floating">{{ philgo.t({ en: 'Please input title', ko: '제목을 입력하세요.' }) }}</ion-label>
       <ion-input [(ngModel)]="form.subject"></ion-input>
     </ion-item>
@@ -17,13 +28,16 @@
       <ion-textarea [(ngModel)]="form.content"></ion-textarea>
     </ion-item>
     <ion-item>
+      <ion-text>File upload</ion-text>
+    </ion-item>
+    <ion-item>
       <ion-button (click)=" onSubmit() ">Submit</ion-button>
       <ion-button (click)=" controller.dismiss( null, 'close' ) ">Dismiss Modal</ion-button>
     </ion-item>
   </ion-list>
 
-<ion-text color="danger" *ngIf=" error ">
-  {{ error.message }}
-</ion-text>
+  <ion-text color="danger" *ngIf=" error ">
+    {{ error.message }}
+  </ion-text>
 
 </ion-content>

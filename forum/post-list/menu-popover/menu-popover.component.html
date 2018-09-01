@@ -1,0 +1,18 @@
+<p>
+  Menus
+</p>
+
+<ion-list>
+  <ion-item (click)=" controller.dismiss(null, 'view')">
+    <ion-icon name="list-box"></ion-icon>
+    <ion-label>View Content</ion-label>
+  </ion-item>
+  <ion-item (click)=" controller.dismiss(null, 'edit')">
+    <ion-icon name="list-box"></ion-icon>
+    <ion-label>Edit</ion-label>
+  </ion-item>
+  <ion-item (click)=" controller.dismiss(null, 'delete')">
+    <ion-icon name="trash"></ion-icon>
+    <ion-label>Delete</ion-label>
+  </ion-item>
+</ion-list>

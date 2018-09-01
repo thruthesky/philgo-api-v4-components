@@ -3,6 +3,7 @@ import { PostListComponent } from './post-list.component';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { EditComponentModule } from '../edit/edit.component.module';
+import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
 
 
 
@@ -13,7 +14,8 @@ import { EditComponentModule } from '../edit/edit.component.module';
         EditComponentModule
     ],
     exports: [PostListComponent],
-    declarations: [PostListComponent],
+    declarations: [PostListComponent, MenuPopoverComponent],
+    entryComponents: [MenuPopoverComponent],
     providers: [],
 })
 export class PostListModule { }
