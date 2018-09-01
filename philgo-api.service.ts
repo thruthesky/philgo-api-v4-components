@@ -613,6 +613,10 @@ export class PhilGoApiService {
      * @param sanitizer
      * @param http
      */
+
+
+    anonymousPhotoURL = 'assets/img/anonymous.png';
+
     constructor(
         private sanitizer: DomSanitizer,
         public http: HttpClient,
@@ -2207,6 +2211,15 @@ export class PhilGoApiService {
             case 'qna': return this.tr.t({ en: 'QnA', ko: '질문과답변' });
             default: return '';
         }
+    }
+
+    /**
+     * Returns user photo URL or default photo url.
+     * @param url user photo URL
+     */
+    photoUrl(url) {
+        if (url) return url;
+        else return this.anonymousPhotoURL;
     }
 
 }
