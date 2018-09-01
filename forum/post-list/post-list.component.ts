@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { PhilGoApiService, ApiPost, ApiPostSearch } from '../../../philgo-api/philgo-api.service';
+import { PhilGoApiService, ApiPost, ApiForum } from '../../../philgo-api/philgo-api.service';
 import { EditService } from '../edit/edit.component.service';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class PostListComponent implements OnInit, AfterViewInit {
 
 
 
-  search: ApiPostSearch = null;
+  forum: ApiForum = null;
   posts: Array<ApiPost> = [];
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -21,11 +22,15 @@ export class PostListComponent implements OnInit, AfterViewInit {
     public readonly edit: EditService
   ) {
 
-    philgo.postSearch({ post_id: 'freetalk', page_no: 1, limit: 10 }).subscribe(search => {
-      console.log('search: ', search);
-      this.search = search;
-      this.posts = search.posts;
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.philgo.postSearch({ post_id: params.get('post_id'), page_no: 1, limit: 10 }).subscribe(search => {
+        console.log('search: ', search);
+        this.forum = search;
+        this.posts = search.posts;
+        // this.onClickPost();
+      });
     });
+
   }
 
   ngOnInit() {
@@ -34,8 +39,11 @@ export class PostListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
   }
-  onClickPost() {
-    this.edit.present();
+  async onClickPost() {
+    const res = await this.edit.present(this.forum);
+    if (res.role == 'success') {
+      this.posts.unshift(res.data);
+    }
   }
 
 }
