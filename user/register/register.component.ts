@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { LanguageTranslate } from '../../language-translate/language-translate';
+import { LanguageTranslate } from '../../../language-translate/language-translate';
 import {
     ApiErrorResponse, ApiProfileUpdateRequest,
     ApiRegisterResponse, ApiProfileResponse, ApiErrorFileNotSelected, ApiErrorFileUploadError, PhilGoApiService
-} from '../../philgo-api/philgo-api.service';
+} from '../../../philgo-api/philgo-api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 

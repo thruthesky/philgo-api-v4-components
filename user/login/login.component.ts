@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { LanguageTranslate } from '../../language-translate/language-translate';
-import { ApiErrorEmptyUid, ApiErrorEmptyPassword, ApiErrorResponse, PhilGoApiService } from '../../philgo-api/philgo-api.service';
+import { LanguageTranslate } from '../../../language-translate/language-translate';
+import { ApiErrorEmptyUid, ApiErrorEmptyPassword, ApiErrorResponse, PhilGoApiService } from '../../../philgo-api/philgo-api.service';
 
 
 @Component({
