@@ -1,12 +1,12 @@
 import { Component, OnInit, NgZone, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { LanguageTranslate } from '../../language-translate/language-translate';
+import { LanguageTranslate } from '../../../language-translate/language-translate';
 
 
 
 import {
     ApiChatMessage, CHAT_STATUS_ENTER, ApiChatRoom, ApiErrorResponse,
     PhilGoApiService, ApiChatRoomUsers, ApiChatRoomEnter
-} from '../../philgo-api/philgo-api.service';
+} from '../../../philgo-api/philgo-api.service';
 
 import { ActivatedRoute } from '@angular/router';
 

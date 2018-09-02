@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LanguageTranslate } from '../../language-translate/language-translate';
-import { AngularLibrary } from '../../angular-library/angular-library';
+import { LanguageTranslate } from '../../../language-translate/language-translate';
+import { AngularLibrary } from '../../../angular-library/angular-library';
 
 import * as firebase from 'firebase/app';
 import 'firebase/messaging';
-import { PhilGoApiService } from '../../philgo-api/philgo-api.service';
+import { PhilGoApiService } from '../../../philgo-api/philgo-api.service';
 
 
 

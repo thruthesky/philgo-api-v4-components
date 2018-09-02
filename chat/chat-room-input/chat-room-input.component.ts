@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
 
 
-import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { AppService } from '../../../providers/app.service';
-import { ApiChatRoomEnter, ApiChatMessage, PhilGoApiService } from '../../philgo-api/philgo-api.service';
+import { ApiChatRoomEnter, ApiChatMessage, PhilGoApiService, ApiError } from '../../../philgo-api/philgo-api.service';
+import { AngularLibrary } from '../../../angular-library/angular-library';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-chat-room-input-component',
@@ -16,6 +16,8 @@ export class ChatRoomInputComponent implements OnInit {
 
     @Output() send = new EventEmitter<ApiChatMessage>();
     @Output() removeMessageByRetvar = new EventEmitter<any>();
+    @Output() error = new EventEmitter<ApiError>();
+
 
     countMessageSent = 0;
     roomInfo: ApiChatRoomEnter = <any>{};
@@ -23,15 +25,19 @@ export class ChatRoomInputComponent implements OnInit {
     // messages: Array<ApiChatMessage> = [];
 
     // subscriptionNewMessage = null;
+
+    platform: 'web' | 'cordova' = 'web';
     constructor(
-        private router: Router,
         // private activatedRoute: ActivatedRoute,
-        public actionSheetController: ActionSheetController,
+        // private actionSheetController: ActionSheetController,
         private alertController: AlertController,
         private camera: Camera,
-        public a: AppService,
-        public philgo: PhilGoApiService
+        private domSanitizer: DomSanitizer,
+        public philgo: PhilGoApiService,
     ) {
+        if ( AngularLibrary.isCordova() ) {
+            this.platform = 'cordova';
+        }
         this.resetForm();
     }
 
@@ -83,20 +89,23 @@ export class ChatRoomInputComponent implements OnInit {
              * Update the new Object by reference.
              */
             m.idx = res.idx;
-        }, e => this.a.toast(e));
+        }, e => {
+            
+            this.error.emit(e)
+        });
     }
 
 
 
     onChangeFile(event: Event) {
-        if (this.a.platform === 'cordova') {
+        if (this.platform === 'cordova') {
             // console.log('Running in cordova. return in onChangeFile()');
             return;
         }
         // console.log('onChangeFile()');
         const files = event.target['files'];
         if (files === void 0 || !files.length || files[0] === void 0) {
-            return this.a.toast('Please select a file');
+            return this.error.emit( this.philgo.error( -1, 'Please select a file') );
         }
 
         // const message: ApiChatMessage = <any>{
@@ -123,7 +132,7 @@ export class ChatRoomInputComponent implements OnInit {
             // console.log('Got dataUrl already. no create object');
         }
         // console.log('url: ', url);
-        const message: ApiChatMessage = <any>{ url: this.a.safeUrl(dataUrl), retvar: ++this.countMessageSent };
+        const message: ApiChatMessage = <any>{ url: this.safeUrl(dataUrl), retvar: ++this.countMessageSent };
         this.displaySendingFile(message);
         this.philgo.fileUpload(files, {
             uid: this.philgo.myIdx(),
@@ -146,7 +155,7 @@ export class ChatRoomInputComponent implements OnInit {
                 this.form.url = res.url;
                 this.sendMessage();
             }
-        }, e => this.a.toast(e));
+        }, e => this.error.emit(e));
     }
     displaySendingFile(message: ApiChatMessage) {
         message.type = 'sending-file';
@@ -165,7 +174,7 @@ export class ChatRoomInputComponent implements OnInit {
    */
     async onClickCordovaCameraIcon(event: Event) {
         // console.log('onClickFile()');
-        if (this.a.platform === 'web') {
+        if (this.platform === 'web') {
             // console.log('it is web. return.');
             return;
         }
@@ -173,16 +182,16 @@ export class ChatRoomInputComponent implements OnInit {
         // console.log('cordova camera....');
 
         const alert = await this.alertController.create({
-            header: this.a.tr.t({ ko: '사진', en: 'Photo' }),
-            subHeader: this.a.tr.t({ ko: '사진 전송을 합니다.', en: 'Sending a photo.' }),
-            message: this.a.tr.t({
+            header: this.philgo.t({ ko: '사진', en: 'Photo' }),
+            subHeader: this.philgo.t({ ko: '사진 전송을 합니다.', en: 'Sending a photo.' }),
+            message: this.philgo.t({
                 ko: '카메라로 사진을 찍어서 전송 할 수 있으며 갤러리에서 사진을 선택 할 수도 있습니다.',
                 en: 'You can take a picture from Camera or select a photo from gallery.'
             }),
             buttons: [
-                { role: 'camera', text: this.a.tr.t({ ko: '카메라로 사진 찍기', en: 'Take a photo using Camera' }) },
-                { role: 'gallery', text: this.a.tr.t({ ko: '갤러리에서 선택하기', en: 'Select a photo from Gallery' }) },
-                { role: 'cancel', text: this.a.tr.t({ ko: '취소', en: 'Cancel' }) }
+                { role: 'camera', text: this.philgo.t({ ko: '카메라로 사진 찍기', en: 'Take a photo using Camera' }) },
+                { role: 'gallery', text: this.philgo.t({ ko: '갤러리에서 선택하기', en: 'Select a photo from Gallery' }) },
+                { role: 'cancel', text: this.philgo.t({ ko: '취소', en: 'Cancel' }) }
             ]
         });
 
@@ -257,5 +266,9 @@ export class ChatRoomInputComponent implements OnInit {
         return blob;
     }
 
+
+  safeUrl(url) {
+    return this.domSanitizer.bypassSecurityTrustUrl(url);
+  }
 }
 

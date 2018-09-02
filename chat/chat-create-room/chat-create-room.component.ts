@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiChatRoomCreateRequest, PhilGoApiService, ApiErrorResponse } from '../../philgo-api/philgo-api.service';
-import { LanguageTranslate } from '../../language-translate/language-translate';
+import { ApiChatRoomCreateRequest, PhilGoApiService, ApiErrorResponse } from '../../../philgo-api/philgo-api.service';
+import { LanguageTranslate } from '../../../language-translate/language-translate';
 
 @Component({
   selector: 'app-chat-create-room-component',

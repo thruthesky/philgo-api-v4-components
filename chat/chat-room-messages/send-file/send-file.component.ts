@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiChatMessage, PhilGoApiService } from '../../../philgo-api/philgo-api.service';
-import { LanguageTranslate } from '../../../language-translate/language-translate';
+import { ApiChatMessage, PhilGoApiService } from '../../../../philgo-api/philgo-api.service';
+import { LanguageTranslate } from '../../../../language-translate/language-translate';
 
 @Component({
   selector: 'app-send-file',

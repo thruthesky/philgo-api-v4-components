@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiChatRoom, PhilGoApiService, ApiErrorResponse, ApiChatMessage } from '../../philgo-api/philgo-api.service';
-import { LanguageTranslate } from '../../language-translate/language-translate';
-import { AngularLibrary } from '../../angular-library/angular-library';
+import { ApiChatRoom, PhilGoApiService, ApiErrorResponse } from '../../../philgo-api/philgo-api.service';
+import { LanguageTranslate } from '../../../language-translate/language-translate';
+import { AngularLibrary } from '../../../angular-library/angular-library';
 
 @Component({
   selector: 'app-chat-my-rooms-component',

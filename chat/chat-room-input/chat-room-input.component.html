@@ -4,9 +4,9 @@
             <ion-icon slot="icon-only" class="camera" name="camera"></ion-icon>
         </ion-buttons>
     </label>
-    <input id="filebox" class="filebox" type="file" name="file" (change)="onChangeFile($event)" *ngIf=" a.platform == 'web' ">
-    <ion-input type="text" placeholder="{{ a.tr.t({ko: '채팅을 입력해주세요.', en: 'Type a message'}) }}" [(ngModel)]="form.message" name="message"
-        (keyup.enter)="onClickSendMessage()"></ion-input>
+    <input id="filebox" class="filebox" type="file" name="file" (change)="onChangeFile($event)" *ngIf=" platform == 'web' ">
+    <ion-input type="text" placeholder="{{ philgo.t({ko: '채팅을 입력해주세요.', en: 'Type a message'}) }}" [(ngModel)]="form.message"
+        name="message" (keyup.enter)="onClickSendMessage()"></ion-input>
     <ion-buttons slot="end" (click)="onClickSendMessage()">
         <ion-button color="tertiary">
             <ion-icon slot="icon-only" name="paper-plane"></ion-icon>
