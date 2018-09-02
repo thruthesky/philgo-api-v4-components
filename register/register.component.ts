@@ -9,7 +9,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-register-component',
-    templateUrl: 'register.component.html'
+    templateUrl: 'register.component.html',
+    styleUrls: ['./../scss/index.scss']
 })
 export class RegisterComponent implements OnInit {
 

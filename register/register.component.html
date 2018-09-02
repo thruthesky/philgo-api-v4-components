@@ -1,21 +1,21 @@
-<section class="d-flex flex-column align-items-center mt-4" *ngIf=" philgo.isLoggedIn() ">
+<section class="d-flex flex-column align-items-center" *ngIf=" philgo.isLoggedIn() ">
 
-    <div class="position-relative" *ngIf=" form.url_profile_photo ">
+    <div class="position-relative py-3 w-200px of-hidden d-flex flex-column align-items-center">
+        <input class="transparent-cover w-200px pointer" type="file" name="file" (change)="onChangePrimaryPhoto($event)">
         <div class="size-120px of-hidden">
-            <img class="w-100" src="{{ philgo.thumbnailUrl({ width: 100, height: 120, path: form.url_profile_photo }) }}">
+            <img class="d-block w-100" src="{{ philgo.profilePhotoUrl(form.url_profile_photo) }}">
         </div>
-        <ion-icon class="position-top-right p-1 size-32px pointer" color="danger" name="close-circle" (click)=" onClickDeletePrimaryPhoto() "></ion-icon>
+        <ion-icon class="photo-delete-icon" color="danger" name="close-circle" (click)=" onClickDeletePrimaryPhoto() "
+            *ngIf=" form.url_profile_photo "></ion-icon>
+
+        <ion-button class="mt-2 no-shadow">
+            <ion-icon class="mr-2 fs-lg" name="camera"></ion-icon>
+            <ion-text>{{ tr.t({ko: '사진 업로드', en: 'Upload Photo' }) }}</ion-text>
+        </ion-button>
     </div>
 
     <ion-text class=" my-1 fs-sm" text-center color="primary" *ngIf="percentage">{{ percentage }}%</ion-text>
 
-    <label class="mt-2">
-        <input class="input-hidden" type="file" name="file" (change)="onChangePrimaryPhoto($event)">
-        <div class="imitate-ion-button  mb-3  py-2 px-3 fs-sm z-index-1">
-            <ion-icon class="mr-2 fs-lg" slot="end" name="camera"></ion-icon>
-            {{ tr.t({ko: '사진 업로드', en: 'Upload Photo' }) }}
-        </div>
-    </label>
 
 </section>
 
@@ -68,8 +68,7 @@
         </ion-item>
     </ion-list>
     <ion-button class="ion-btn-large" color="warning" margin-vertical expand="full" type="button" (click)="onSubmit()">
-        {{ philgo.isLoggedIn() ? tr.t({ko: '회원 정보 수정', en: 'Update Profile' }) : tr.t({ko: '회원 가입 하기', en: 'Register'
-        }) }}
+        {{ philgo.isLoggedIn() ? tr.t({ko: '회원 정보 수정', en: 'Update Profile' }) : tr.t({ko: '회원 가입 하기', en: 'Register' }) }}
         <ion-icon slot="end" name="send"></ion-icon>
     </ion-button>
 </form>
