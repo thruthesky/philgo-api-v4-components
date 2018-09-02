@@ -19,7 +19,11 @@
     background-color: blue;
     opacity: 0.001;
 }
-
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .pointer {
     cursor: pointer;
 }
@@ -37,7 +41,7 @@
 }
 
 .no-shadow {
-    --box-shadow: 0 !important
+    --box-shadow: 0 !important;
 }
 
 .transparent-cover {
@@ -55,4 +59,8 @@
     // @include transparent-cover();
     @include size-32px();
     cursor: pointer;
+}
+
+.flex-center {
+    @include flex-center();
 }
