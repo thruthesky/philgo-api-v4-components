@@ -2,11 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@
 
 
 import { ActionSheetController, AlertController } from '@ionic/angular';
-<<<<<<< HEAD:src/app/modules/components/chat/chat-room-input/chat-room-input.component.ts
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-=======
 import { Camera, CameraOptions } from '@ionic-native/camera';
->>>>>>> b02351feeecda0c6016e0af266b27f31b31234e3:src/app/modules/components/chat/chat-room-input/chat-room-input.component.ts
 import { ApiChatRoomEnter, ApiChatMessage, PhilGoApiService, ApiError } from '../../../philgo-api/philgo-api.service';
 import { AngularLibrary } from '../../../angular-library/angular-library';
 import { DomSanitizer } from '@angular/platform-browser';
