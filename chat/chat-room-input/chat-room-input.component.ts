@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@
 
 
 import { ActionSheetController, AlertController } from '@ionic/angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ApiChatRoomEnter, ApiChatMessage, PhilGoApiService, ApiError } from '../../../philgo-api/philgo-api.service';
 import { AngularLibrary } from '../../../angular-library/angular-library';
 import { DomSanitizer } from '@angular/platform-browser';
