@@ -67,7 +67,7 @@
             <ion-input name="mobile" [(ngModel)]="form.mobile" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
     </ion-list>
-    <ion-button class="ion-btn-large" color="warning" margin-vertical expand="full" type="button" (click)="onSubmit()">
+    <ion-button class="submit-button register-submit-button" color="warning" margin-vertical expand="full" type="button" (click)="onSubmit()">
         {{ philgo.isLoggedIn() ? tr.t({ko: '회원 정보 수정', en: 'Update Profile' }) : tr.t({ko: '회원 가입 하기', en: 'Register' }) }}
         <ion-icon slot="end" name="send"></ion-icon>
     </ion-button>
