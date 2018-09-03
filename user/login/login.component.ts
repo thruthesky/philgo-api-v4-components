@@ -5,7 +5,8 @@ import { ApiErrorEmptyUid, ApiErrorEmptyPassword, ApiErrorResponse, PhilGoApiSer
 
 @Component({
   selector: 'app-login-component',
-  templateUrl: 'login.component.html'
+  templateUrl: 'login.component.html',
+  styleUrls: ['./../../scss/index.scss', './login.component.scss']
 })
 export class LoginComponent implements OnInit {
 

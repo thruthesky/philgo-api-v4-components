@@ -1,11 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { PhilGoApiService, ApiPost, ApiError, ApiForum } from '../../../philgo-api/philgo-api.service';
+import { PhilGoApiService, ApiPost, ApiError, ApiForum } from '../../../../philgo-api/philgo-api.service';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  styleUrls: ['../../../scss/index.scss']
 })
 export class EditComponent implements OnInit, AfterViewInit {
   controller: ModalController;
@@ -86,7 +86,7 @@ export class EditComponent implements OnInit, AfterViewInit {
        * Create
        */
       console.log('onSubmit() => postCreate() : ', this.form);
-      if (this.data.role == 'reply') {
+      if (this.data.role === 'reply') {
         this.form.idx_parent = this.data.idx;
       }
       this.philgo.postCreate(this.form).subscribe(res => {
