@@ -1,23 +1,11 @@
 @import './mixins';
 
-.pointer {
-    cursor: pointer;
-}
-
-.w-200px {
-    width: 200px !important;
-}
-
 .size-32px {
-    @include size-32px();
-}
-.size-120px {
-    width: 120px !important;
-    height: 120px !important;
+    @include size-px(32,32);
 }
 
-.no-shadow {
-    --box-shadow: 0 !important;
+.size-120px {
+    @include size-px(120,120);
 }
 
 .transparent-cover {
@@ -31,10 +19,140 @@
 .photo-delete-icon {
     padding: 1em 2em 0 0;
     @include position-top-right();
-    @include size-32px();
+    @include size-px(32,32);
     cursor: pointer;
+}
+
+.submit-button{
+    @include submit-button();
 }
 
 .flex-center {
     @include flex-center();
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.w-100px {
+    width: 100px!important;
+}
+
+.w-200px {
+    width: 200px !important;
+}
+
+.w-300px{
+    width: 300px!important;
+}
+
+.mw-200px {
+    max-width: 200px !important;
+}
+
+.mw-300px {
+    max-width: 300px !important;
+}
+
+.of-hidden {
+    overflow: hidden !important;
+}
+
+.no-shadow {
+    --box-shadow: 0 !important;
+}
+
+.border-radius-45px {
+    border-radius: 45px
+}
+
+.fw-light {
+    font-weight: 200 !important;
+}
+
+.fs-xs {
+    font-size: .5rem!important;
+}
+
+.fs-sm {
+    font-size: .75rem!important;
+}
+
+.fs-md {
+    font-size: .95rem !important;
+}
+
+.fs-lg {
+    font-size: 1.2rem !important;
+}
+
+.fs-xl {
+    font-size: 2.2rem !important;
+}
+
+.icon-size {
+    width: 24px;
+    height: 24px;
+}
+
+.align-icon{
+    position: relative;
+    top: .125em;
+}
+
+.ion-btn-large {
+    --height: 4em;
+}
+
+.ion-btn-normal{
+    --height: 3em;
+}
+
+@media (min-width:$md) {
+    .w-md-50 {
+        width: 50%;
+    }
+    .mt-md-5 {
+        margin-top: 3rem !important;
+    }
+}
+
+
+.comments-depth {
+    .comment {
+        &[depth='2'] {
+            margin-left: 1em;
+        }
+        &[depth='3'] {
+            margin-left: 2em;
+        }
+        &[depth='4'] {
+            margin-left: 3em;
+        }
+        &[depth='5'] {
+            margin-left: 4em;
+        }
+        &[depth='6'] {
+            margin-left: 5em;
+        }
+        &[depth='7'] {
+            margin-left: 6em;
+        }
+        &[depth='8'] {
+            margin-left: 7em;
+        }
+        &[depth='9'] {
+            margin-left: 7em;
+        }
+        &[depth='10'] {
+            margin-left: 7em;
+        }
+        &[depth='11'] {
+            margin-left: 7em;
+        }
+        &[depth='12'] {
+            margin-left: 7em;
+        }
+    }
 }

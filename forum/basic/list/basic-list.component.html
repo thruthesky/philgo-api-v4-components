@@ -48,7 +48,7 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-list class="comments" *ngIf=" post?.comments?.length ">
+    <ion-list class="comments comments-depth" *ngIf=" post?.comments?.length ">
       <ion-item class="comment" *ngFor=" let comment of post.comments " [attr.depth]=" comment.depth ">
         <div>
           No. {{ comment.idx }}
