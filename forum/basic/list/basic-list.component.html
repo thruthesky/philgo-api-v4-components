@@ -37,6 +37,13 @@
     <ion-button (click)=" onVote( post, 'good' ) ">Like{{ post.good == '0' ? '' : ' ' + post.good }}</ion-button>
     <ion-button (click)=" onVote( post, 'bad' ) ">Dislike{{ post.bad == '0' ? '' : ' ' + post.bad }}</ion-button>
 
+
+    <ion-button (click)=" onEdit( post ) ">
+        <ion-icon name="quote"></ion-icon>
+        <ion-text class="pl-2">Edit</ion-text>
+      </ion-button>
+
+      
     <ion-button (click)=" onReply( post, post ) ">
       <ion-icon name="quote"></ion-icon>
       <ion-text class="pl-2">Reply</ion-text>
@@ -64,7 +71,7 @@
         <ion-buttons>
           <ion-button (click)=" onVote( comment, 'good' ) ">Like{{ comment.good == '0' ? '' : ' ' + comment.good }}</ion-button>
           <ion-button (click)=" onVote( comment, 'bad' ) ">Disike{{ comment.bad == '0' ? '' : ' ' + comment.bad }}</ion-button>
-          <ion-button (click)=" onClickCommentEdit( comment ) ">
+          <ion-button (click)=" onEdit( comment ) ">
             <ion-icon name="create"></ion-icon>
             <ion-text>Edit</ion-text>
           </ion-button>

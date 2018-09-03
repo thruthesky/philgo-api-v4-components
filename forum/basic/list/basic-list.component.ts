@@ -103,7 +103,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     if (action === 'view') {
       this.onView(post);
     } else if (action === 'edit') {
-      this.onPostEdit(post);
+      this.onEdit(post);
     } else if (action === 'delete') {
       this.onDelete(post);
     } else if (action === 'like') {
@@ -121,22 +121,29 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   }
 
 
-  async onPostEdit(post: ApiPost) {
-    post['role'] = 'post-edit';
+  async onEdit(post: ApiPost) {
+    if ( post.idx_parent !== '0' ) {
+      post['role'] = 'comment-edit';
+    } else {
+      post['role'] = 'post-edit';
+    }
     const data = Object.assign({}, post);
     const res = await this.edit.present(data);
     if (res.role === 'success') {
       Object.assign(post, res.data);
     }
   }
-  async onClickCommentEdit(comment: ApiPost) {
-    comment['role'] = 'comment-edit';
-    const data = Object.assign({}, comment);
-    const res = await this.edit.present(data);
-    if (res.role === 'success') {
-      Object.assign(comment, res.data);
-    }
-  }
+
+  // async onClickCommentEdit(comment: ApiPost) {
+  //   comment['role'] = 'comment-edit';
+  //   const data = Object.assign({}, comment);
+  //   const res = await this.edit.present(data);
+  //   if (res.role === 'success') {
+  //     Object.assign(comment, res.data);
+  //   }
+  // }
+
+
 
   async onDelete(post: ApiPost) {
     console.log(post);
