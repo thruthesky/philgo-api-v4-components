@@ -12,9 +12,7 @@
     </ion-toolbar>
 
     <ion-list lines="full" *ngIf=" rooms.length ">
-        <!-- <ion-item *ngFor="let room of rooms" (click)="enter.emit(room)"> -->
-        <!-- <ion-item *ngFor="let room of rooms" (click)="onClickRoom(room)"> -->
-
+        
         <ng-container *ngFor="let room of rooms">
             <ion-item class="name pointer" (click)=" onClickRoom(room.idx) ">
                 <ion-label>

@@ -1,0 +1,27 @@
+
+@mixin size-32px {
+    width: 32px !important;
+    height: 32px !important;
+}
+@mixin position-top-right {
+    position: absolute;
+    z-index: 10002;
+    top: 0;
+    right: 0;
+}
+
+@mixin transparent-cover {
+    position: absolute;
+    z-index: 10001;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: blue;
+    opacity: 0.001;
+}
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
