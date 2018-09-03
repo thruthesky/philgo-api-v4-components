@@ -4,6 +4,7 @@ import { EditService } from '../edit/edit.component.service';
 import { ActivatedRoute } from '@angular/router';
 import { PopoverController, AlertController } from '@ionic/angular';
 import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
+import { ComponentService } from '../../../service/component.service';
 
 
 @Component({
@@ -13,8 +14,6 @@ import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
 })
 export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
-
-
   forum: ApiForum = null;
   posts: Array<ApiPost> = [];
   constructor(
@@ -22,7 +21,8 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     private readonly popoverController: PopoverController,
     private readonly alertController: AlertController,
     public readonly philgo: PhilGoApiService,
-    public readonly edit: EditService
+    public readonly edit: EditService,
+    private readonly componentService: ComponentService
   ) {
 
     this.activatedRoute.paramMap.subscribe(params => {
@@ -45,22 +45,42 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   async onClickPost() {
     this.forum['role'] = 'post-create';
     const res = await this.edit.present(this.forum);
-    if (res.role == 'success') {
+    if (res.role === 'success') {
       this.posts.unshift(res.data);
     }
   }
 
-  async onClickReply(post: ApiPost) {
+
+  async onReply(post: ApiPost, rootPost: ApiPost) {
+    console.log('onReply()', post, rootPost);
     post['role'] = 'reply';
     const res = await this.edit.present(post);
-    if (res.role == 'success') {
-      // this.posts.unshift(res.data);
-      if (post.comments && post.comments.length) {
+    if (res.role === 'success') {
+
+      /**
+       * Or post create?
+       */
+      if (rootPost.comments && rootPost.comments.length) {
 
       } else {
-        post.comments = [];
+        rootPost.comments = [];
       }
-      post.comments.push(res.data);
+
+      console.log('post, rootPost, res.data', post, rootPost, res.data);
+      /**
+       * Is it comment create?
+       */
+      if (post.idx_parent) {
+        const pos = rootPost.comments.findIndex(comment => comment.idx === post.idx);
+        if (pos !== -1) {
+          rootPost.comments.splice(pos + 1, 0, res.data);
+        } else {
+          rootPost.comments.push(res.data);
+        }
+      }
+      // else {
+      //   rootPost.comments.push(res.data);
+      // }
     }
   }
 
@@ -79,12 +99,16 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     const action = re.role;
 
     console.log('action: ', action);
-    if (action == 'view') {
+    if (action === 'view') {
       this.onView(post);
-    } else if (action == 'edit') {
+    } else if (action === 'edit') {
       this.onPostEdit(post);
-    } else if (action == 'delete') {
+    } else if (action === 'delete') {
       this.onDelete(post);
+    } else if (action === 'like') {
+      this.onVote(post, 'good');
+    } else if (action === 'reply') {
+      this.onReply(post, post);
     }
   }
 
@@ -98,7 +122,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     post['role'] = 'post-edit';
     const data = Object.assign({}, post);
     const res = await this.edit.present(data);
-    if (res.role == 'success') {
+    if (res.role === 'success') {
       Object.assign(post, res.data);
     }
   }
@@ -106,7 +130,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     comment['role'] = 'comment-edit';
     const data = Object.assign({}, comment);
     const res = await this.edit.present(data);
-    if (res.role == 'success') {
+    if (res.role === 'success') {
       Object.assign(comment, res.data);
     }
   }
@@ -129,11 +153,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
               post.subject = this.philgo.textDeleted();
               post.content = this.philgo.textDeleted();
             }, async e => {
-              const fail = await this.alertController.create({
-                message: this.philgo.t({ en: `Failed to delete: #reason`, ko: '글 삭제 실패: #reason' }, { reason: e.message }),
-                buttons: [this.philgo.t({ en: 'OK', ko: '확인' })]
-              });
-              await fail.present();
+              this.componentService.alert(e);
             });
           }
         },
@@ -176,11 +196,9 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
               post.subject = this.philgo.textDeleted();
               post.content = this.philgo.textDeleted();
             }, async e => {
-              const fail = await this.alertController.create({
-                message: this.philgo.t({ en: `Failed to delete: #reason`, ko: '글 삭제 실패: #reason' }, { reason: e.message }),
-                buttons: [this.philgo.t({ en: 'OK', ko: '확인' })]
+              this.componentService.alert({
+                message: this.philgo.t({ en: `Failed to delete: #reason`, ko: '글 삭제 실패: #reason' }, { reason: e.message })
               });
-              await fail.present();
             });
           }
         }
@@ -188,6 +206,17 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     });
 
     await alert.present();
+  }
+
+  onVote(post, mode: 'good' | 'bad') {
+
+    this.philgo.postLike({ idx: post.idx, mode: mode }).subscribe(res => {
+      console.log('res: ', res);
+      post[mode] = res.result;
+    }, e => {
+      this.componentService.alert(e);
+    });
+
   }
 }
 

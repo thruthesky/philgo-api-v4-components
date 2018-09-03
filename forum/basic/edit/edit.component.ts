@@ -86,7 +86,7 @@ export class EditComponent implements OnInit, AfterViewInit {
        * Create
        */
       console.log('onSubmit() => postCreate() : ', this.form);
-      if (this.data.role == 'reply') {
+      if (this.data.role === 'reply') {
         this.form.idx_parent = this.data.idx;
       }
       this.philgo.postCreate(this.form).subscribe(res => {

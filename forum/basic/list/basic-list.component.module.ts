@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { EditComponentModule } from '../edit/edit.component.module';
 import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
 import { ForumBasicListComponent } from './basic-list.component';
+import { ComponentServiceModule } from '../../../service/component.service.module';
 
 
 
@@ -11,7 +12,8 @@ import { ForumBasicListComponent } from './basic-list.component';
     imports: [
         CommonModule,
         IonicModule,
-        EditComponentModule
+        EditComponentModule,
+        ComponentServiceModule
     ],
     exports: [ForumBasicListComponent],
     declarations: [ForumBasicListComponent, MenuPopoverComponent],

@@ -1,0 +1,37 @@
+.comments {
+    .comment {
+        &[depth='2'] {
+            margin-left: 1em;
+        }
+        &[depth='3'] {
+            margin-left: 2em;
+        }
+        &[depth='4'] {
+            margin-left: 3em;
+        }
+        &[depth='5'] {
+            margin-left: 4em;
+        }
+        &[depth='6'] {
+            margin-left: 5em;
+        }
+        &[depth='7'] {
+            margin-left: 6em;
+        }
+        &[depth='8'] {
+            margin-left: 7em;
+        }
+        &[depth='9'] {
+            margin-left: 7em;
+        }
+        &[depth='10'] {
+            margin-left: 7em;
+        }
+        &[depth='11'] {
+            margin-left: 7em;
+        }
+        &[depth='12'] {
+            margin-left: 7em;
+        }
+    }
+}

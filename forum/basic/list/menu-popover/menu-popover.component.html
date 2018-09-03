@@ -7,6 +7,14 @@
     <ion-icon name="list-box"></ion-icon>
     <ion-label>View Content</ion-label>
   </ion-item>
+  <ion-item (click)=" controller.dismiss(null, 'like')">
+    <ion-icon name="trash"></ion-icon>
+    <ion-label>Like</ion-label>
+  </ion-item>
+  <ion-item (click)=" controller.dismiss(null, 'reply')">
+    <ion-icon name="trash"></ion-icon>
+    <ion-label>Reply</ion-label>
+  </ion-item>
   <ion-item (click)=" controller.dismiss(null, 'edit')">
     <ion-icon name="list-box"></ion-icon>
     <ion-label>Edit</ion-label>
