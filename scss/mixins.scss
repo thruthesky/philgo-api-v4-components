@@ -1,7 +1,7 @@
 
-@mixin size-32px {
-    width: 32px !important;
-    height: 32px !important;
+@mixin size-px($w, $h) {
+    width: $w + px !important;
+    height: $h + px!important;
 }
 @mixin position-top-right {
     position: absolute;
@@ -24,4 +24,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@mixin submit-button {
+    margin-top: 2rem !important;
+    --height: 42px !important;
+    --box-shadow: 0 !important;
 }

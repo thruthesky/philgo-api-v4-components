@@ -10,7 +10,8 @@ import { PhilGoApiService } from '../../../philgo-api/philgo-api.service';
 
 @Component({
   selector: 'app-chat-update-component',
-  templateUrl: './chat-update.component.html'
+  templateUrl: './chat-update.component.html',
+  styleUrls: ['../../scss/index.scss', './chat-update.component.scss']
 })
 export class ChatUpdateComponent implements OnInit {
 

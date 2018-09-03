@@ -4,18 +4,18 @@
 </div>
 
 <ng-template #roomListLoaded>
-    <ion-list lines="full" class="rooms" *ngIf=" philgo.myRooms.length ">
+    <ion-list lines="full" *ngIf=" philgo.myRooms.length ">
         <ng-container *ngFor="let room of philgo.myRooms">
-            <ion-item class="name pointer" (click)=" onClickRoom(room.idx) ">
+            <ion-item class="pointer" (click)=" onClickRoom(room.idx) ">
                 <ion-label>
                     <h3 class="fs-md">{{ room.name }}</h3>
                     <p class="mb-2 fs-sm text-secondary">{{ room.description }}</p>
-                    <p class="d-flex align-items-center mb-1">
-                        <ion-icon class="d-none d-md-block mr-1" name="mail"></ion-icon>
+                    <p class="d-flex align-items-center mb-1" *ngIf= "philgo.lastMessage( room )">
+                        <span><ion-icon class="align-icon mr-1" name="mail"></ion-icon></span>
                         <span>{{ philgo.lastMessage( room ) }}</span>
                     </p>
                     <p class="d-none d-md-flex align-items-center">
-                        <ion-icon class="d-none d-md-block mr-1" name="person"></ion-icon>
+                        <span><ion-icon class="align-icon mr-1" name="person"></ion-icon></span>
                         <span>{{ tr.t({ ko: '총 인원: ', en: 'No of users: ' }) }}{{ room.no_of_member }}</span>
                     </p>
                 </ion-label>
@@ -41,7 +41,7 @@
     
 </ng-template>
 
-<a class="imitate-ion-button p-3" *ngIf=" isMobileWeb " href="https://play.google.com/store/apps/details?id=com.sonub.chat"
+<a class="playstore-button flex-center mt-3 p-3 pointer" *ngIf=" isMobileWeb " href="https://play.google.com/store/apps/details?id=com.sonub.chat"
     target="_blank">
     <span>{{ tr.t({ko: '채팅앱 이용하기', en: 'Use chat app'})}}</span>
     <ion-icon class="icon-size ml-2" name="appstore"></ion-icon>

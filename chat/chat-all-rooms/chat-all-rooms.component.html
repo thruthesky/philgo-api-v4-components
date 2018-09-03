@@ -19,7 +19,7 @@
                     <h3 class="fs-md">{{ room.name }}</h3>
                     <p class="mb-2 fs-sm text-secondary">{{ room.description }}</p>
                     <p class="d-none d-md-flex align-items-center">
-                        <ion-icon class="d-none d-md-block mr-1" name="person"></ion-icon>
+                        <span><ion-icon class="align-icon mr-1" name="person"></ion-icon></span>
                         <span>{{ tr.t({ ko: '총 인원: ', en: 'No of users: ' }) }}{{ room.no_of_member }}</span>
                     </p>
                 </ion-label>
@@ -40,7 +40,7 @@
     </ion-list>
 
 
-    <div class="flex-center flex-column mx-5" text-center routerLink="/all-rooms" *ngIf=" 1 || ! philgo.myRooms.length ">
+    <div class="flex-center flex-column mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
         <ion-img class="mt-5 mx-5 px-5 mw-300px" src="/assets/img/chat-icon.png"></ion-img>
         <ion-text class="fs-lg my-2" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
         <ion-text>{{ tr.t({ko: '채팅방이 검색되지 않습니다. 다른 단어로 검색해 보세요.', en: 'There is no chat room by the serarch. Try other words.'}) }}</ion-text>
@@ -49,8 +49,8 @@
     
 </ng-template>
 
-<a *ngIf=" isMobileWeb " class="playstore-button" href="https://play.google.com/store/apps/details?id=com.sonub.chat"
+<a class="playstore-button flex-center mt-3 p-3 pointer" *ngIf="isMobileWeb " href="https://play.google.com/store/apps/details?id=com.sonub.chat"
     target="_blank">
     <span>{{ tr.t({ko: '채팅앱 이용하기', en: 'Use chat app'})}}</span>
-    <ion-icon name="appstore"></ion-icon>
+    <ion-icon class="icon-size ml-2" name="appstore"></ion-icon>
 </a>

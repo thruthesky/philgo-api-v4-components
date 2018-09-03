@@ -9,7 +9,7 @@ import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
 @Component({
   selector: 'app-forum-basic-list-component',
   templateUrl: './basic-list.component.html',
-  styleUrls: ['./basic-list.component.scss']
+  styleUrls: ['../../../scss/index.scss']
 })
 export class ForumBasicListComponent implements OnInit, AfterViewInit {
 

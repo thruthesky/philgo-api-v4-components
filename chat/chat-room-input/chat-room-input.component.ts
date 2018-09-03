@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
     selector: 'app-chat-room-input-component',
     templateUrl: './chat-room-input.component.html',
-    styleUrls: ['./chat-room-input.component.scss']
+    styleUrls: ['./../../scss/index.scss', './chat-room-input.component.scss']
 })
 export class ChatRoomInputComponent implements OnInit {
 
