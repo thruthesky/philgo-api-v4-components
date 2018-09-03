@@ -1,0 +1,15 @@
+<ion-toolbar class="chat-room-input">
+    <label for="filebox" slot="start" (click)=" onClickCordovaCameraIcon($event) ">
+        <ion-buttons>
+            <ion-icon slot="icon-only" class="camera" name="camera"></ion-icon>
+        </ion-buttons>
+    </label>
+    <input id="filebox" class="filebox" type="file" name="file" (change)="onChangeFile($event)" *ngIf=" platform == 'web' ">
+    <ion-input type="text" placeholder="{{ philgo.t({ko: '채팅을 입력해주세요.', en: 'Type a message'}) }}" [(ngModel)]="form.message"
+        name="message" (keyup.enter)="onClickSendMessage()"></ion-input>
+    <ion-buttons slot="end" (click)="onClickSendMessage()">
+        <ion-button color="tertiary">
+            <ion-icon slot="icon-only" name="paper-plane"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+</ion-toolbar>

@@ -1,0 +1,12 @@
+<div class="send-file" *ngIf=" philgo.isImageType( message.type ) ">
+  <div class="photo">
+    <div class="image"><img [src]=" message.url "></div>
+    {{ tr.t({ko: '업로드', en: 'Upload'}) }}: {{ message.percentage }}%
+  </div>
+</div>
+
+
+
+<div class="mt-2" *ngIf=" !philgo.isImageType( message.type ) ">
+  {{ tr.t({ko: '파일 업로드 중', en: 'File upload in progress'}) }}: {{ message.percentage }}%
+</div>

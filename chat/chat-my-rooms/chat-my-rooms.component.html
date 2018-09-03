@@ -1,0 +1,48 @@
+<div class="text-center p-5" *ngIf=" show.loader.roomList; else roomListLoaded ">
+    <ion-spinner class="mb-4"></ion-spinner>
+    <div>{{ tr.t({ko: '채팅방 목록을 로딩중입니다.', en: 'Loading chat room list.'}) }}</div>
+</div>
+
+<ng-template #roomListLoaded>
+    <ion-list lines="full" class="rooms" *ngIf=" philgo.myRooms.length ">
+        <ng-container *ngFor="let room of philgo.myRooms">
+            <ion-item class="name pointer" (click)=" onClickRoom(room.idx) ">
+                <ion-label>
+                    <h3 class="fs-md">{{ room.name }}</h3>
+                    <p class="mb-2 fs-sm text-secondary">{{ room.description }}</p>
+                    <p class="d-flex align-items-center mb-1">
+                        <ion-icon class="d-none d-md-block mr-1" name="mail"></ion-icon>
+                        <span>{{ philgo.lastMessage( room ) }}</span>
+                    </p>
+                    <p class="d-none d-md-flex align-items-center">
+                        <ion-icon class="d-none d-md-block mr-1" name="person"></ion-icon>
+                        <span>{{ tr.t({ ko: '총 인원: ', en: 'No of users: ' }) }}{{ room.no_of_member }}</span>
+                    </p>
+                </ion-label>
+                <ion-icon color="dark" name="ribbon" *ngIf="room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
+                <ion-icon color="primary" name="heart" *ngIf=" room.favorite == 'Y' "></ion-icon>
+                <ion-icon color="tertiary" name="notifications" *ngIf=" room.disable_alarm != 'Y' "></ion-icon>
+                <ion-badge class="border-radius-45px" slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
+            </ion-item>
+        </ng-container>
+    </ion-list>
+
+
+    <div class="flex-center flex-column mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
+        <ion-img class="mt-5 mx-5 px-5 mw-300px" src="/assets/img/chat-icon.png"></ion-img>
+        <ion-text class="my-2" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
+        <ion-text>{{ tr.t({ko: '회원님이 참여한 채팅 방이 없네요.', en: 'You do not have any philgo.myRooms.'}) }}</ion-text>
+        <ion-text>{{ tr.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text>
+        <ion-button class="my-1">
+            <span>{{ tr.t({ko: '전체 채팅방 목록', en:'All Chat Room List' }) }}</span>
+            <ion-icon class="ml-1" name="open"></ion-icon>
+        </ion-button>
+    </div>
+    
+</ng-template>
+
+<a class="imitate-ion-button p-3" *ngIf=" isMobileWeb " href="https://play.google.com/store/apps/details?id=com.sonub.chat"
+    target="_blank">
+    <span>{{ tr.t({ko: '채팅앱 이용하기', en: 'Use chat app'})}}</span>
+    <ion-icon class="icon-size ml-2" name="appstore"></ion-icon>
+</a>

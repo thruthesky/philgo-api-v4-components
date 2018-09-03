@@ -1,0 +1,87 @@
+@import '../../scss/vars';
+@mixin content($bgcolor: #fff) {
+    padding: .5rem 1rem;
+
+    @media (min-width: $md) {
+        padding: .75rem 1rem;
+    }
+    border-radius: 5px;
+    line-height: 1.4rem;
+    background-color: $bgcolor;
+    font-size: .9em;
+    word-break: break-all !important;
+}
+
+.message {
+    padding: 1rem;
+    min-height: 100%;
+    background: #99C0D9;
+    font-size: .85rem;
+    
+    @media (min-width: $md) {
+        font-size: .9rem;
+    }
+    .chat-room-message-other {
+        display: flex;
+        margin-right: auto;
+        margin-top: .5rem;
+        max-width: 93%;
+        .chat-profile {
+            padding: .25rem .75rem 0 0;
+            .chat-message-avatar {
+                height: $avatar-size-sm;
+                width: $avatar-size-sm;
+                min-width: $avatar-size-sm;
+                border-radius: 5%;
+            
+                @media (min-width: $md) {
+                    height: $avatar-size-md;
+                    width: $avatar-size-md;
+                    min-width: $avatar-size-md;
+                }
+            }
+        }
+        .text{
+            .meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin: 0 4px .35rem 2px;
+                .name {
+                    font-weight: 400;
+                    font-size: .75rem;
+                }
+                .date {
+                    color: #447899;
+                }
+            }
+            .other-message-content {
+                @include content();
+            }
+        }
+    }
+
+    .chat-room-message-my {
+        display: flex;
+        justify-content: flex-end;
+        margin-left: auto;
+        margin-top: .4rem;
+        max-width: 93%;
+        .my-message-content {
+            @include content(rgb(247, 222, 0));
+        }
+    }
+    
+}
+
+
+.chat-room-message-loader{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 254, 233, 0.5);
+}
