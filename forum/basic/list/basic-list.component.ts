@@ -1,17 +1,17 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { PhilGoApiService, ApiPost, ApiForum } from '../../../philgo-api/philgo-api.service';
+import { PhilGoApiService, ApiPost, ApiForum } from '../../../../philgo-api/philgo-api.service';
 import { EditService } from '../edit/edit.component.service';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, PopoverController, AlertController } from '@ionic/angular';
+import { PopoverController, AlertController } from '@ionic/angular';
 import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
 
 
 @Component({
-  selector: 'app-post-list',
-  templateUrl: './post-list.component.html',
-  styleUrls: ['./post-list.component.scss']
+  selector: 'app-forum-basic-list-component',
+  templateUrl: './basic-list.component.html',
+  styleUrls: ['./basic-list.component.scss']
 })
-export class PostListComponent implements OnInit, AfterViewInit {
+export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
 
 

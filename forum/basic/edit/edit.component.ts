@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { PhilGoApiService, ApiPost, ApiError, ApiForum } from '../../../philgo-api/philgo-api.service';
+import { PhilGoApiService, ApiPost, ApiError, ApiForum } from '../../../../philgo-api/philgo-api.service';
 
 @Component({
   selector: 'app-edit',

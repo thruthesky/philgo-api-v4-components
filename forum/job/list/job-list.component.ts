@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
     styleUrls: ['job-list.component.scss']
 })
 
-export class JobListComponent implements OnInit {
+export class ForumJobListComponent implements OnInit {
 
     @Input() title;
     @Input() category;
