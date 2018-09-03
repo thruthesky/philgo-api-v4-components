@@ -27,53 +27,13 @@
     <ion-card-title>{{ post.subject }}</ion-card-title>
   </ion-card-header>
 
-  <ion-item>
-    <ion-button (click)=" onView( post ) ">View Content</ion-button>
-    <ion-button (click)=" onVote( post, 'good' ) ">Like{{ post.good == '0' ? '' : ' ' + post.good }}</ion-button>
-    <ion-button (click)=" onVote( post, 'bad' ) ">Dislike{{ post.bad == '0' ? '' : ' ' + post.bad }}</ion-button>
-
-    <ion-button (click)=" onReply( post, post ) ">
-      <ion-icon name="quote"></ion-icon>
-      <ion-text class="pl-2">Reply</ion-text>
-    </ion-button>
-  </ion-item>
-
   <ion-card-content *ngIf="post['showMore']">
     <div [innerHTML]="post?.content"></div>
-
-    <ion-buttons>
-      <ion-button (click)=" onReply( post, post ) ">
-        <ion-icon name="quote"></ion-icon>
-        <ion-text class="pl-2">Reply</ion-text>
-      </ion-button>
-    </ion-buttons>
-
-    <ion-list class="comments comments-depth" *ngIf=" post?.comments?.length ">
-      <ion-item class="comment" *ngFor=" let comment of post.comments " [attr.depth]=" comment.depth ">
-        <div>
-          No. {{ comment.idx }}
-          <div [innerHTML]="comment.content"></div>
-          <ion-buttons>
-            <ion-button (click)=" onVote( comment, 'good' ) ">Like{{ comment.good == '0' ? '' : ' ' + comment.good }}</ion-button>
-            <ion-button (click)=" onVote( comment, 'bad' ) ">Disike{{ comment.bad == '0' ? '' : ' ' + comment.bad }}</ion-button>
-            <ion-button (click)=" onClickCommentEdit( comment ) ">
-              <ion-icon name="create"></ion-icon>
-              <ion-text>Edit</ion-text>
-            </ion-button>
-            <ion-button (click)=" onReply( comment, post ) ">
-              <ion-icon name="quote"></ion-icon>
-              <ion-text class="pl-2">Reply</ion-text>
-            </ion-button>
-            Delete Report
-          </ion-buttons>
-        </div>
-      </ion-item>
-    </ion-list>
   </ion-card-content>
 
 
   <ion-item>
-    <ion-button (click)=" onView( post ) " *ngIf=" ! autoViewContent ">View Content</ion-button>
+    <ion-button (click)=" onView( post ) " *ngIf=" ! show( post ) ">View Content</ion-button>
     <ion-button (click)=" onVote( post, 'good' ) ">Like{{ post.good == '0' ? '' : ' ' + post.good }}</ion-button>
     <ion-button (click)=" onVote( post, 'bad' ) ">Dislike{{ post.bad == '0' ? '' : ' ' + post.bad }}</ion-button>
 
