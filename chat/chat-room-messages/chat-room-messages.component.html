@@ -21,7 +21,8 @@
             </div>
             <div class="chat-room-message-my" *ngIf="message.idx_member == philgo.myIdx(); ">
                 <div class="my-message-content d-flex align-items-center">
-                    <ion-spinner class="mr-2" name="bubbles" *ngIf=" ! message.idx "></ion-spinner>
+                    <ion-spinner class="mr-2" name="bubbles" *ngIf=" ! message.idx && ! message.failed "></ion-spinner>
+                    <ion-icon name="close-circle" color="danger" *ngIf=" message.failed "></ion-icon>
                     <div [innerHTML]="message.message" *ngIf="message.message"></div>
                     <app-show-file *ngIf="message.url" [message]="message" (load)=" scroll.emit() "></app-show-file>
                     <div class="fs-sm ml-3" *ngIf=" message['percentage'] ">{{ message['percentage'] }}%</div>

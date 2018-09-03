@@ -89,9 +89,10 @@ export class ChatRoomInputComponent implements OnInit {
              * Update the new Object by reference.
              */
             m.idx = res.idx;
+            m.message = res.message;
         }, e => {
-            
-            this.error.emit(e)
+            m.failed = true;
+            this.error.emit(e);
         });
     }
 

@@ -13,4 +13,7 @@ export class ForumJobListComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }
+    onClickPost() {
+
+    }
 }
