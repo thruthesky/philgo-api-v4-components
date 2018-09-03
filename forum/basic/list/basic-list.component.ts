@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { PhilGoApiService, ApiPost, ApiForum } from '../../../../philgo-api/philgo-api.service';
 import { EditService } from '../edit/edit.component.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,6 +14,7 @@ import { ComponentService } from '../../../service/component.service';
 })
 export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
+  @Input() autoViewContent = false;
   forum: ApiForum = null;
   posts: Array<ApiPost> = [];
   constructor(
@@ -109,6 +110,8 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
       this.onVote(post, 'good');
     } else if (action === 'reply') {
       this.onReply(post, post);
+    } else if (action === 'report') {
+      this.onReport(post);
     }
   }
 
@@ -217,6 +220,23 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
       this.componentService.alert(e);
     });
 
+  }
+
+  onReport(post: ApiPost) {
+
+    this.philgo.postReport( post.idx ).subscribe(res => {
+      console.log('res: ', res);
+      this.componentService.alert({
+        message: this.philgo.t({ en: 'This post has been reported.', ko: '본 글은 신고되었습니다.' })
+      });
+    }, e => {
+      this.componentService.alert(e);
+    });
+
+  }
+
+  show(post) {
+    return post['showMore'] || this.autoViewContent;
   }
 }
 
