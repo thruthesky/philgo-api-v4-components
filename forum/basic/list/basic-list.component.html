@@ -4,14 +4,14 @@
       <ion-icon slot="start" name="add"></ion-icon>
       <ion-text>CREATE POST</ion-text>
     </ion-button>
-    <div class="flex-center  px-2 w-100 bg-light fs-md">
+    <div class="flex-center  px-2 w-100 bg-light fs-80">
       <span>FORUM</span> 
       <ion-icon class="mx-2" name="play"></ion-icon>
       <span>{{ philgo.forumName(forum?.post_id)}}</span>
     </div>
 </div>
 
-<ion-card class="no-shadow border pt-1" *ngFor="let post of posts">
+<ion-card class="no-shadow mx-0 pt-1 border" *ngFor="let post of posts">
 
   <ion-item>
     <ion-avatar class="mx-0" slot="start">
@@ -20,7 +20,7 @@
     <ion-list>
       <ion-item>
         <ion-label>
-            <div *ngIf=" post?.member "> {{ post?.member?.nickname }}</div>
+            <div class="mb-1" *ngIf=" post?.member "> {{ post?.member?.nickname }}</div>
             <p>No: {{ post.idx }}</p>
             <p>Date: {{ philgo.shortDate(post.stamp) }}</p>
         </ion-label>
