@@ -4,14 +4,14 @@
       <ion-icon slot="start" name="add"></ion-icon>
       <ion-text>CREATE POST</ion-text>
     </ion-button>
-    <div class="flex-center w-100 bg-light">
+    <div class="flex-center  px-2 w-100 bg-light fs-md">
       <span>FORUM</span> 
       <ion-icon class="mx-2" name="play"></ion-icon>
       <span>{{ philgo.forumName(forum?.post_id)}}</span>
     </div>
 </div>
 
-<ion-card class="no-shadow border py-1" *ngFor="let post of posts">
+<ion-card class="no-shadow border pt-1" *ngFor="let post of posts">
 
   <ion-item>
     <ion-avatar class="mx-0" slot="start">
@@ -26,7 +26,7 @@
         </ion-label>
       </ion-item>
     </ion-list>
-    <ion-icon name="arrow-dropdown-circle" slot="end" (click)=" onClickMenu( $event, post ) "></ion-icon>
+    <ion-icon class="position-top-right pt-2 px-3 pointer" name="arrow-dropdown-circle" (click)=" onClickMenu( $event, post ) "></ion-icon>
   </ion-item>
 
   <!-- {{ post | json }} -->
@@ -41,7 +41,7 @@
 
   <ion-item class="mb-1">
 
-    <ion-buttons class="d-inline-block">
+    <ion-buttons class="d-block">
         <ion-button class="mr-2" color="primary" fill="solid" (click)=" onView( post ) " *ngIf=" ! show( post ) ">
           <ion-icon slot="start" name="eye"></ion-icon>
           <ion-text>View Content</ion-text>
@@ -66,9 +66,7 @@
           <ion-icon color="secondary" slot="start" name="text" mode="ios"></ion-icon>
           <ion-text>Reply</ion-text>
         </ion-button>
-    </ion-buttons>
 
-    <ion-buttons class="d-inline-block ml-auto mt-auto">
         <ion-button (click)=" onDelete( post ) ">
           <ion-icon slot="start" color="danger" name="trash"></ion-icon>
           <ion-text>Delete</ion-text>
