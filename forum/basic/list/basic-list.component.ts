@@ -41,7 +41,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    window.setTimeout(() => this.onClickPost(), 200);
+    // window.setTimeout(() => this.onClickPost(), 200);
   }
   async onClickPost() {
     this.forum['role'] = 'post-create';

@@ -1,11 +1,38 @@
 @import './mixins';
+.bg-black {
+    background-color: black !important;
+}
+
+.bg-white {
+    background-color: white !important;
+}
+
+.white {
+    color: white !important;
+}
+
+.black {
+    color: black !important;
+}
+
+.red {
+    color: red !important;
+}
+
+.blue {
+    color: blue !important;
+}
+
+.darkred {
+    color: darkred !important;
+}
 
 .size-32px {
-    @include size-px(32,32);
+    @include size-px(32, 32);
 }
 
 .size-120px {
-    @include size-px(120,120);
+    @include size-px(120, 120);
 }
 
 .transparent-cover {
@@ -16,14 +43,29 @@
     @include position-top-right();
 }
 
+/**
+ *
+ * @example use
+    <div class="file position-relative mw-200px"....>
+        <img class="w-100" src="{{ file.src_thumbnail }}">
+        <ion-icon name="trash" class="photo-delete-icon bg-black white"></ion-icon>
+        <ion-icon class="photo-delete-icon bg-black white" name="close" ...>
+    </div>
+ *
+ */
+
 .photo-delete-icon {
-    padding: 1em 2em 0 0;
+    margin: 0.5em 0.5em 0 0;
+    padding: .3em;
     @include position-top-right();
-    @include size-px(32,32);
+    @include size-px(32, 32);
+    border-radius: 50%;
+    background-color: black;
+    color: white;
     cursor: pointer;
 }
 
-.submit-button{
+.submit-button {
     @include submit-button();
 }
 
@@ -36,19 +78,29 @@
 }
 
 .w-100px {
-    width: 100px!important;
+    width: 100px !important;
 }
 
 .w-200px {
     width: 200px !important;
 }
 
-.w-300px{
-    width: 300px!important;
+.w-300px {
+    width: 300px !important;
+}
+
+.mw-100px {
+    max-width: 100px !important;
 }
 
 .mw-200px {
     max-width: 200px !important;
+}
+
+.mw-md-200px {
+    @media (min-width: $md) {
+        max-width: 200px !important;
+    }
 }
 
 .mw-300px {
@@ -61,7 +113,7 @@
 
 .no-shadow {
     --box-shadow: 0 !important;
-    box-shadow: none!important;
+    box-shadow: none !important;
 }
 
 .border-radius-45px {
@@ -73,11 +125,11 @@
 }
 
 .fs-xs {
-    font-size: .5rem!important;
+    font-size: .5rem !important;
 }
 
 .fs-sm {
-    font-size: .75rem!important;
+    font-size: .75rem !important;
 }
 
 .fs-md {
@@ -92,8 +144,8 @@
     font-size: 2.2rem !important;
 }
 
-.fs-80{
-    font-size: 80%!important;
+.fs-80 {
+    font-size: 80% !important;
 }
 
 .icon-size {
@@ -101,7 +153,7 @@
     height: 24px;
 }
 
-.align-icon{
+.align-icon {
     position: relative;
     top: .125em;
 }
@@ -110,7 +162,7 @@
     --height: 4em;
 }
 
-.ion-btn-normal{
+.ion-btn-normal {
     --height: 3em;
 }
 
@@ -122,7 +174,6 @@
         margin-top: 3rem !important;
     }
 }
-
 
 .comments-depth {
     .comment {

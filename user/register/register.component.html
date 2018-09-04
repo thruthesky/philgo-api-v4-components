@@ -5,7 +5,7 @@
         <div class="size-120px of-hidden">
             <img class="d-block w-100" src="{{ philgo.profilePhotoUrl(form.url_profile_photo) }}">
         </div>
-        <ion-icon class="photo-delete-icon" color="danger" name="close-circle" (click)=" onClickDeletePrimaryPhoto() "
+        <ion-icon class="photo-delete-icon" name="close" (click)=" onClickDeletePrimaryPhoto() "
             *ngIf=" form.url_profile_photo "></ion-icon>
 
         <ion-button class="mt-2 no-shadow">

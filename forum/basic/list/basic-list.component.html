@@ -34,8 +34,9 @@
     <ion-card-title>{{ post.subject }}</ion-card-title>
   </ion-card-header>
 
-  <ion-card-content *ngIf="post['showMore']">
+  <ion-card-content *ngIf=" show(post) ">
     <div [innerHTML]="post?.content"></div>
+    <app-files-component [post]=" post "></app-files-component>
   </ion-card-content>
 
 
