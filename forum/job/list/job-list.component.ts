@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { PhilGoApiService } from '../../../../philgo-api/philgo-api.service';
 
 @Component({
     selector: 'app-job-list-component',
@@ -6,13 +7,15 @@ import { Component, OnInit, Input } from '@angular/core';
     styleUrls: ['../../../scss/index.scss']
 })
 
-export class ForumJobListComponent implements OnInit {
+export class ForumJobListComponent implements OnInit, AfterViewInit {
 
-    @Input() title;
     @Input() category;
-    constructor() { }
-
+    constructor(
+        public philgo: PhilGoApiService
+    ) { }
     ngOnInit() { }
+    ngAfterViewInit() {
+    }
     onClickPost() {
 
     }
