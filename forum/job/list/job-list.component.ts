@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
     selector: 'app-job-list-component',
     templateUrl: 'job-list.component.html',
-    styleUrls: ['../../../scss/index.scss']
+    styleUrls: ['../../../scss/index.scss', './job-list.component.scss']
 })
 
 export class ForumJobListComponent implements OnInit {

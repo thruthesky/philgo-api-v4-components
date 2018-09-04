@@ -5,7 +5,7 @@ import { PhilGoApiService, ApiPost, ApiError, ApiForum } from '../../../../philg
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['../../../scss/index.scss']
+  styleUrls: ['../../../scss/index.scss', './edit.component.scss']
 })
 export class EditComponent implements OnInit, AfterViewInit {
   controller: ModalController;

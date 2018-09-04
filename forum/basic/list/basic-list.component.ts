@@ -10,7 +10,7 @@ import { ComponentService } from '../../../service/component.service';
 @Component({
   selector: 'app-forum-basic-list-component',
   templateUrl: './basic-list.component.html',
-  styleUrls: ['../../../scss/index.scss']
+  styleUrls: ['../../../scss/index.scss', './basic-list.component.module.ts']
 })
 export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
@@ -134,14 +134,14 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // async onClickCommentEdit(comment: ApiPost) {
-  //   comment['role'] = 'comment-edit';
-  //   const data = Object.assign({}, comment);
-  //   const res = await this.edit.present(data);
-  //   if (res.role === 'success') {
-  //     Object.assign(comment, res.data);
-  //   }
-  // }
+  async onClickCommentEdit(comment: ApiPost) {
+    comment['role'] = 'comment-edit';
+    const data = Object.assign({}, comment);
+    const res = await this.edit.present(data);
+    if (res.role === 'success') {
+      Object.assign(comment, res.data);
+    }
+  }
 
 
 
