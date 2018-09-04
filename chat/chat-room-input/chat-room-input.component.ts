@@ -135,7 +135,7 @@ export class ChatRoomInputComponent implements OnInit {
         // console.log('url: ', url);
         const message: ApiChatMessage = <any>{ url: this.safeUrl(dataUrl), retvar: ++this.countMessageSent };
         this.displaySendingFile(message);
-        this.philgo.fileUpload(files, {
+        this.philgo.newFileUpload(files, {
             uid: this.philgo.myIdx(),
             secret: this.philgo.myIdx()
         }).subscribe(res => {

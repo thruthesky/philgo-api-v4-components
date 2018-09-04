@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PhilGoApiService, ApiPost, ApiError, ApiForum } from '../../../../philgo-api/philgo-api.service';
+import { AngularLibrary } from '../../../../angular-library/angular-library';
 
 @Component({
   selector: 'app-edit',
@@ -52,11 +53,14 @@ export class EditComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
+    console.log('form: ', this.form);
+    setTimeout(() => {
+      if (!this.form.gid) {
+        this.form.gid = AngularLibrary.randomString(15, this.philgo.myIdx());
+        console.log(this.form.gid);
+      }
+    });
   }
-
-
-
   onSubmit() {
     this.error = null;
     // if (!this.form.subject || this.form.subject.length < 10) {
@@ -97,5 +101,27 @@ export class EditComponent implements OnInit, AfterViewInit {
         this.error = e;
       });
     }
+  }
+
+
+  onChangeFile(event: Event) {
+    if (AngularLibrary.isCordova()) {
+      return;
+    }
+    const files = event.target['files'];
+    if (files === void 0 || !files.length || files[0] === void 0) {
+      this.error = { code: -1, message: this.philgo.t({ en: 'Please select a file', ko: '업로드 할 팔일을 선택해주세요.' }) };
+    }
+    this.philgo.fileUpload(files, { gid: this.form.gid }).subscribe(res => {
+      if (typeof res === 'number') {
+        console.log('percentage: ', res);
+      } else {
+        console.log('file success: ', res);
+        if ( ! this.form.photos || ! this.form.photos.length ) {
+          this.form.photos = [];
+        }
+        this.form.photos.push( res );
+      }
+    }, e => console.error(e));
   }
 }

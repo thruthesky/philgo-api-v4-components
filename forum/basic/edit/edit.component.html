@@ -29,6 +29,7 @@
     </ion-item>
     <ion-item>
       <ion-text>File upload</ion-text>
+      <input type="file" name="file" (change)="onChangeFile($event)">
     </ion-item>
     <ion-item>
       <ion-button (click)=" onSubmit() ">Submit</ion-button>
