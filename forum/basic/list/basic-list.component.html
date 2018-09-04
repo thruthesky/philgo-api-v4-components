@@ -71,7 +71,11 @@
         <ion-buttons>
           <ion-button (click)=" onVote( comment, 'good' ) ">Like{{ comment.good == '0' ? '' : ' ' + comment.good }}</ion-button>
           <ion-button (click)=" onVote( comment, 'bad' ) ">Disike{{ comment.bad == '0' ? '' : ' ' + comment.bad }}</ion-button>
+<<<<<<< HEAD
           <ion-button (click)=" onEdit( comment ) ">
+=======
+          <ion-button (click)=" onClickCommentEdit( comment ) ">
+>>>>>>> e5e792c2c954f5f4d1c312578b64b3207b87304e
             <ion-icon name="create"></ion-icon>
             <ion-text>Edit</ion-text>
           </ion-button>
