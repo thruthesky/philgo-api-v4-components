@@ -22,34 +22,80 @@
     <ion-icon name="arrow-dropdown-circle" slot="end" (click)=" onClickMenu( $event, post ) "></ion-icon>
   </ion-item>
 
+  <!-- {{ post | json }} -->
   <ion-card-header (click)=" onView( post ) ">
     <ion-card-title>{{ post.subject }}</ion-card-title>
   </ion-card-header>
 
   <ion-card-content *ngIf="post['showMore']">
     <div [innerHTML]="post?.content"></div>
-
-    <ion-buttons>
-      <ion-button (click)=" onClickReply( post ) ">
-        <ion-icon name="quote"></ion-icon>
-        <ion-text class="pl-2">Reply</ion-text>
-      </ion-button>
-    </ion-buttons>
-
-    <ion-list *ngIf=" post?.comments?.length ">
-      <ion-item *ngFor=" let comment of post.comments ">
-        <div>
-          <div [innerHTML]="comment.content"></div>
-          <ion-buttons>
-            Like(3)
-            <ion-button (click)=" onClickCommentEdit( comment ) ">
-              <ion-icon name="create"></ion-icon>
-              <ion-text>Edit</ion-text>
-            </ion-button>
-            Reply Delete Report
-          </ion-buttons>
-        </div>
-      </ion-item>
-    </ion-list>
   </ion-card-content>
+
+
+  <ion-item>
+    <ion-button (click)=" onView( post ) " *ngIf=" ! show( post ) ">View Content</ion-button>
+    <ion-button (click)=" onVote( post, 'good' ) ">Like{{ post.good == '0' ? '' : ' ' + post.good }}</ion-button>
+    <ion-button (click)=" onVote( post, 'bad' ) ">Dislike{{ post.bad == '0' ? '' : ' ' + post.bad }}</ion-button>
+
+
+    <ion-button (click)=" onEdit( post ) ">
+        <ion-icon name="quote"></ion-icon>
+        <ion-text class="pl-2">Edit</ion-text>
+      </ion-button>
+
+      
+    <ion-button (click)=" onReply( post, post ) ">
+      <ion-icon name="quote"></ion-icon>
+      <ion-text class="pl-2">Reply</ion-text>
+    </ion-button>
+
+    <ion-button (click)=" onDelete( post ) ">
+      <ion-icon name="trash"></ion-icon>
+      <ion-text class="pl-2">Delete</ion-text>
+    </ion-button>
+
+    <ion-button (click)=" onReport( post ) ">
+      <ion-icon name="warning"></ion-icon>
+      <ion-text class="pl-2">Report</ion-text>
+    </ion-button>
+
+  </ion-item>
+
+
+
+  <ion-list class="comments comments-depth" *ngIf=" post?.comments?.length && show(post) ">
+    <ion-item class="comment" *ngFor=" let comment of post.comments " [attr.depth]=" comment.depth ">
+      <div>
+        No. {{ comment.idx }}
+        <div [innerHTML]="comment.content"></div>
+        <ion-buttons>
+          <ion-button (click)=" onVote( comment, 'good' ) ">Like{{ comment.good == '0' ? '' : ' ' + comment.good }}</ion-button>
+          <ion-button (click)=" onVote( comment, 'bad' ) ">Disike{{ comment.bad == '0' ? '' : ' ' + comment.bad }}</ion-button>
+<<<<<<< HEAD
+          <ion-button (click)=" onEdit( comment ) ">
+=======
+          <ion-button (click)=" onClickCommentEdit( comment ) ">
+>>>>>>> e5e792c2c954f5f4d1c312578b64b3207b87304e
+            <ion-icon name="create"></ion-icon>
+            <ion-text>Edit</ion-text>
+          </ion-button>
+          <ion-button (click)=" onReply( comment, post ) ">
+            <ion-icon name="quote"></ion-icon>
+            <ion-text class="pl-2">Reply</ion-text>
+          </ion-button>
+          <ion-button (click)=" onDelete( comment ) ">
+            <ion-icon name="trash"></ion-icon>
+            <ion-text class="pl-2">Delete</ion-text>
+          </ion-button>
+
+          <ion-button (click)=" onReport( comment ) ">
+            <ion-icon name="warning"></ion-icon>
+            <ion-text class="pl-2">Report</ion-text>
+          </ion-button>
+
+        </ion-buttons>
+      </div>
+    </ion-item>
+  </ion-list>
+
 </ion-card>

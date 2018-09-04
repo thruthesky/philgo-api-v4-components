@@ -4,7 +4,7 @@ import { PopoverController } from '@ionic/angular';
 @Component({
   selector: 'app-menu-popover',
   templateUrl: './menu-popover.component.html',
-  styleUrls: ['./menu-popover.component.scss']
+  styleUrls: ['../../../../scss/index.scss']
 })
 export class MenuPopoverComponent implements OnInit {
 

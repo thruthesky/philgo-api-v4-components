@@ -5,7 +5,8 @@ import { LanguageTranslate } from '../../../language-translate/language-translat
 
 @Component({
   selector: 'app-chat-create-room-component',
-  templateUrl: './chat-create-room.component.html'
+  templateUrl: './chat-create-room.component.html',
+  styleUrls: ['./../../scss/index.scss', './chat-create-room.component.scss']
 })
 export class ChatCreateRoomComponent implements OnInit {
 

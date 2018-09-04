@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
     selector: 'app-chat-room-input-component',
     templateUrl: './chat-room-input.component.html',
-    styleUrls: ['./chat-room-input.component.scss']
+    styleUrls: ['./../../scss/index.scss', './chat-room-input.component.scss']
 })
 export class ChatRoomInputComponent implements OnInit {
 
@@ -89,9 +89,10 @@ export class ChatRoomInputComponent implements OnInit {
              * Update the new Object by reference.
              */
             m.idx = res.idx;
+            m.message = res.message;
         }, e => {
-            
-            this.error.emit(e)
+            m.failed = true;
+            this.error.emit(e);
         });
     }
 
