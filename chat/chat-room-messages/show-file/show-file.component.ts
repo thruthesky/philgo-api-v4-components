@@ -4,7 +4,8 @@ import { LanguageTranslate } from '../../../../language-translate/language-trans
 
 @Component({
   selector: 'app-show-file',
-  templateUrl: './show-file.component.html'
+  templateUrl: './show-file.component.html',
+  styleUrls: ['./../../../scss/index.scss', './show-file.component.scss']
 })
 export class ChatRoomShowFileComponent implements OnInit {
 

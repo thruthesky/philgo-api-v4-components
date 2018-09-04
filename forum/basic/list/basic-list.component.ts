@@ -10,7 +10,7 @@ import { ComponentService } from '../../../service/component.service';
 @Component({
   selector: 'app-forum-basic-list-component',
   templateUrl: './basic-list.component.html',
-  styleUrls: ['../../../scss/index.scss']
+  styleUrls: ['../../../scss/index.scss', './basic-list.component.scss']
 })
 export class ForumBasicListComponent implements OnInit, AfterViewInit {
 

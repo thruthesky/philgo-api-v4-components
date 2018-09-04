@@ -61,6 +61,7 @@
 
 .no-shadow {
     --box-shadow: 0 !important;
+    box-shadow: none!important;
 }
 
 .border-radius-45px {
@@ -89,6 +90,10 @@
 
 .fs-xl {
     font-size: 2.2rem !important;
+}
+
+.fs-80{
+    font-size: 80%!important;
 }
 
 .icon-size {
