@@ -33,7 +33,7 @@
       <ion-textarea rows="5" [(ngModel)]="form.content"></ion-textarea>
     </ion-item>
     <ion-item>
-      <app-files-component [showDeleteButton]=" true " [post]=" form "></app-files-component>
+      <app-files-component class="d-block my-3" [showDeleteButton]=" true " [post]=" form "></app-files-component>
     </ion-item>
 
     <ion-item>
@@ -42,7 +42,7 @@
         <ion-button  *ngIf=" isWeb " color="light" fill="solid">
           <ion-icon slot="start" name="attach"></ion-icon>
           <ion-text>File upload</ion-text>
-          <input class="transparent-cover" type="file" name="file" (change)="onChangeFile($event)">
+          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event)">
         </ion-button>
 
         <ion-button *ngIf=" isCordova " color="light" fill="solid" (click)=" onClickCordovaFileUploadButton() ">

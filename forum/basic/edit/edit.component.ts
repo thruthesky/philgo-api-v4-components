@@ -161,19 +161,19 @@ export class EditComponent implements OnInit, AfterViewInit {
     /**
      * This is camera settings.
      */
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.CAMERA
-    };
-    if (re.role === 'cancel') {
-      return;
-    }
-    if (re.role === 'gallery') {
-      options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
-    }
+    // const options: CameraOptions = {
+    //   quality: 100,
+    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   mediaType: this.camera.MediaType.PICTURE,
+    //   sourceType: this.camera.PictureSourceType.CAMERA
+    // };
+    // if (re.role === 'cancel') {
+    //   return;
+    // }
+    // if (re.role === 'gallery') {
+    //   options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
+    // }
 
 
     /**
