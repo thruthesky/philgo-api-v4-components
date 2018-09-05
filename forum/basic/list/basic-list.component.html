@@ -31,7 +31,7 @@
 
   
   <ion-item  *ngIf=" show(post) ">
-      <ion-card class="no-shadow mb-0">
+      <ion-card class="no-shadow mb-1">
         <ion-card-content class="py-0">
             <div [innerHTML]="post?.content"></div>
             <app-files-component [post]=" post "></app-files-component>
