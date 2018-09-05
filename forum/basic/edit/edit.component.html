@@ -10,15 +10,15 @@
 
     <div class="d-md-flex mb-2">
         <ion-item class="mr-md-1" *ngIf=" philgo.isLoggedOut() ">
-          <ion-label position="floating">{{ philgo.t({en: 'Please input name', ko: '이름을 입력하세요.' }) }}</ion-label>
+          <ion-label position="floating">{{ philgo.t({en: 'Name', ko: '이름' }) }}</ion-label>
           <ion-input [(ngModel)]="form.user_name"></ion-input>
         </ion-item>
         <ion-item class="mx-md-2" *ngIf=" philgo.isLoggedOut() ">
-          <ion-label position="floating">{{ philgo.t({en: 'Please input email', ko: '이메일을 입력하세요.' }) }}</ion-label>
+          <ion-label position="floating">{{ philgo.t({en: 'Email address', ko: '이메일' }) }}</ion-label>
           <ion-input [(ngModel)]="form.user_email"></ion-input>
         </ion-item>
         <ion-item class="ml-md-1" *ngIf=" philgo.isLoggedOut() ">
-          <ion-label position="floating">{{ philgo.t({en: 'Please input password.', ko: '비밀번호를 입력하세요.' }) }}</ion-label>
+          <ion-label position="floating">{{ philgo.t({en: 'Password', ko: '비밀번호' }) }}</ion-label>
           <ion-input [(ngModel)]="form.user_password"></ion-input>
         </ion-item>
     </div>
