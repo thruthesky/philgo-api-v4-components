@@ -85,7 +85,7 @@
 
   <ion-list class="comments comments-depth" *ngIf=" post?.comments?.length && show(post) ">
     <ion-item class="comment" *ngFor=" let comment of post.comments " [attr.depth]=" comment.depth ">
-      <ion-card class=" no-shadow border mb-3 px-3 pt-3">
+      <ion-card class=" no-shadow border mb-0 px-3 pt-3">
         <div>No. {{ comment.idx }}</div>
         <ion-card-content class="pb-0">
           <div [innerHTML]="comment.content"></div>
