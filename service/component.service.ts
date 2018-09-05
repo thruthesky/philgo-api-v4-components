@@ -16,11 +16,15 @@ export class ComponentService {
       return;
     }
 
-    if ( ! options.buttons ) {
+    if (!options.buttons) {
       options.buttons = [this.philgo.t({ en: 'OK', ko: '확인' })];
     }
 
     const fail = await this.alertController.create(options);
     await fail.present();
+  }
+
+  async checkPostUserPassword() {
+    return '';
   }
 }

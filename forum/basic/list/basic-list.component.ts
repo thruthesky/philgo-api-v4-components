@@ -36,7 +36,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     });
 
   }
-  
+
   ngOnInit() {
   }
 
@@ -121,7 +121,14 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   }
 
 
+  /**
+   * Opens an edit box.
+   * @param post post or comment to edit
+   */
   async onEdit(post: ApiPost) {
+    if ( this.philgo.parseNumber(post.idx_member) === 0 ) {
+      const password = await this.componentService.checkPostUserPassword();
+    }
     if (post.idx_parent !== '0') {
       post['role'] = 'comment-edit';
     } else {
