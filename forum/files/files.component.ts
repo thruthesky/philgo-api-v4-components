@@ -9,6 +9,7 @@ import { ComponentService } from '../../service/component.service';
 })
 export class FilesComponent implements OnInit {
 
+  @Input() showDeleteButton = false;
   @Input() post: ApiPost;
   constructor(
     public philgo: PhilGoApiService,

@@ -79,26 +79,21 @@ export class EditComponent implements OnInit, AfterViewInit {
      * Edit
      */
     if (this.form.idx) {
-      console.log('onSubmit() => postEdit() : ', this.form);
       this.philgo.postEdit(this.form).subscribe(res => {
         this.controller.dismiss(res, 'success');
       }, e => {
-        console.error(e);
         this.componentService.alert(e);
       });
     } else {
       /**
        * Create
        */
-      console.log('onSubmit() => postCreate() : ', this.form);
       if (this.data.role === 'reply') {
         this.form.idx_parent = this.data.idx;
       }
       this.philgo.postCreate(this.form).subscribe(res => {
-        console.log('post res: ', res);
         this.controller.dismiss(res, 'success');
       }, e => {
-        console.error(e);
         this.componentService.alert(e);
       });
     }

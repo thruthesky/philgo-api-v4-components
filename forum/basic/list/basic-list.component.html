@@ -89,6 +89,7 @@
         <div>No. {{ comment.idx }}</div>
         <ion-card-content class="pb-0">
           <div [innerHTML]="comment.content"></div>
+          <app-files-component [post]=" comment "></app-files-component>
         </ion-card-content>
 
         <ion-buttons class="d-block">

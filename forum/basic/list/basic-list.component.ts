@@ -46,6 +46,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   async onClickPost() {
     this.forum['role'] = 'post-create';
     const res = await this.edit.present(this.forum);
+    this.forum['role'] = '';
     if (res.role === 'success') {
       this.posts.unshift(res.data);
     }
@@ -56,8 +57,8 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     console.log('onReply()', post, rootPost);
     post['role'] = 'reply';
     const res = await this.edit.present(post);
+    post['role'] = '';
     if (res.role === 'success') {
-
       /**
        * Or post create?
        */
@@ -79,9 +80,6 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
           rootPost.comments.push(res.data);
         }
       }
-      // else {
-      //   rootPost.comments.push(res.data);
-      // }
     }
   }
 
@@ -150,6 +148,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
      */
     const data = Object.assign({}, post);
     const res = await this.edit.present(data);
+    post['role'] = '';
     if (res.role === 'success') {
       /// Assign to main post's position( reference )
       Object.assign(post, res.data);
@@ -166,10 +165,8 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     } else {
       return this.componentService.deletePostWithMemberLogin(post);
     }
-
   }
   onVote(post, mode: 'good' | 'bad') {
-
     this.philgo.postLike({ idx: post.idx, mode: mode }).subscribe(res => {
       console.log('res: ', res);
       post[mode] = res.result;
