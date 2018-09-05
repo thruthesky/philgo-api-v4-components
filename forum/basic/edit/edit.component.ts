@@ -3,7 +3,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { PhilGoApiService, ApiPost, ApiError, ApiForum } from '../../../../philgo-api/philgo-api.service';
 import { AngularLibrary } from '../../../../angular-library/angular-library';
 import { ComponentService } from '../../../service/component.service';
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-edit',
@@ -20,6 +20,7 @@ export class EditComponent implements OnInit, AfterViewInit {
   isCordova = false;
 
   pageTitle = '';
+  percentage = 0;
   constructor(
     private readonly alertController: AlertController,
     private camera: Camera,
@@ -220,6 +221,7 @@ export class EditComponent implements OnInit, AfterViewInit {
     this.philgo.fileUpload(files, { gid: this.form.gid, user_password: this.form.user_password }).subscribe(res => {
       if (typeof res === 'number') {
         console.log('percentage: ', res);
+        this.percentage = res;
       } else {
         console.log('file success: ', res);
         if (!this.form.files || !this.form.files.length) {
