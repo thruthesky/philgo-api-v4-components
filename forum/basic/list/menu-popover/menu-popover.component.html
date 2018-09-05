@@ -8,6 +8,10 @@
         <ion-icon color="primary" slot="start" name="thumbs-up"></ion-icon>
         <ion-label>Like</ion-label>
       </ion-item>
+      <ion-item (click)=" controller.dismiss(null, 'dislike')">
+        <ion-icon color="medium" slot="start" name="thumbs-down"></ion-icon>
+        <ion-label color="medium">Dislike</ion-label>
+      </ion-item>
       <ion-item (click)=" controller.dismiss(null, 'reply')">
         <ion-icon color="secondary" slot="start" name="text" mode="ios"></ion-icon>
         <ion-label>Reply</ion-label>
