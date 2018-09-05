@@ -133,9 +133,9 @@
 </ng-container>
 
 
-<div *ngIf=" noMorePosts ">
+<ion-item *ngIf=" noMorePosts ">
   {{ philgo.t({ en: 'There is no more posts.', ko: '더 이상 글이 없습니다.' })}}
-</div>
+</ion-item>
 
 <ion-infinite-scroll (ionInfinite)="loadPage($event)">
   <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
