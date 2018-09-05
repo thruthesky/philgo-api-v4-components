@@ -77,6 +77,10 @@
     @include flex-center();
 }
 
+.flex-1{
+    flex:1;
+}
+
 .pointer {
     cursor: pointer;
 }
