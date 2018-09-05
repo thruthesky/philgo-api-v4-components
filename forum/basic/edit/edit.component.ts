@@ -81,11 +81,9 @@ export class EditComponent implements OnInit, AfterViewInit {
     if (this.form.idx) {
       console.log('onSubmit() => postEdit() : ', this.form);
       this.philgo.postEdit(this.form).subscribe(res => {
-        console.log('post res: ', res);
         this.controller.dismiss(res, 'success');
       }, e => {
         console.error(e);
-        // this.error = e;
         this.componentService.alert(e);
       });
     } else {
@@ -121,10 +119,10 @@ export class EditComponent implements OnInit, AfterViewInit {
         console.log('percentage: ', res);
       } else {
         console.log('file success: ', res);
-        if ( ! this.form.files || ! this.form.files.length ) {
+        if (!this.form.files || !this.form.files.length) {
           this.form.files = [];
         }
-        this.form.files.push( res );
+        this.form.files.push(res);
       }
     }, e => {
       console.error(e);

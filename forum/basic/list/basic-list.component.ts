@@ -126,105 +126,48 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
    * @param post post or comment to edit
    */
   async onEdit(post: ApiPost) {
-    if ( this.philgo.parseNumber(post.idx_member) === 0 ) {
-      const password = await this.componentService.checkPostUserPassword();
+
+
+    if (this.philgo.isAnonymousPost(post)) {
+      const password = await this.componentService.checkPostUserPassword(post);
+      if (password) {
+        post.user_password = password;
+      } else {
+        console.log('onEdit() ==> philgo.isAnonymousPost() failed ==> return ');
+        return;
+      }
     }
+    // console.log('daa: ', data);
     if (post.idx_parent !== '0') {
       post['role'] = 'comment-edit';
     } else {
       post['role'] = 'post-edit';
     }
+
+
+    /**
+     * Make a copy from post. So, it will not be referenced.
+     */
     const data = Object.assign({}, post);
     const res = await this.edit.present(data);
     if (res.role === 'success') {
+      /// Assign to main post's position( reference )
       Object.assign(post, res.data);
     }
   }
 
-  // async onClickCommentEdit(comment: ApiPost) {
-  //   comment['role'] = 'comment-edit';
-  //   const data = Object.assign({}, comment);
-  //   const res = await this.edit.present(data);
-  //   if (res.role === 'success') {
-  //     Object.assign(comment, res.data);
-  //   }
-  // }
 
 
 
-  async onDelete(post: ApiPost) {
+  onDelete(post: ApiPost) {
     console.log(post);
-    if (post.idx_member === '0') {
-      return this.onActionDeleteWithPassword(post);
+    if (this.philgo.parseNumber(post.idx_member) === 0) {
+      return this.componentService.deletePostWithPassword(post);
+    } else {
+      return this.componentService.deletePostWithMemberLogin(post);
     }
-    const alert = await this.alertController.create({
-      message: 'Are you sure you want to delete this post?',
-      buttons: [
-        {
-          text: 'Yes',
-          role: 'yes',
-          handler: () => {
-            console.log('going to delete:', post.idx);
-            this.philgo.postDelete({ idx: post.idx }).subscribe(res => {
-              console.log('delete success: ', res);
-              post.subject = this.philgo.textDeleted();
-              post.content = this.philgo.textDeleted();
-            }, async e => {
-              this.componentService.alert(e);
-            });
-          }
-        },
-        {
-          text: 'No',
-          role: 'no',
-          handler: () => {
-          }
-        }
-      ]
-    });
-
-    await alert.present();
 
   }
-  async onActionDeleteWithPassword(post: ApiPost) {
-    const alert = await this.alertController.create({
-      header: this.philgo.t({ en: 'Password', ko: '비밀번호' }),
-      inputs: [
-        {
-          name: 'user_password',
-          type: 'text',
-          placeholder: this.philgo.t({ en: 'Please input password!', ko: '비밀번호를 입력하세요.' })
-        }
-      ],
-      buttons: [
-        {
-          text: this.philgo.t({ en: 'Cancel', ko: '취소' }),
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: this.philgo.t({ en: 'Ok', ko: '확인' }),
-          handler: input => {
-            console.log('Confirm Ok', input);
-            this.philgo.postDelete({ idx: post.idx, user_password: input.user_password }).subscribe(res => {
-              console.log('delete success: ', res);
-              post.subject = this.philgo.textDeleted();
-              post.content = this.philgo.textDeleted();
-            }, async e => {
-              this.componentService.alert({
-                message: this.philgo.t({ en: `Failed to delete: #reason`, ko: '글 삭제 실패: #reason' }, { reason: e.message })
-              });
-            });
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
   onVote(post, mode: 'good' | 'bad') {
 
     this.philgo.postLike({ idx: post.idx, mode: mode }).subscribe(res => {
@@ -233,7 +176,6 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     }, e => {
       this.componentService.alert(e);
     });
-
   }
 
   onReport(post: ApiPost) {

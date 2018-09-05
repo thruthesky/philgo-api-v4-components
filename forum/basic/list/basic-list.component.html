@@ -61,7 +61,7 @@
         <ion-text>Dislike<span class="ml-1">{{ post.bad == '0' ? '' : ' ' + post.bad }}</span></ion-text>
       </ion-button>
 
-      <ion-button (click)=" onEdit( post ) ">
+      <ion-button (click)=" onEdit( post ) " *ngIf=" philgo.isMyPost( post ) || philgo.isAnonymousPost( post ) ">
         <ion-icon color="tertiary" slot="start" name="create" mode="ios"></ion-icon>
         <ion-text>Edit</ion-text>
       </ion-button>
@@ -71,7 +71,7 @@
         <ion-text>Reply</ion-text>
       </ion-button>
 
-      <ion-button (click)=" onDelete( post ) ">
+      <ion-button (click)=" onDelete( post ) " *ngIf=" philgo.isMyPost( post ) || philgo.isAnonymousPost( post ) ">
         <ion-icon slot="start" color="danger" name="trash"></ion-icon>
         <ion-text>Delete</ion-text>
       </ion-button>

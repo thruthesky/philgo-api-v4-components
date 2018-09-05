@@ -23,7 +23,7 @@ export class FilesComponent implements OnInit {
     console.log('going to delete file: ', file, req);
     this.philgo.fileDelete(req).subscribe(res => {
       console.log('file delete success', res);
-      const pos = this.post.files.findIndex(orgFile => orgFile.idx == res.idx);
+      const pos = this.post.files.findIndex(orgFile => orgFile.idx === res.idx);
       if (pos !== -1) {
         this.post.files.splice(pos, 1);
       }
