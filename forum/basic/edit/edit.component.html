@@ -6,19 +6,24 @@
 <ion-content>
 
 
-  <ion-list class="mx-5 mt-1 mb-4">
-    <ion-item *ngIf=" philgo.isLoggedOut() ">
-      <ion-label position="floating">{{ philgo.t({en: 'Please input name', ko: '이름을 입력하세요.' }) }}</ion-label>
-      <ion-input [(ngModel)]="form.user_name"></ion-input>
-    </ion-item>
-    <ion-item *ngIf=" philgo.isLoggedOut() ">
-      <ion-label position="floating">{{ philgo.t({en: 'Please input email', ko: '이메일을 입력하세요.' }) }}</ion-label>
-      <ion-input [(ngModel)]="form.user_email"></ion-input>
-    </ion-item>
-    <ion-item *ngIf=" philgo.isLoggedOut() ">
-      <ion-label position="floating">{{ philgo.t({en: 'Please input password.', ko: '비밀번호를 입력하세요.' }) }}</ion-label>
-      <ion-input [(ngModel)]="form.user_password"></ion-input>
-    </ion-item>
+  <ion-list class="mx-4 mt-1 mb-4">
+
+    <div class="d-md-flex mb-2">
+        <ion-item class="mr-md-1" *ngIf=" philgo.isLoggedOut() ">
+          <ion-label position="floating">{{ philgo.t({en: 'Please input name', ko: '이름을 입력하세요.' }) }}</ion-label>
+          <ion-input [(ngModel)]="form.user_name"></ion-input>
+        </ion-item>
+        <ion-item class="mx-md-2" *ngIf=" philgo.isLoggedOut() ">
+          <ion-label position="floating">{{ philgo.t({en: 'Please input email', ko: '이메일을 입력하세요.' }) }}</ion-label>
+          <ion-input [(ngModel)]="form.user_email"></ion-input>
+        </ion-item>
+        <ion-item class="ml-md-1" *ngIf=" philgo.isLoggedOut() ">
+          <ion-label position="floating">{{ philgo.t({en: 'Please input password.', ko: '비밀번호를 입력하세요.' }) }}</ion-label>
+          <ion-input [(ngModel)]="form.user_password"></ion-input>
+        </ion-item>
+    </div>
+
+
     <ion-item *ngIf=" data.role != 'reply' && data.role != 'comment-edit' ">
       <ion-label position="floating">{{ philgo.t({ en: 'Please input title', ko: '제목을 입력하세요.' }) }}</ion-label>
       <ion-input [(ngModel)]="form.subject"></ion-input>
@@ -28,37 +33,40 @@
       <ion-textarea rows="5" [(ngModel)]="form.content"></ion-textarea>
     </ion-item>
     <ion-item>
+<<<<<<< HEAD
       <app-files-component [showDeleteButton]=" true " [post]=" form "></app-files-component>
       <div class="progress" *ngIf=" percentage ">
         <div class="progress-bar" [style.width]="percentage">{{percentage}}%</div>
       </div>
+=======
+      <app-files-component class="d-block my-3" [showDeleteButton]=" true " [post]=" form "></app-files-component>
+>>>>>>> master
     </ion-item>
 
     <ion-item>
+      <ion-buttons class="d-md-flex flex-column flex-md-row m-auto">
 
-      <div class="flex-center bg-light mx-auto my-2 px-5 py-3 pointer" *ngIf=" isWeb ">
-        <ion-text>File upload</ion-text>
-        <ion-icon class="fs-lg ml-2" mode="ios" name="attach"></ion-icon>
-        <input class="transparent-cover" type="file" name="file" (change)="onChangeFile($event)">
-      </div>
+        <ion-button  *ngIf=" isWeb " color="light" fill="solid">
+          <ion-icon slot="start" name="attach"></ion-icon>
+          <ion-text>File upload</ion-text>
+          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event)">
+        </ion-button>
 
-      <div *ngIf=" isCordova " (click)=" onClickCordovaFileUploadButton() ">
-        <ion-icon name="camera"></ion-icon>
-        <ion-text>Cordova file upload</ion-text>
-      </div>
+        <ion-button *ngIf=" isCordova " color="light" fill="solid" (click)=" onClickCordovaFileUploadButton() ">
+          <ion-icon slot="start" name="camera"></ion-icon>
+          <ion-text>Cordova file upload</ion-text>
+        </ion-button>
 
-    </ion-item>
-
-    <ion-item>
-      <ion-buttons class="mx-auto">
-        <ion-button class="mr-3" color="primary" fill="solid" (click)=" onSubmit() ">
+        <ion-button class="m-3 my-md-0" color="primary" fill="solid" (click)=" onSubmit() ">
           <ion-icon slot="start" name="paper-plane"></ion-icon>
           Submit
         </ion-button>
-        <ion-button color="light" fill="solid" (click)=" controller.dismiss( null, 'close' ) ">
+
+        <ion-button (click)=" controller.dismiss( null, 'close' ) ">
           <ion-icon color="danger" slot="start" name="close"></ion-icon>
-          Dismiss Modal
+          Close
         </ion-button>
+
       </ion-buttons>
     </ion-item>
   </ion-list>
