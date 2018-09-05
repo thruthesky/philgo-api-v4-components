@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ForumJobListComponent } from './job-list.component';
 import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     imports: [
-        IonicModule
+        IonicModule,
+        CommonModule
     ],
     declarations: [
         ForumJobListComponent

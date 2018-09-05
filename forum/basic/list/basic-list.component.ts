@@ -10,7 +10,7 @@ import { ComponentService } from '../../../service/component.service';
 @Component({
   selector: 'app-forum-basic-list-component',
   templateUrl: './basic-list.component.html',
-  styleUrls: ['../../../scss/index.scss']
+  styleUrls: ['../../../scss/index.scss', './basic-list.component.scss']
 })
 export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
@@ -36,12 +36,12 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     });
 
   }
-
+  
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-
+    // window.setTimeout(() => this.onClickPost(), 200);
   }
   async onClickPost() {
     this.forum['role'] = 'post-create';
@@ -122,7 +122,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
 
   async onEdit(post: ApiPost) {
-    if ( post.idx_parent !== '0' ) {
+    if (post.idx_parent !== '0') {
       post['role'] = 'comment-edit';
     } else {
       post['role'] = 'post-edit';
@@ -231,7 +231,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
   onReport(post: ApiPost) {
 
-    this.philgo.postReport( post.idx ).subscribe(res => {
+    this.philgo.postReport(post.idx).subscribe(res => {
       console.log('res: ', res);
       this.componentService.alert({
         message: this.philgo.t({ en: 'This post has been reported.', ko: '본 글은 신고되었습니다.' })

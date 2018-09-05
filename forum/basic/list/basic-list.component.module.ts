@@ -5,6 +5,7 @@ import { EditComponentModule } from '../edit/edit.component.module';
 import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
 import { ForumBasicListComponent } from './basic-list.component';
 import { ComponentServiceModule } from '../../../service/component.service.module';
+import { FilesComponentModule } from '../../files/files.module';
 
 
 
@@ -13,7 +14,8 @@ import { ComponentServiceModule } from '../../../service/component.service.modul
         CommonModule,
         IonicModule,
         EditComponentModule,
-        ComponentServiceModule
+        ComponentServiceModule,
+        FilesComponentModule
     ],
     exports: [ForumBasicListComponent],
     declarations: [ForumBasicListComponent, MenuPopoverComponent],

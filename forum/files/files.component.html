@@ -1,0 +1,6 @@
+<div class="files clearfix" *ngIf=" post?.files?.length ">
+  <div class="file position-relative float-left mw-100px mw-md-200px" *ngFor=" let file of post.files ">
+    <img class="w-100" src="{{ file.src_thumbnail }}">
+    <ion-icon name="trash" class="photo-delete-icon bg-white darkred" (click)=" onClickDeleteButton( file ) "></ion-icon>
+  </div>
+</div>
