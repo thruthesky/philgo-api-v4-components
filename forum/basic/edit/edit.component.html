@@ -6,7 +6,7 @@
 <ion-content>
 
 
-  <ion-list>
+  <ion-list class="mx-5 my-4">
     <ion-item *ngIf=" philgo.isLoggedOut() ">
       <ion-label position="floating">{{ philgo.t({en: 'Please input name', ko: '이름을 입력하세요.' }) }}</ion-label>
       <ion-input [(ngModel)]="form.user_name"></ion-input>
@@ -25,17 +25,20 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">{{ philgo.t({ en: 'Please input content', ko: '내용을 입력하세요.' }) }}</ion-label>
-      <ion-textarea [(ngModel)]="form.content"></ion-textarea>
+      <ion-textarea rows="6" [(ngModel)]="form.content"></ion-textarea>
     </ion-item>
     <ion-item>
       <app-files-component [post]=" form "></app-files-component>
     </ion-item>
     <ion-item>
-      <ion-text>File upload</ion-text>
-      <input type="file" name="file" (change)="onChangeFile($event)">
+      <div class="flex-center bg-light mx-auto my-2 px-5 py-3 pointer">
+          <ion-text>File upload</ion-text>
+          <ion-icon class="fs-lg ml-2" mode="ios" name="attach"></ion-icon>
+          <input class="transparent-cover" type="file" name="file" (change)="onChangeFile($event)">
+      </div>
     </ion-item>
     <ion-item>
-      <ion-buttons>
+      <ion-buttons class="mx-auto">
         <ion-button class="mr-3" color="primary" fill="solid" (click)=" onSubmit() ">
           <ion-icon slot="start" name="paper-plane"></ion-icon>
           Submit
