@@ -35,11 +35,11 @@
     <ion-item>
       <app-files-component class="d-block my-3" [showDeleteButton]=" true " [post]=" form "></app-files-component>
     </ion-item>
-    <!--<ion-item>-->
-      <!--<div class="progress w-200px" *ngIf=" percentage ">-->
-        <!--<div class="progress-bar" [style.width]="percentage">{{percentage}}%</div>-->
-      <!--</div>-->
-    <!--</ion-item>-->
+    <ion-item>
+      <div class="progress w-200px" *ngIf=" percentage ">
+        <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
+      </div>
+    </ion-item>
 
     <ion-item>
       <ion-buttons class="d-md-flex flex-column flex-md-row m-auto">

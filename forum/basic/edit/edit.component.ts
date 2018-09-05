@@ -228,9 +228,11 @@ export class EditComponent implements OnInit, AfterViewInit {
           this.form.files = [];
         }
         this.form.files.push(res);
+          this.percentage = 0;
       }
     }, e => {
       console.error(e);
+        this.percentage = 0;
       this.componentService.alert(e);
     });
   }
