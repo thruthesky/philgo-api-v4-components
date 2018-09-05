@@ -6,7 +6,7 @@
 <ion-content>
 
 
-  <ion-list class="mx-5 my-4">
+  <ion-list class="mx-5 my-3">
     <ion-item *ngIf=" philgo.isLoggedOut() ">
       <ion-label position="floating">{{ philgo.t({en: 'Please input name', ko: '이름을 입력하세요.' }) }}</ion-label>
       <ion-input [(ngModel)]="form.user_name"></ion-input>
