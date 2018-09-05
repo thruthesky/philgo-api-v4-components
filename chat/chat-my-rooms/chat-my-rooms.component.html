@@ -6,7 +6,7 @@
 <ng-template #roomListLoaded>
     <ion-list lines="full" *ngIf=" philgo.myRooms.length ">
         <ng-container *ngFor="let room of philgo.myRooms">
-            <ion-item class="pointer" (click)=" onClickRoom(room.idx) ">
+            <ion-item class="pointer" routerLink="/room/{{ room.idx }}">
                 <ion-label>
                     <h3 class="fs-md">{{ room.name }}</h3>
                     <p class="mb-2 fs-sm text-secondary">{{ room.description }}</p>
