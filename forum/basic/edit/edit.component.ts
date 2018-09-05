@@ -85,6 +85,7 @@ export class EditComponent implements OnInit, AfterViewInit {
     //   return;
     // }
 
+    console.log('data.role: ', this.data.role);
 
     /**
      * Edit
@@ -100,9 +101,11 @@ export class EditComponent implements OnInit, AfterViewInit {
        * Create
        */
       if (this.data.role === 'reply') {
+        console.log('reply');
         this.form.idx_parent = this.data.idx;
       }
       this.philgo.postCreate(this.form).subscribe(res => {
+        console.log('create res: ', res);
         this.controller.dismiss(res, 'success');
       }, e => {
         this.componentService.alert(e);

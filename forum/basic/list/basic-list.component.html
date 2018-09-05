@@ -22,9 +22,9 @@
       <ion-label class="d-md-flex align-items-center justify-content-between my-md-0" text-wrap>
         <h2 class="fs-lg pointer flex-1 py-md-4" (click)=" onView( post ) ">{{ post.subject }}</h2>
         <p class="fs-sm ml-md-2">
-          <span class="d-block d-md-inline-block mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
-          <span class="d-block d-md-inline-block mr-3 my-1 my-md-0">No: {{ post.idx }}</span>
-          <span class="d-block d-md-inline-block">Date: {{ philgo.shortDate(post.stamp ) }}</span>
+          <span class=" mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
+          <!-- <span class="d-block d-md-inline-block mr-3 my-1 my-md-0">No: {{ post.idx }}</span> -->
+          <span class="">Date: {{ philgo.shortDate(post.stamp ) }}</span>
         </p>
       </ion-label>
   
@@ -83,6 +83,7 @@
   
     </ion-item>
   
+    <!-- {{ post.comments | json }} -->
   
   
     <ion-list class="comments comments-depth bg-light" *ngIf=" post?.comments?.length && show(post) " >

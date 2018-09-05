@@ -185,6 +185,12 @@
 
 .comments-depth {
     .comment {
+        &[depth='0'] {
+            margin-left: 0em;
+        }
+        &[depth='1'] {
+            margin-left: 0em;
+        }
         &[depth='2'] {
             margin-left: 1em;
         }
