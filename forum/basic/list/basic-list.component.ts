@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { PhilGoApiService, ApiPost, ApiForum } from '../../../../philgo-api/philgo-api.service';
 import { EditService } from '../edit/edit.component.service';
 import { ActivatedRoute } from '@angular/router';
-import { PopoverController, AlertController } from '@ionic/angular';
+import { PopoverController, InfiniteScroll } from '@ionic/angular';
 import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
 import { ComponentService } from '../../../service/component.service';
 
@@ -17,22 +17,23 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   @Input() autoViewContent = false;
   forum: ApiForum = null;
   posts: Array<ApiPost> = [];
+
+
+  post_id: string = '';
+  page_no = 1;
+  limit = 20;
+  noMorePosts = false;
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly popoverController: PopoverController,
-    private readonly alertController: AlertController,
     public readonly philgo: PhilGoApiService,
     public readonly edit: EditService,
     private readonly componentService: ComponentService
   ) {
 
     this.activatedRoute.paramMap.subscribe(params => {
-      this.philgo.postSearch({ post_id: params.get('post_id'), page_no: 1, limit: 10 }).subscribe(search => {
-        console.log('search: ', search);
-        this.forum = search;
-        this.posts = search.posts;
-        // this.onClickPost();
-      });
+      this.post_id = params.get('post_id');
+      this.loadPage();
     });
 
   }
@@ -43,6 +44,29 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // window.setTimeout(() => this.onClickPost(), 200);
   }
+
+  loadPage(event?: Event) {
+    let infiniteScroll: InfiniteScroll;
+    if (event) {
+      infiniteScroll = <any>event.target;
+    }
+    this.philgo.postSearch({ post_id: this.post_id, page_no: this.page_no, limit: this.limit }).subscribe(search => {
+      console.log('search: ', search);
+      this.page_no++;
+      this.forum = search;
+
+      if (!search.posts || !search.posts.length) {
+        infiniteScroll.disabled = true;
+        this.noMorePosts = true;
+        return;
+      }
+      this.posts = this.posts.concat(search.posts);
+      if (event) {
+        infiniteScroll.complete();
+      }
+    });
+  }
+
   async onClickPost() {
     this.forum['role'] = 'post-create';
     const res = await this.edit.present(this.forum);

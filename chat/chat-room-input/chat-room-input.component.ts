@@ -35,7 +35,7 @@ export class ChatRoomInputComponent implements OnInit {
         private domSanitizer: DomSanitizer,
         public philgo: PhilGoApiService,
     ) {
-        if ( AngularLibrary.isCordova() ) {
+        if (AngularLibrary.isCordova()) {
             this.platform = 'cordova';
         }
         this.resetForm();
@@ -68,7 +68,7 @@ export class ChatRoomInputComponent implements OnInit {
         /**
          * 새 방에 입장하는 경우, 초기화가 좀 느리다. 따라서 초기화 전에 들어가면 그냥 리턴.
          */
-        if ( ! this.philgo.currentRoom ) {
+        if (!this.philgo.currentRoom) {
             console.log('wait. you cannot type until room is initialized.');
             return false;
         }
@@ -106,7 +106,7 @@ export class ChatRoomInputComponent implements OnInit {
         // console.log('onChangeFile()');
         const files = event.target['files'];
         if (files === void 0 || !files.length || files[0] === void 0) {
-            return this.error.emit( this.philgo.error( -1, 'Please select a file') );
+            return this.error.emit(this.philgo.error(-1, 'Please select a file'));
         }
 
         // const message: ApiChatMessage = <any>{
@@ -230,7 +230,7 @@ export class ChatRoomInputComponent implements OnInit {
             // console.log('No data path or base64. just return');
         }
         // console.log('path: ', data);
-        const blob = this.b64toBlob(base64);
+        const blob = AngularLibrary.base64toBlob(base64);
         /**
          * File 와 FileList 타입의 변수를 만든다.
          * 그리고 그냥 일반 HTML FORM <input type='file'> 에서 파일 정보를 받아 업로드하는 것과 똑 같이 하면 된다.
@@ -251,25 +251,25 @@ export class ChatRoomInputComponent implements OnInit {
      * Base64 데이터를 바이너리로 변경해서 리턴한다.
      *
      */
-    b64toBlob(b64Data, contentType = 'image/jpeg', sliceSize = 512): Blob {
-        const byteCharacters = atob(b64Data);
-        const byteArrays = [];
-        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-            const slice = byteCharacters.slice(offset, offset + sliceSize);
-            const byteNumbers = new Array(slice.length);
-            for (let i = 0; i < slice.length; i++) {
-                byteNumbers[i] = slice.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            byteArrays.push(byteArray);
-        }
-        const blob = new Blob(byteArrays, { type: contentType });
-        return blob;
+    // static base64toBlob(b64Data, contentType = 'image/jpeg', sliceSize = 512): Blob {
+    //     const byteCharacters = atob(b64Data);
+    //     const byteArrays = [];
+    //     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    //         const slice = byteCharacters.slice(offset, offset + sliceSize);
+    //         const byteNumbers = new Array(slice.length);
+    //         for (let i = 0; i < slice.length; i++) {
+    //             byteNumbers[i] = slice.charCodeAt(i);
+    //         }
+    //         const byteArray = new Uint8Array(byteNumbers);
+    //         byteArrays.push(byteArray);
+    //     }
+    //     const blob = new Blob(byteArrays, { type: contentType });
+    //     return blob;
+    // }
+
+
+    safeUrl(url) {
+        return this.domSanitizer.bypassSecurityTrustUrl(url);
     }
-
-
-  safeUrl(url) {
-    return this.domSanitizer.bypassSecurityTrustUrl(url);
-  }
 }
 

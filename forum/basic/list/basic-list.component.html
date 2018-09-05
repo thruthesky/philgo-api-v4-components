@@ -18,25 +18,25 @@
     </ion-avatar>
 
     <ion-label text-wrap>
-        <h2 class="fs-lg pointer" (click)=" onView( post ) ">{{ post.subject }}</h2>
-        <p class="fs-sm"> 
-          <span class="d-block d-md-inline-block mr-3 darkgreen"  *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
-          <span class="d-block d-md-inline-block mr-3 my-1 my-md-0">No: {{ post.idx }}</span>
-          <span class="d-block d-md-inline-block">Date: {{ philgo.shortDate(post.stamp  ) }}</span>
-        </p>
+      <h2 class="fs-lg pointer" (click)=" onView( post ) ">{{ post.subject }}</h2>
+      <p class="fs-sm">
+        <span class="d-block d-md-inline-block mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
+        <span class="d-block d-md-inline-block mr-3 my-1 my-md-0">No: {{ post.idx }}</span>
+        <span class="d-block d-md-inline-block">Date: {{ philgo.shortDate(post.stamp ) }}</span>
+      </p>
     </ion-label>
 
     <ion-icon class="pointer py-3" slot="end" name="more" mode="ios" (click)=" onClickMenu( $event, post ) "></ion-icon>
   </ion-item>
 
-  
-  <ion-item  *ngIf=" show(post) ">
-      <ion-card class="no-shadow mb-1">
-        <ion-card-content class="py-0">
-            <div [innerHTML]="post?.content"></div>
-            <app-files-component [post]=" post "></app-files-component>
-        </ion-card-content>
-      </ion-card>
+
+  <ion-item *ngIf=" show(post) ">
+    <ion-card class="no-shadow mb-1">
+      <ion-card-content class="py-0">
+        <div [innerHTML]="post?.content"></div>
+        <app-files-component [post]=" post "></app-files-component>
+      </ion-card-content>
+    </ion-card>
   </ion-item>
 
 
@@ -128,3 +128,13 @@
   </ion-list>
 
 </ion-list>
+
+
+<div *ngIf=" noMorePosts ">
+  {{ philgo.t({ en: 'There is no more posts.', ko: '더 이상 글이 없습니다.' })}}
+</div>
+
+<ion-infinite-scroll (ionInfinite)="loadPage($event)">
+  <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>

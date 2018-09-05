@@ -30,13 +30,22 @@
     <ion-item>
       <app-files-component [showDeleteButton]=" true " [post]=" form "></app-files-component>
     </ion-item>
+
     <ion-item>
-      <div class="flex-center bg-light mx-auto my-2 px-5 py-3 pointer">
-          <ion-text>File upload</ion-text>
-          <ion-icon class="fs-lg ml-2" mode="ios" name="attach"></ion-icon>
-          <input class="transparent-cover" type="file" name="file" (change)="onChangeFile($event)">
+
+      <div class="flex-center bg-light mx-auto my-2 px-5 py-3 pointer" *ngIf=" isWeb ">
+        <ion-text>File upload</ion-text>
+        <ion-icon class="fs-lg ml-2" mode="ios" name="attach"></ion-icon>
+        <input class="transparent-cover" type="file" name="file" (change)="onChangeFile($event)">
       </div>
+
+      <div *ngIf=" isCordova " (click)=" onClickCordovaFileUploadButton() ">
+        <ion-icon name="camera"></ion-icon>
+        <ion-text>Cordova file upload</ion-text>
+      </div>
+
     </ion-item>
+
     <ion-item>
       <ion-buttons class="mx-auto">
         <ion-button class="mr-3" color="primary" fill="solid" (click)=" onSubmit() ">
