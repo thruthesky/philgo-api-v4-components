@@ -128,8 +128,18 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
     }
 
 
+    /**
+     * 채팅 방에 새로 들어왔으니,
+     * - 채팅 방의 정보를 현재 채팅방의 것으로 업데이트하고
+     * - 기존 모든 메시지를 삭제하고,
+     * - 현재 채팅방의 마지막 메시지를 보여주고, 스크롤 하고,
+     * - 현재 채팅방의 새 정보들을 listen 할 수 있도록 하고,
+     * 등등을 한다.
+     * 
+     * @param res data for chat room enter
+     */
     arrangeRoomEnter(res: ApiChatRoomEnter) {
-        console.log('roomInfo: ', res);
+        console.log('ChatRoomMessageComponent::arrangeRoomEnter() => roomInfo: ', res);
         if (!res) {
             return;
         }
