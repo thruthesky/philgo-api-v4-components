@@ -19,9 +19,9 @@
         <img [src]="philgo.primaryPhotoUrl( post?.member?.idx_primary_photo )">
       </ion-avatar>
   
-      <ion-label class="d-md-flex align-items-center justify-content-between my-1 my-md-0"  (click)=" onView( post ) " text-wrap>
+      <ion-label class="d-md-flex align-items-center justify-content-between my-2 my-md-0"  (click)=" onView( post ) " text-wrap>
         <h2 class="flex-1 py-md-3 pointer">{{ post.subject }}</h2>
-        <p class="fs-sm ml-md-2">
+        <p class="fs-sm my-md-0 ml-md-2">
           <span class="mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
           <!-- <span class="d-block d-md-inline-block mr-3 my-1 my-md-0">No: {{ post.idx }}</span> -->
           <span>Date: {{ philgo.shortDate(post.stamp ) }}</span>
