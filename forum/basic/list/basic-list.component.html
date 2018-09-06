@@ -34,7 +34,7 @@
       <ion-card class="no-shadow mb-1">
         <ion-card-content class="p-0">
           <div [innerHTML]="post?.content"></div>
-          <app-files-component class="d-block pt-2 pb-1" [post]=" post "></app-files-component>
+          <app-files-component *ngIf="post.files.length" class="d-block pt-2 pb-1" [post]=" post "></app-files-component>
         </ion-card-content>
       </ion-card>
     </ion-item>
@@ -77,7 +77,7 @@
           <div>No. {{ comment.idx }}</div>
           <ion-card-content class="pb-0">
             <div [innerHTML]="comment.content"></div>
-            <app-files-component class="d-block pt-2 pb-1" [post]=" comment "></app-files-component>
+            <app-files-component *ngIf="comment.files.length" class="d-block pt-2 pb-1" [post]=" comment "></app-files-component>
           </ion-card-content>
   
           <ion-buttons class="d-block">
