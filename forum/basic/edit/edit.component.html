@@ -6,7 +6,7 @@
 <ion-content>
 
 
-  <ion-list class="mx-4 mt-1 mb-4">
+  <ion-list class="mx-4 mb-4">
 
     <div class="d-md-flex mb-2">
         <ion-item class="mr-md-1" *ngIf=" philgo.isLoggedOut() ">
@@ -30,7 +30,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">{{ philgo.t({ en: 'Please input content', ko: '내용을 입력하세요.' }) }}</ion-label>
-      <ion-textarea rows="5" [(ngModel)]="form.content"></ion-textarea>
+      <ion-textarea rows="4" [(ngModel)]="form.content"></ion-textarea>
     </ion-item>
     <ion-item>
       <app-files-component class="d-block my-3" [showDeleteButton]=" true " [post]=" form "></app-files-component>
