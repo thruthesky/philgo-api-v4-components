@@ -139,7 +139,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
 
   onView(post: ApiPost) {
-    post['showMore'] = true;
+    post['showMore'] = ! post['showMore'];
   }
 
 

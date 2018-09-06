@@ -6,12 +6,14 @@ import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
 import { ForumBasicListComponent } from './basic-list.component';
 import { ComponentServiceModule } from '../../../service/component.service.module';
 import { FilesComponentModule } from '../../files/files.module';
+// import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
     imports: [
         CommonModule,
+        // RouterModule,
         IonicModule,
         EditComponentModule,
         ComponentServiceModule,
