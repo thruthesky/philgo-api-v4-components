@@ -20,11 +20,11 @@
       </ion-avatar>
   
       <ion-label class="d-md-flex align-items-center justify-content-between my-1 my-md-0" text-wrap>
-        <h2 class="pointer flex-1 py-md-3" (click)=" onView( post ) ">{{ post.subject }}</h2>
-        <p class="fs-sm ml-md-2">
-          <span class=" mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
+        <h2 class="flex-1 py-md-3 pointer" (click)=" onView( post ) ">{{ post.subject }}</h2>
+        <p class="fs-sm ml-md-2 pointer"  (click)=" onView( post ) ">
+          <span class="mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
           <!-- <span class="d-block d-md-inline-block mr-3 my-1 my-md-0">No: {{ post.idx }}</span> -->
-          <span class="">Date: {{ philgo.shortDate(post.stamp ) }}</span>
+          <span>Date: {{ philgo.shortDate(post.stamp ) }}</span>
         </p>
       </ion-label>
     </ion-item>
@@ -34,7 +34,7 @@
       <ion-card class="no-shadow mb-1">
         <ion-card-content class="py-0">
           <div [innerHTML]="post?.content"></div>
-          <app-files-component [post]=" post "></app-files-component>
+          <app-files-component class="d-block pt-2 pb-1" [post]=" post "></app-files-component>
         </ion-card-content>
       </ion-card>
     </ion-item>
@@ -72,11 +72,12 @@
   
     <ion-list class="comments comments-depth bg-light" *ngIf=" post?.comments?.length && show(post) " >
       <ion-item class="comment" *ngFor=" let comment of post.comments " [attr.depth]=" comment.depth ">
-        <ion-card class=" no-shadow bg-white px-3 pt-3">
+        <ion-card class=" no-shadow bg-white px-3 pt-3 mb-0 ml-1 w-100">
+          
           <div>No. {{ comment.idx }}</div>
           <ion-card-content class="pb-0">
             <div [innerHTML]="comment.content"></div>
-            <app-files-component [post]=" comment "></app-files-component>
+            <app-files-component class="d-block pt-2 pb-1" [post]=" comment "></app-files-component>
           </ion-card-content>
   
           <ion-buttons class="d-block">

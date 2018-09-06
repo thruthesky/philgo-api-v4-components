@@ -5,7 +5,7 @@ import { ComponentService } from '../../service/component.service';
 @Component({
   selector: 'app-files-component',
   templateUrl: './files.component.html',
-  styleUrls: ['./files.component.scss']
+  styleUrls: ['./../../scss/index.scss', './files.component.scss']
 })
 export class FilesComponent implements OnInit {
 
