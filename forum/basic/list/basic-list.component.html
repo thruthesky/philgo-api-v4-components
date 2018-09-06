@@ -12,16 +12,16 @@
 
 <ng-container  *ngFor="let post of posts">
 
-  <ion-list [ngClass]="{ 'mb-0': !show(post), 'bg-light': show(post), 'pt-2': show(post) }">
+  <ion-list [class.mb-0]="!show(post)">
 
-    <ion-item>
+    <ion-item [ngClass]="{ 'border-top': show(post), 'pt-2': show(post) }">
       <ion-avatar slot="start">
         <img [src]="philgo.primaryPhotoUrl( post?.member?.idx_primary_photo )">
       </ion-avatar>
   
-      <ion-label class="d-md-flex align-items-center justify-content-between my-1 my-md-0" text-wrap>
-        <h2 class="flex-1 py-md-3 pointer" (click)=" onView( post ) ">{{ post.subject }}</h2>
-        <p class="fs-sm ml-md-2 pointer"  (click)=" onView( post ) ">
+      <ion-label class="d-md-flex align-items-center justify-content-between my-1 my-md-0"  (click)=" onView( post ) " text-wrap>
+        <h2 class="flex-1 py-md-3 pointer">{{ post.subject }}</h2>
+        <p class="fs-sm ml-md-2">
           <span class="mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
           <!-- <span class="d-block d-md-inline-block mr-3 my-1 my-md-0">No: {{ post.idx }}</span> -->
           <span>Date: {{ philgo.shortDate(post.stamp ) }}</span>
@@ -70,9 +70,9 @@
     <!-- {{ post.comments | json }} -->
   
   
-    <ion-list class="comments comments-depth bg-light" *ngIf=" post?.comments?.length && show(post) " >
+    <ion-list class="comments comments-depth bg-light pt-2" *ngIf=" post?.comments?.length && show(post) " >
       <ion-item class="comment" *ngFor=" let comment of post.comments " [attr.depth]=" comment.depth ">
-        <ion-card class=" no-shadow bg-white px-3 pt-3 mb-0 ml-1 w-100">
+        <ion-card class=" no-shadow p-0 mb-0 ml-1 w-100">
           
           <div>No. {{ comment.idx }}</div>
           <ion-card-content class="pb-0">
