@@ -1,4 +1,4 @@
-<div class="d-flex align-items-stretch mb-3">
+<div class="d-flex align-items-stretch mb-2">
     <ion-button class="no-shadow mr-3 ion-button-m-0" color="tertiary" (click)="onClickPost()">
       <ion-icon slot="start" name="add"></ion-icon>
       <ion-text>CREATE POST</ion-text>
@@ -12,23 +12,22 @@
 
 <ng-container  *ngFor="let post of posts">
 
-  <ion-list [class.mb-0]="!show(post)">
+  <ion-list class="mb-0">
 
-    <ion-item [ngClass]="{ 'border-top': show(post), 'pt-2': show(post) }" routerLink="#"  (click)=" onView( post ) ">
+    <ion-item routerLink="#"  (click)="onView( post ) ">
       <ion-avatar slot="start">
         <img [src]="philgo.primaryPhotoUrl( post?.member?.idx_primary_photo )">
       </ion-avatar>
   
-      <ion-label class="d-md-flex align-items-center justify-content-between my-2 my-md-0" text-wrap>
-        <h2 class="flex-1 py-md-3 pointer">{{ post.subject }}</h2>
+      <ion-label class="d-md-flex align-items-center justify-content-between my-1" text-wrap>
+        <h2>{{ post.subject }}</h2>
         <p class="fs-sm my-md-0 ml-md-2">
           <span class="mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
-          <!-- <span class="d-block d-md-inline-block mr-3 my-1 my-md-0">No: {{ post.idx }}</span> -->
           <span>Date: {{ philgo.shortDate(post.stamp ) }}</span>
         </p>
       </ion-label>
     </ion-item>
-  
+    
   
     <ion-item *ngIf=" show(post) ">
       <ion-card class="no-shadow mb-1">
