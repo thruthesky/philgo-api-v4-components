@@ -1,52 +1,45 @@
-@import './mixins';
-.bg-black {
-    background-color: black !important;
+
+.pointer {
+    cursor: pointer;
 }
 
-.bg-white {
-    background-color: white !important;
+.of-hidden {
+    overflow: hidden !important;
 }
 
-.white {
-    color: white !important;
+.no-shadow {
+    --box-shadow: 0 !important;
+    box-shadow: none !important;
 }
 
-.black {
-    color: black !important;
+.border-radius-45px {
+    border-radius: 45px
 }
 
-.red {
-    color: red !important;
+.ion-btn-large {
+    --height: 4em;
 }
 
-.darkgreen{
-    color: darkgreen
+.ion-btn-normal {
+    --height: 3em;
 }
 
-.blue {
-    color: blue !important;
+@media (min-width:$md) {
+    .w-md-50 {
+        width: 50%;
+    }
+    .mt-md-5 {
+        margin-top: 3rem !important;
+    }
 }
 
-.darkred {
-    color: darkred !important;
-}
 
-.size-32px {
-    @include size-px(32, 32);
-}
 
-.size-120px {
-    @include size-px(120, 120);
-}
+
 
 .transparent-cover {
     @include transparent-cover();
 }
-
-.position-top-right {
-    @include position-top-right();
-}
-
 /**
  *
  * @example use
@@ -71,116 +64,6 @@
 
 .submit-button {
     @include submit-button();
-}
-
-.flex-center {
-    @include flex-center();
-}
-
-.flex-1{
-    flex:1;
-}
-
-.pointer {
-    cursor: pointer;
-}
-
-.w-100px {
-    width: 100px !important;
-}
-
-.w-200px {
-    width: 200px !important;
-}
-
-.w-300px {
-    width: 300px !important;
-}
-
-.mw-100px {
-    max-width: 100px !important;
-}
-
-.mw-200px {
-    max-width: 200px !important;
-}
-
-.mw-md-200px {
-    @media (min-width: $md) {
-        max-width: 200px !important;
-    }
-}
-
-.mw-300px {
-    max-width: 300px !important;
-}
-
-.of-hidden {
-    overflow: hidden !important;
-}
-
-.no-shadow {
-    --box-shadow: 0 !important;
-    box-shadow: none !important;
-}
-
-.border-radius-45px {
-    border-radius: 45px
-}
-
-.fw-light {
-    font-weight: 200 !important;
-}
-
-.fs-xs {
-    font-size: .5rem !important;
-}
-
-.fs-sm {
-    font-size: .75rem !important;
-}
-
-.fs-md {
-    font-size: .95rem !important;
-}
-
-.fs-lg {
-    font-size: 1.2rem !important;
-}
-
-.fs-xl {
-    font-size: 2.2rem !important;
-}
-
-.fs-80 {
-    font-size: 80% !important;
-}
-
-.icon-size {
-    width: 24px;
-    height: 24px;
-}
-
-.align-icon {
-    position: relative;
-    top: .125em;
-}
-
-.ion-btn-large {
-    --height: 4em;
-}
-
-.ion-btn-normal {
-    --height: 3em;
-}
-
-@media (min-width:$md) {
-    .w-md-50 {
-        width: 50%;
-    }
-    .mt-md-5 {
-        margin-top: 3rem !important;
-    }
 }
 
 .comments-depth {
