@@ -2,6 +2,6 @@
 <!-- {{ philgo.postConfigs | json }} -->
 
 
-<h1>{{ philgo.t(philgo.postConfigs.wanted.category[ category ]) }}</h1>
+<h1>{{ philgo.forumName('wanted', category) }}</h1>
 
 <ion-button (click)="onClickPost()">POST</ion-button>
