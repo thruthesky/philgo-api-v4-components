@@ -11,4 +11,8 @@ export const address = 'varchar_11';
 export const intro = 'content';
 export const link = 'link';
 
+export const selectedGender = {
+    'M': 'Male',
+    'F': 'Female'
+};
 

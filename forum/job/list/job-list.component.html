@@ -1,16 +1,44 @@
-<!-- <h1>{{ title }}</h1> -->
-<!-- {{ philgo.postConfigs | json }} -->
+<div class="d-flex align-items-stretch mb-2">
+  <ion-button class="no-shadow mr-3 ion-button-m-0" color="tertiary" (click)="onClickPost()">
+    <ion-icon slot="start" name="add"></ion-icon>
+    <ion-text>CREATE POST</ion-text>
+  </ion-button>
+  <div class="flex-center px-2 w-100 bg-light fs-80 text-muted">
+    <span>Job</span>
+    <ion-icon class="mx-2" name="play"></ion-icon>
+    <span>{{ philgo.forumName('wanted', category)}}</span>
+  </div>
+</div>
 
+<ion-card class="job" *ngFor="let post of posts" (click)=" onView( post ) ">
+  <ion-card-content>
+    <img class="w-100px" src="{{  philgo.getSrc( post.files, 'profile-photo' )}}">
+    <ion-text class="d-block">Name:{{ post[ N.name ] }}</ion-text>
+    <ion-text class="d-block">Mobile:{{ post[ N.mobile ] }}</ion-text>
+    <ion-text class="d-block">Email:{{ post[ N.email ] }}</ion-text>
+    <ion-text class="d-block">Province:{{ post[ N.province ] }}</ion-text>
+    <ion-text class="d-block">City:{{ post[ N.city ] }}</ion-text>
+    <ion-text class="d-block">Birthday:{{ post[ N.birthday ] }}</ion-text>
+    <ion-text class="d-block">Gender:{{ N.selectedGender[ post[ N.gender ] ] }}</ion-text>
+    <ion-text class="d-block">Introduction:{{ post[ N.intro ] }}</ion-text>
+    <ion-text class="d-block">Link:{{ post[ N.link ] }}</ion-text>
+    <ion-item>
 
-<h1>{{ philgo.forumName('wanted', category) }}</h1>
+      <ion-buttons class="d-block">
+        <ion-button (click)=" onClickMenu( $event, post ) ">
+          <ion-icon slot="icon-only" name="more" mode="ios" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
 
-<ion-button (click)="onClickPost()">POST</ion-button>
-
-
-<ion-list class="">
-
-    <ion-item routerLink="#" *ngFor="let post of posts" (click)=" onView( post ) ">
-        {{ post[ N.name ] }}
     </ion-item>
+  </ion-card-content>
+</ion-card>
 
-</ion-list>
+<div class="text-center py-3 text-muted" *ngIf=" noMorePosts ">
+  {{ philgo.t({ en: 'There is no more posts.', ko: '더 이상 글이 없습니다.' })}}
+</div>
+
+<ion-infinite-scroll class="mt-3" (ionInfinite)="loadPage($event)">
+  <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>

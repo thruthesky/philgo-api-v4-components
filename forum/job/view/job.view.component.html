@@ -12,8 +12,15 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <p>
-    job view compo works!
-  </p>
-
+      <img class="w-100px" src="{{ philgo.getSrc( post.files, 'profile-photo' ) }}">
+      <img class="w-100px" src="{{ philgo.getSrc( post.files, 'body-photo' ) }}">
+      <ion-text class="d-block">Name:{{ post[ N.name ] }}</ion-text>
+      <ion-text class="d-block">Mobile:{{ post[ N.mobile ] }}</ion-text>
+      <ion-text class="d-block">Email:{{ post[ N.email ] }}</ion-text>
+      <ion-text class="d-block">Province:{{ post[ N.province ] }}</ion-text>
+      <ion-text class="d-block">City:{{ post[ N.city ] }}</ion-text>
+      <ion-text class="d-block">Birthday:{{ post[ N.birthday ] }}</ion-text>
+      <ion-text class="d-block">Gender:{{ N.selectedGender[ post[ N.gender ] ] }}</ion-text>
+      <ion-text class="d-block">Introduction:{{ post[ N.intro ] }}</ion-text>
+      <ion-text class="d-block">Link:{{ post[ N.link ] }}</ion-text>
 </ion-content>

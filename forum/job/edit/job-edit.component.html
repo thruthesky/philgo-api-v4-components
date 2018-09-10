@@ -103,16 +103,31 @@
     <div class="note">Address will not be shown to others.</div>
 
     <ion-item>
-      <ion-label position="floating">{{ philgo.t({ en: 'Birth Day', ko: '생년월일' }) }}</ion-label>
-      <ion-input [(ngModel)]="form[N.birthday]"></ion-input>
+      <ion-label position="floating">{{ philgo.t({ en: 'Birth Day', ko: '생년월일' }) }} </ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" min="1945-01-01" max="2000-01-01" [(ngModel)]="birthday"></ion-datetime>
     </ion-item>
 
-
+    {{birthday|json}}
 
     <ion-item>
-      <ion-label position="floating">{{ philgo.t({ en: '성별', ko: 'Gender' }) }}</ion-label>
-      <ion-input [(ngModel)]="form[N.gender]"></ion-input>
+        <ion-radio-group [(ngModel)]="form[N.gender]">
+          <ion-list-header>
+            <ion-label>{{ philgo.t({ en: 'Gender', ko: '성별' }) }}</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-label>Male</ion-label>
+            <ion-radio slot="start" value="M"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Female</ion-label>
+            <ion-radio slot="start" value="F"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
     </ion-item>
+
+
 
 
     <ion-item>
@@ -137,7 +152,7 @@
           Submit
         </ion-button>
 
-        <ion-button class="mx-2" color="light" fill="solid" (click)=" onDelete() ">
+        <ion-button class="mx-2" color="light" fill="solid" (click)=" onDelete() " *ngIf=" form?.idx ">
           <ion-icon color="danger" slot="start" name="trash"></ion-icon>
           Delete
         </ion-button>

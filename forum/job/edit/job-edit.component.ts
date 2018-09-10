@@ -18,17 +18,16 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   controller: ModalController;
   data;
   form: ApiPost = <ApiPost>{};
+  birthday;
 
   pageTitle = '';
   percentage = 0;
 
   profilePhoto = 'profile-photo';
   bodyPhoto = 'body-photo';
-  
+
 
   N = N;
-
-  
 
   constructor(
     public philgo: PhilGoApiService,
@@ -37,6 +36,9 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   ) {
   }
   ngOnInit() {
+    const d = new Date();
+    this.birthday = { 'month': { 'text': '10', 'value': 10, 'columnIndex': 0 }, 'day': { 'text': '11', 'value': 11, 'columnIndex': 1 }, 'year': { 'text': '1998', 'value': 1998, 'columnIndex': 2 } };
+
     if (this.data && this.data.idx === void 0) {
       this.form.post_id = this.data.post_id;
       const forumName = this.philgo.forumName(this.data.post_id );
@@ -65,6 +67,8 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     console.log('data.role: ', this.data.role);
+
+    this.form[N.birthday] = this.birthday;
     /**
      * Edit
      */

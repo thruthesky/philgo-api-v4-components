@@ -4,19 +4,22 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { JobEditComponentModule } from '../edit/job-edit.component.module';
 import { JobViewComponent } from '../view/job.view.component';
+import { MenuPopoverComponent } from '../../basic/list/menu-popover/menu-popover.component';
 
 @NgModule({
     imports: [
         IonicModule,
         CommonModule,
-        JobEditComponentModule
+        JobEditComponentModule,
     ],
     declarations: [
         JobListComponent,
-        JobViewComponent
+        JobViewComponent,
+        MenuPopoverComponent
     ],
     entryComponents: [
-        JobViewComponent
+        JobViewComponent,
+        MenuPopoverComponent
     ],
     exports: [
         JobListComponent

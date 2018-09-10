@@ -1,10 +1,12 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { PhilGoApiService, ApiForum, ApiPost } from '../../../../philgo-api/philgo-api.service';
 import { JobEditService } from '../edit/job-edit.component.service';
-import { InfiniteScroll, ModalController } from '@ionic/angular';
+import { InfiniteScroll, ModalController, PopoverController } from '@ionic/angular';
 
 import * as N from '../job.defines';
 import { JobViewComponent } from '../view/job.view.component';
+import { MenuPopoverComponent } from '../../basic/list/menu-popover/menu-popover.component';
+import { ComponentService } from '../../../service/component.service';
 
 @Component({
     selector: 'app-job-list-component',
@@ -34,14 +36,67 @@ export class JobListComponent implements OnInit, AfterViewInit {
     //
     constructor(
         private modalController: ModalController,
+        private readonly popoverController: PopoverController,
+        private readonly componentService: ComponentService,
         public philgo: PhilGoApiService,
         public edit: JobEditService
-    ) { }
+    ) {}
     ngOnInit() { }
     ngAfterViewInit() {
         // setTimeout(() => this.onClickPost(), 200);
 
         this.loadPage();
+    }
+
+
+    async onClickMenu(event: any, post: ApiPost) {
+        event.stopPropagation();
+        const popover = await this.popoverController.create({
+            component: MenuPopoverComponent,
+            componentProps: {
+                controller: this.popoverController
+            },
+            event: event,
+            translucent: true
+        });
+        await popover.present();
+        const re = await popover.onDidDismiss();
+        const action = re.role;
+
+        console.log('action: ', action);
+        if (action === 'view') {
+            this.onView(post);
+        } else if (action === 'edit') {
+            this.onEdit(post);
+        } else if (action === 'delete') {
+            this.onDelete(post);
+        }
+    }
+
+
+
+    loadPage(event?: Event) {
+        let infiniteScroll: InfiniteScroll;
+        if (event) {
+            infiniteScroll = <any>event.target;
+        }
+        this.philgo.postSearch({ post_id: this.post_id, page_no: this.page_no, limit: this.limit }).subscribe(search => {
+            console.log('search: ', search);
+            this.page_no++;
+            this.forum = search;
+
+            if (!search.posts || !search.posts.length) {
+                if (event) {
+                    infiniteScroll.disabled = true;
+                }
+                this.noMorePosts = true;
+                return;
+            }
+            this.posts = this.posts.concat(search.posts);
+            if (event) {
+                infiniteScroll.complete();
+            }
+        });
     }
 
     async onClickPost() {
@@ -58,28 +113,6 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     }
 
-    loadPage(event?: Event) {
-        let infiniteScroll: InfiniteScroll;
-        if (event) {
-            infiniteScroll = <any>event.target;
-        }
-        this.philgo.postSearch({ post_id: this.post_id, page_no: this.page_no, limit: this.limit }).subscribe(search => {
-            console.log('search: ', search);
-            this.page_no++;
-            this.forum = search;
-
-            if (!search.posts || !search.posts.length) {
-                infiniteScroll.disabled = true;
-                this.noMorePosts = true;
-                return;
-            }
-            this.posts = this.posts.concat(search.posts);
-            if (event) {
-                infiniteScroll.complete();
-            }
-        });
-    }
-
     async onView(post: ApiPost) {
         const modal = await this.modalController.create({
             component: JobViewComponent,
@@ -90,5 +123,41 @@ export class JobListComponent implements OnInit, AfterViewInit {
         });
         await modal.present();
         const re = await modal.onDidDismiss();
+    }
+
+    /**
+     * Opens Job edit box.
+     * @param post  job post
+     */
+    async onEdit(post: ApiPost) {
+
+
+        // if (this.philgo.isAnonymousPost(post)) {
+        //     const password = await this.componentService.checkPostUserPassword(post);
+        //     if (password) {
+        //         post.user_password = password;
+        //     } else {
+        //         console.log('onEdit() ==> philgo.isAnonymousPost() failed ==> return ');
+        //         return;
+        //     }
+        // }
+
+        /**
+         * Make a copy from job post. So, it will not be referenced.
+         */
+        const data = Object.assign({}, post);
+        const res = await this.edit.present(data);
+        if (res.role === 'success') {
+            Object.assign(post, res.data);
+        }
+    }
+
+    onDelete(post: ApiPost) {
+        console.log(post);
+        if (this.philgo.parseNumber(post.idx_member) === 0) {
+            return this.componentService.deletePostWithPassword(post);
+        } else {
+            return this.componentService.deletePostWithMemberLogin(post);
+        }
     }
 }
