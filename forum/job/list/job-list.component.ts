@@ -40,7 +40,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
         private readonly componentService: ComponentService,
         public philgo: PhilGoApiService,
         public edit: JobEditService
-    ) {}
+    ) { }
     ngOnInit() { }
     ngAfterViewInit() {
         // setTimeout(() => this.onClickPost(), 200);
@@ -50,27 +50,27 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
 
     async onClickMenu(event: any, post: ApiPost) {
-        event.stopPropagation();
-        const popover = await this.popoverController.create({
-            component: MenuPopoverComponent,
-            componentProps: {
-                controller: this.popoverController
-            },
-            event: event,
-            translucent: true
-        });
-        await popover.present();
-        const re = await popover.onDidDismiss();
-        const action = re.role;
+        // event.stopPropagation();
+        // const popover = await this.popoverController.create({
+        //     component: MenuPopoverComponent,
+        //     componentProps: {
+        //         controller: this.popoverController
+        //     },
+        //     event: event,
+        //     translucent: true
+        // });
+        // await popover.present();
+        // const re = await popover.onDidDismiss();
+        // const action = re.role;
 
-        console.log('action: ', action);
-        if (action === 'view') {
-            this.onView(post);
-        } else if (action === 'edit') {
-            this.onEdit(post);
-        } else if (action === 'delete') {
-            this.onDelete(post);
-        }
+        // console.log('action: ', action);
+        // if (action === 'view') {
+        //     this.onView(post);
+        // } else if (action === 'edit') {
+        //     this.onEdit(post);
+        // } else if (action === 'delete') {
+        //     this.onDelete(post);
+        // }
     }
 
 
@@ -80,7 +80,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
         if (event) {
             infiniteScroll = <any>event.target;
         }
-        this.philgo.postSearch({ post_id: this.post_id, page_no: this.page_no, limit: this.limit }).subscribe(search => {
+        this.philgo.postSearch({ post_id: this.post_id, page_no: this.page_no, limit: this.limit, deleted: 0 }).subscribe(search => {
             console.log('search: ', search);
             this.page_no++;
             this.forum = search;
@@ -152,12 +152,15 @@ export class JobListComponent implements OnInit, AfterViewInit {
         }
     }
 
-    onDelete(post: ApiPost) {
+    async onDelete(post: ApiPost) {
         console.log(post);
-        if (this.philgo.parseNumber(post.idx_member) === 0) {
-            return this.componentService.deletePostWithPassword(post);
-        } else {
-            return this.componentService.deletePostWithMemberLogin(post);
+        const re = await this.componentService.deletePostWithMemberLogin(post);
+        if (re === 'success') {
+            const pos = this.posts.findIndex(p => p.idx === post.idx);
+            console.log('pos: ', pos);
+            if (pos !== -1) {
+                this.posts.splice(pos, 1);
+            }
         }
     }
 }

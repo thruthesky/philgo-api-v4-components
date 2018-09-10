@@ -71,13 +71,6 @@ export class ComponentService {
           role: 'yes',
           handler: () => {
             console.log('going to delete:', post.idx);
-            this.philgo.postDelete({ idx: post.idx }).subscribe(res => {
-              console.log('delete success: ', res);
-              post.subject = this.philgo.textDeleted();
-              post.content = this.philgo.textDeleted();
-            }, async e => {
-              this.alert(e);
-            });
           }
         },
         {
@@ -90,6 +83,20 @@ export class ComponentService {
     });
 
     await alert.present();
+    const re = await alert.onDidDismiss();
+    if (re.role === 'yes') {
+      return await this.philgo.postDelete({ idx: post.idx }).toPromise().then(res => {
+        console.log('delete success: ', res);
+        post.subject = this.philgo.textDeleted();
+        post.content = this.philgo.textDeleted();
+        return 'success';
+      }).catch(async e => {
+        this.alert(e);
+        return 'failed';
+      });
+    } else {
+      return 'failed';
+    }
   }
 
   async deletePostWithPassword(post: ApiPost) {
@@ -112,23 +119,32 @@ export class ComponentService {
           }
         }, {
           text: this.philgo.t({ en: 'Ok', ko: '확인' }),
+          role: 'ok',
           handler: input => {
             console.log('Confirm Ok', input);
-            this.philgo.postDelete({ idx: post.idx, user_password: input.user_password }).subscribe(res => {
-              console.log('delete success: ', res);
-              post.subject = this.philgo.textDeleted();
-              post.content = this.philgo.textDeleted();
-            }, async e => {
-              this.alert({
-                message: this.philgo.t({ en: `Failed to delete: #reason`, ko: '글 삭제 실패: #reason' }, { reason: e.message })
-              });
-            });
           }
         }
       ]
     });
 
     await alert.present();
+    const re = await alert.onDidDismiss();
+    if (re.role === 'ok') {
+      return await this.philgo.postDelete({ idx: post.idx, user_password: re.data.values['user_password'] }).toPromise()
+        .then(res => {
+          console.log('delete success: ', res);
+          post.subject = this.philgo.textDeleted();
+          post.content = this.philgo.textDeleted();
+          return 'success';
+        }).catch(async e => {
+          this.alert({
+            message: this.philgo.t({ en: `Failed to delete: #reason`, ko: '글 삭제 실패: #reason' }, { reason: e.message })
+          });
+          return 'failed';
+        });
+    } else {
+      return 'failed';
+    }
   }
 
 }

@@ -10,8 +10,8 @@
   </div>
 </div>
 
-<ion-card class="job" *ngFor="let post of posts" (click)=" onView( post ) ">
-  <ion-card-content>
+<ion-card class="job" *ngFor="let post of posts">
+  <ion-card-content (click)=" onView( post ) ">
     <img class="w-100px" src="{{  philgo.getSrc( post.files, 'profile-photo' )}}">
     <ion-text class="d-block">Name:{{ post[ N.name ] }}</ion-text>
     <ion-text class="d-block">Mobile:{{ post[ N.mobile ] }}</ion-text>
@@ -24,14 +24,15 @@
     <ion-text class="d-block">Link:{{ post[ N.link ] }}</ion-text>
     <ion-item>
 
-      <ion-buttons class="d-block">
-        <ion-button (click)=" onClickMenu( $event, post ) ">
-          <ion-icon slot="icon-only" name="more" mode="ios" ></ion-icon>
-        </ion-button>
-      </ion-buttons>
-
     </ion-item>
   </ion-card-content>
+
+  <ion-buttons class="d-block">
+    <ion-button (click)=" onDelete( post ) ">
+      <ion-icon slot="icon-only" name="trash" mode="ios"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+
 </ion-card>
 
 <div class="text-center py-3 text-muted" *ngIf=" noMorePosts ">

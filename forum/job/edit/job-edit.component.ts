@@ -68,7 +68,7 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   onSubmit() {
     console.log('data.role: ', this.data.role);
 
-    this.form[N.birthday] = this.birthday;
+    // this.form[N.birthday] = this.birthday;
     /**
      * Edit
      */

@@ -1,5 +1,11 @@
 
-<app-forum-basic-view [post]=" forum.view " [autoViewContent]=" true " *ngIf=" forum?.view "></app-forum-basic-view>
+<app-forum-basic-view [post]=" forum.view " [autoViewContent]=" true " *ngIf=" forum?.view "
+
+(onVote)=" onVote( $event[0], $event[1] ) "
+(onReply)=" onReply( $event[0], $event[1] ) "
+(onClickMenu) =" onClickMenu( $event[0], $event[1] ) "
+
+></app-forum-basic-view>
 
 
 <div class="d-flex align-items-stretch mb-2">

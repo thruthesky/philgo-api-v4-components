@@ -191,13 +191,15 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
 
 
-  onDelete(post: ApiPost) {
+  async onDelete(post: ApiPost) {
     console.log(post);
+    let re;
     if (this.philgo.parseNumber(post.idx_member) === 0) {
-      return this.componentService.deletePostWithPassword(post);
+      re = await this.componentService.deletePostWithPassword(post);
     } else {
-      return this.componentService.deletePostWithMemberLogin(post);
+      re = await this.componentService.deletePostWithMemberLogin(post);
     }
+    console.log('onDelete(): ', re);
   }
   onVote(post, mode: 'good' | 'bad') {
     this.philgo.postLike({ idx: post.idx, mode: mode }).subscribe(res => {
