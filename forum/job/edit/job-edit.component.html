@@ -1,0 +1,148 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ pageTitle }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+
+  <ion-list class="mx-4 mb-4">
+
+    <ion-item>
+      Job Profile Update
+      <ion-button color="light" class="pl-1 no-shadow" (click)="tooltip.present( $event, { title: 'Job Forum', subTitle: 'Job', content: 'If you are in need of job, this is right place to get it. Please input true information only.'} )">
+        <ion-icon name="help"></ion-icon>
+      </ion-button>
+
+    </ion-item>
+
+
+    <div class="row">
+      <div class="col">
+
+
+        <ion-item *ngIf=" getPhoto( profilePhoto ) ">
+          <img class="size-200px" src="{{ src( profilePhoto ) }}">
+        </ion-item>
+
+        <ion-item *ngIf=" ! getPhoto( profilePhoto ) ">
+          <img class="size-200px" src="{{ philgo.anonymousPhotoURL }}">
+        </ion-item>
+        <ion-item>
+          <ion-button color="secondary no-shadow" fill="solid">
+            <ion-icon slot="start" name="image"></ion-icon>
+            <ion-text>Profile Photo</ion-text>
+            <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  profilePhoto )">
+          </ion-button>
+          <ion-button color="light" class="pl-1 no-shadow" (click)=" tooltip.present( $event, { title: 'Upload profile photo', subTitle: 'Profile photo', content: 'size: width: 200px, height: 200px'}) ">
+            <ion-icon name="help"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </div>
+      <div class="col">
+
+        <ion-item *ngIf=" getPhoto( bodyPhoto ) ">
+          <img src="{{ src( bodyPhoto ) }}">
+        </ion-item>
+
+        <ion-item *ngIf=" ! getPhoto( bodyPhoto ) ">
+          <img class="size-200px" src="{{ philgo.anonymousPhotoURL }}">
+        </ion-item>
+
+
+        <ion-item>
+          <ion-button color="secondary no-shadow" fill="solid">
+            <ion-icon slot="start" name="image"></ion-icon>
+            <ion-text>Whole Body Photo</ion-text>
+            <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, bodyPhoto )">
+          </ion-button>
+          <ion-button color="light" class="pl-1 no-shadow">
+            <ion-icon name="help"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+      </div>
+    </div>
+
+
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: 'Name', ko: '이름' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.name]"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: 'Mobile Number', ko: '핸드폰 번호' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.mobile]"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: 'Email Address', ko: '이메일 주소' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.email]"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: 'Province', ko: '주' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.province]"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: 'City', ko: '도시' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.city]"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: 'Address', ko: '나머지 주소' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.address]"></ion-input>
+    </ion-item>
+
+    <div>Address will not be shown to others.</div>
+
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: 'Birth Day', ko: '생년월일' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.birthday]"></ion-input>
+    </ion-item>
+
+
+
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: '성별', ko: 'Gender' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.gender]"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: 'Self introduction', ko: '본인소개' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.intro]"></ion-input>
+    </ion-item>
+
+    <div>10 글자 이내</div>
+
+
+    <ion-item>
+      <ion-label position="floating">{{ philgo.t({ en: 'Facebook or other URL', ko: '페이스북 또는 참고 URL 을 입력하세요.' }) }}</ion-label>
+      <ion-input [(ngModel)]="form[N.link]"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-buttons class="">
+
+        <ion-button class="" color="primary" fill="solid" (click)=" onSubmit() ">
+          <ion-icon slot="start" name="paper-plane"></ion-icon>
+          Submit
+        </ion-button>
+
+        <ion-button (click)=" onDelete() ">
+          Delete
+        </ion-button>
+
+
+        <ion-button color="light" fill="solid" (click)=" controller.dismiss( null, 'close' ) ">
+          <ion-icon color="danger" slot="start" name="close"></ion-icon>
+          Close
+        </ion-button>
+
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -7,6 +7,10 @@
     @include size-px(120, 120);
 }
 
+.size-200px {
+    @include size-px(200, 200);
+}
+
 .w-100px {
     width: 100px !important;
 }
