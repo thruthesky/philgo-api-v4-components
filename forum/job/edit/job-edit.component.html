@@ -9,18 +9,16 @@
   <ion-list class="mx-4 mb-4">
 
     <ion-item>
-      Job Profile Update
-      <ion-button color="light" class="pl-1 no-shadow" (click)="tooltip.present( $event, { title: 'Job Forum', subTitle: 'Job', content: 'If you are in need of job, this is right place to get it. Please input true information only.'} )">
-        <ion-icon name="help"></ion-icon>
-      </ion-button>
-
+        <ion-text>Job Profile Update</ion-text>
+            <ion-button color="light" class="pl-1 no-shadow" (click)="tooltip.present( $event, { title: 'Job Forum', subTitle: 'Job', content: 'If you are in need of job, this is right place to get it. Please input true information only.'} )">
+                <ion-icon name="help"></ion-icon>
+            </ion-button>
     </ion-item>
 
 
-    <div class="row">
+    <div class="row my-2">
+
       <div class="col">
-
-
         <ion-item *ngIf=" getPhoto( profilePhoto ) ">
           <img class="size-200px" src="{{ src( profilePhoto ) }}">
         </ion-item>
@@ -29,8 +27,8 @@
           <img class="size-200px" src="{{ philgo.anonymousPhotoURL }}">
         </ion-item>
         <ion-item>
-          <ion-button color="secondary no-shadow" fill="solid">
-            <ion-icon slot="start" name="image"></ion-icon>
+          <ion-button class="no-shadow" color="secondary">
+            <ion-icon class="pl-1" slot="start" name="image"></ion-icon>
             <ion-text>Profile Photo</ion-text>
             <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  profilePhoto )">
           </ion-button>
@@ -39,6 +37,7 @@
           </ion-button>
         </ion-item>
       </div>
+
       <div class="col">
 
         <ion-item *ngIf=" getPhoto( bodyPhoto ) ">
@@ -52,7 +51,7 @@
 
         <ion-item>
           <ion-button color="secondary no-shadow" fill="solid">
-            <ion-icon slot="start" name="image"></ion-icon>
+            <ion-icon class="pl-1" slot="start" name="image"></ion-icon>
             <ion-text>Whole Body Photo</ion-text>
             <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, bodyPhoto )">
           </ion-button>
@@ -62,6 +61,7 @@
         </ion-item>
 
       </div>
+      
     </div>
 
 
@@ -94,7 +94,7 @@
       <ion-input [(ngModel)]="form[N.address]"></ion-input>
     </ion-item>
 
-    <div>Address will not be shown to others.</div>
+    <div class="note">Address will not be shown to others.</div>
 
     <ion-item>
       <ion-label position="floating">{{ philgo.t({ en: 'Birth Day', ko: '생년월일' }) }}</ion-label>
@@ -114,7 +114,7 @@
       <ion-input [(ngModel)]="form[N.intro]"></ion-input>
     </ion-item>
 
-    <div>10 글자 이내</div>
+    <div class="note">10 글자 이내</div>
 
 
     <ion-item>
@@ -123,21 +123,22 @@
     </ion-item>
 
 
-    <ion-item>
-      <ion-buttons class="">
+    <ion-item class="pt-4">
+      <ion-buttons class="m-auto">
 
-        <ion-button class="" color="primary" fill="solid" (click)=" onSubmit() ">
+        <ion-button color="primary" fill="solid" (click)=" onSubmit() ">
           <ion-icon slot="start" name="paper-plane"></ion-icon>
           Submit
         </ion-button>
 
-        <ion-button (click)=" onDelete() ">
+        <ion-button class="mx-2" color="light" fill="solid" (click)=" onDelete() ">
+          <ion-icon color="danger" slot="start" name="trash"></ion-icon>
           Delete
         </ion-button>
 
 
         <ion-button color="light" fill="solid" (click)=" controller.dismiss( null, 'close' ) ">
-          <ion-icon color="danger" slot="start" name="close"></ion-icon>
+          <ion-icon slot="start" name="close"></ion-icon>
           Close
         </ion-button>
 
