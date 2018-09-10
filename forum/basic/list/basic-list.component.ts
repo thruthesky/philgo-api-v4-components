@@ -63,21 +63,21 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     if (options.view) {
       req.view = options.view;
     }
-      this.philgo.postSearch(req).subscribe(search => {
-        console.log('search: ', search);
-        this.page_no++;
-        this.forum = search;
+    this.philgo.postSearch(req).subscribe(search => {
+      console.log('search: ', search);
+      this.page_no++;
+      this.forum = search;
 
-        if (!search.posts || !search.posts.length) {
-          infiniteScroll.disabled = true;
-          this.noMorePosts = true;
-          return;
-        }
-        this.posts = this.posts.concat(search.posts);
-        if (event) {
-          infiniteScroll.complete();
-        }
-      });
+      if (!search.posts || !search.posts.length) {
+        infiniteScroll.disabled = true;
+        this.noMorePosts = true;
+        return;
+      }
+      this.posts = this.posts.concat(search.posts);
+      if (event) {
+        infiniteScroll.complete();
+      }
+    });
   }
 
   async onClickPost() {
@@ -151,10 +151,6 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   }
 
 
-  onView(post: ApiPost) {
-    post['showMore'] = !post['showMore'];
-  }
-
 
   /**
    * Opens an edit box.
@@ -225,9 +221,14 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
   }
 
-  show(post) {
-    return post['showMore'] || this.autoViewContent;
+
+
+  onView(post: ApiPost) {
+    post['showMore'] = !post['showMore'];
+    history.pushState({}, post.subject, `/forum/${post.post_id}/${post.idx}`);
   }
+
+
 }
 
 
