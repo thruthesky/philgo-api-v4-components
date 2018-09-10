@@ -4,6 +4,14 @@
 .flex-center {
     @include flex-center();
 }
+
+.flex-column-center{
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center
+}
+
 .flex-1{
     flex:1;
 }

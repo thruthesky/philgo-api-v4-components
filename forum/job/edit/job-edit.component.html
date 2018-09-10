@@ -5,26 +5,28 @@
 </ion-header>
 <ion-content>
 
-
+  <div class="flex-center p-2">
+      <ion-text>Job Profile Update</ion-text>
+      <ion-button class="ml-2 no-shadow" (click)="tooltip.present( $event, { title: 'Job Forum', subTitle: 'Job', content: 'If you are in need of job, this is right place to get it. Please input true information only.'} )">
+          <ion-icon name="help"></ion-icon>
+      </ion-button>
+  </div>
+  
   <ion-list class="mx-4 mb-4">
 
-    <ion-item>
-        <ion-text>Job Profile Update</ion-text>
-            <ion-button color="light" class="pl-1 no-shadow" (click)="tooltip.present( $event, { title: 'Job Forum', subTitle: 'Job', content: 'If you are in need of job, this is right place to get it. Please input true information only.'} )">
-                <ion-icon name="help"></ion-icon>
-            </ion-button>
-    </ion-item>
+    <div class="row">
 
-
-    <div class="row my-2">
-
-      <div class="col">
+      <div class="col-12 col-md-6 flex-column-center">
         <ion-item *ngIf=" getPhoto( profilePhoto ) ">
-          <img class="size-200px" src="{{ src( profilePhoto ) }}">
+          <div class="size-120px of-hidden" >
+              <img class="w-100" src="{{ src( profilePhoto ) }}">
+          </div>
         </ion-item>
 
         <ion-item *ngIf=" ! getPhoto( profilePhoto ) ">
-          <img class="size-200px" src="{{ philgo.anonymousPhotoURL }}">
+          <div class="size-120px of-hidden" >
+              <img class="w-100" src="{{ philgo.anonymousPhotoURL }}">
+          </div>
         </ion-item>
         <ion-item>
           <ion-button class="no-shadow" color="secondary">
@@ -38,14 +40,18 @@
         </ion-item>
       </div>
 
-      <div class="col">
+      <div class="col-12 col-md-6 flex-center flex-column mt-3 mt-md-0">
 
         <ion-item *ngIf=" getPhoto( bodyPhoto ) ">
-          <img src="{{ src( bodyPhoto ) }}">
+          <div class="size-120px of-hidden">
+            <img class="w-100" src="{{ src( bodyPhoto ) }}">
+          </div>
         </ion-item>
 
         <ion-item *ngIf=" ! getPhoto( bodyPhoto ) ">
-          <img class="size-200px" src="{{ philgo.anonymousPhotoURL }}">
+          <div class="size-120px of-hidden">
+              <img class="w-100" src="{{ philgo.anonymousPhotoURL }}">
+          </div>
         </ion-item>
 
 
