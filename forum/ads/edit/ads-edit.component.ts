@@ -129,9 +129,10 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
   }
 
   getPhoto(code): ApiFile {
-    if (this.form.files) {
-      return this.form.files.find(v => v.code === code);
-    }
+    return this.philgo.getFile( this.form.files, code );
+    // if (this.form.files) {
+    //   return this.form.files.find(v => v.code === code);
+    // }
   }
 
   src(code): string {

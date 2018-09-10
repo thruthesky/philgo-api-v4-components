@@ -2,6 +2,9 @@
 .size-32px {
     @include size-px(32, 32);
 }
+.size-64px {
+    @include size-px(64, 64);
+}
 
 .size-120px {
     @include size-px(120, 120);
