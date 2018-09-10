@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { EditComponentModule } from '../edit/edit.component.module';
-import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
-import { ForumBasicListComponent } from './basic-list.component';
+import { AdsEditComponentModule } from '../edit/ads-edit.component.module';
+import { AdsListComponent } from './ads-list.component';
 import { ComponentServiceModule } from '../../../service/component.service.module';
 import { FilesComponentModule } from '../../files/files.module';
 // import { RouterModule } from '@angular/router';
@@ -15,13 +14,13 @@ import { FilesComponentModule } from '../../files/files.module';
         CommonModule,
         // RouterModule,
         IonicModule,
-        EditComponentModule,
+        AdsEditComponentModule,
         ComponentServiceModule,
         FilesComponentModule
     ],
-    exports: [ForumBasicListComponent],
-    declarations: [ForumBasicListComponent, MenuPopoverComponent],
-    entryComponents: [MenuPopoverComponent],
+    exports: [AdsListComponent],
+    declarations: [AdsListComponent],
+    entryComponents: [],
     providers: [],
 })
-export class ForumBasicListComponentModule { }
+export class AdsListComponentModule { }

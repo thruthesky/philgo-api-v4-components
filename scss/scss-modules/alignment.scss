@@ -1,0 +1,13 @@
+.position-top-right {
+    @include position-top-right();
+}
+.flex-center {
+    @include flex-center();
+}
+.flex-1{
+    flex:1;
+}
+.align-icon {
+    position: relative;
+    top: .125em;
+}

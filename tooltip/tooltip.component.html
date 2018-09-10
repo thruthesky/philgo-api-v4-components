@@ -1,0 +1,13 @@
+<ion-card class="no-shadow">
+  <ion-card-header>
+    <ion-card-subtitle>{{ props?.subTitle }}</ion-card-subtitle>
+    <ion-card-title>{{ props?.title }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{ props?.content }}
+  </ion-card-content>
+  <ion-button color="light" class="position-top-right no-shadow" (click)=" controller.dismiss() ">
+    <ion-icon name="close"></ion-icon>
+  </ion-button>
+</ion-card>

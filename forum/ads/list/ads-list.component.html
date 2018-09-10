@@ -1,0 +1,32 @@
+<div class="d-flex align-items-stretch mb-2">
+  <ion-button class="no-shadow mr-3 ion-button-m-0" color="tertiary" (click)="onClickPost()">
+    <ion-icon slot="start" name="add"></ion-icon>
+    <ion-text>CREATE POST</ion-text>
+  </ion-button>
+  <div class="flex-center px-2 w-100 bg-light fs-80 text-muted">
+    <span>FORUM</span>
+    <ion-icon class="mx-2" name="play"></ion-icon>
+    <span>{{ philgo.forumName(forum?.post_id)}}</span>
+  </div>
+</div>
+
+<ng-container *ngIf=" forum?.posts?.length ">
+
+  <ion-list class="mb-0" *ngFor="let post of forum.posts">
+
+    <ion-item routerLink="#" (click)="onEdit( post ) ">
+      <ion-avatar slot="start">
+        <img [src]="philgo.primaryPhotoUrl( post?.member?.idx_primary_photo )">
+      </ion-avatar>
+
+      <ion-label class="d-md-flex align-items-center justify-content-between my-1" text-wrap>
+        <h2 class="flex-1">{{ post.subject }}</h2>
+        <p class="fs-sm my-md-0 ml-md-2">
+          <span class="mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
+          <span>Date: {{ philgo.shortDate(post.stamp ) }}</span>
+        </p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+</ng-container>

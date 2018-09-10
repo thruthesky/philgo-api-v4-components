@@ -36,6 +36,7 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
   }
 
   loadMyChatRoomList() {
+    // console.log('ChatMyRoomsComponent::loadMyChatRoomtList()');
     this.show.loader.roomList = true;
 
     this.philgo.chatLoadMyRooms().subscribe(res => {
@@ -47,9 +48,9 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
 
   }
 
-  onClickRoom(idx) {
-    this.router.navigateByUrl('/room/' + idx);
-  }
+  // onClickRoom(idx) {
+  //   this.router.navigateByUrl('/room/' + idx);
+  // }
 
 
 }

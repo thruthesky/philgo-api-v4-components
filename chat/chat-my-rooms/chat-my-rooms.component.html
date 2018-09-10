@@ -6,7 +6,7 @@
 <ng-template #roomListLoaded>
     <ion-list lines="full" *ngIf=" philgo.myRooms.length ">
         <ng-container *ngFor="let room of philgo.myRooms">
-            <ion-item class="pointer" (click)=" onClickRoom(room.idx) ">
+            <ion-item class="pointer" routerLink="/room/{{ room.idx }}">
                 <ion-label>
                     <h3 class="fs-md">{{ room.name }}</h3>
                     <p class="mb-2 fs-sm text-secondary">{{ room.description }}</p>
@@ -26,14 +26,13 @@
             </ion-item>
         </ng-container>
     </ion-list>
-
-
-    <div class="flex-center flex-column mx-5" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
-        <ion-img class="mt-5 mx-5 px-5 mw-300px" src="/assets/img/chat-icon.png"></ion-img>
-        <ion-text class="my-2" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
+    
+    <div class="flex-center flex-column my-5 fs-md" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
+        <ion-img class="mx-5 px-5 mw-300px" src="/assets/img/chat-icon.png"></ion-img>
+        <ion-text class="my-2 fs-xl" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
         <ion-text>{{ tr.t({ko: '회원님이 참여한 채팅 방이 없네요.', en: 'You do not have any philgo.myRooms.'}) }}</ion-text>
-        <ion-text>{{ tr.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text>
-        <ion-button class="my-1">
+        <ion-text class="my-2">{{ tr.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text>
+        <ion-button class="mt-1">
             <span>{{ tr.t({ko: '전체 채팅방 목록', en:'All Chat Room List' }) }}</span>
             <ion-icon class="ml-1" name="open"></ion-icon>
         </ion-button>

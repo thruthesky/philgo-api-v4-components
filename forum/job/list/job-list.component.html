@@ -1,7 +1,16 @@
-<!-- <h1>{{ title }}</h1>
-{{ philgo.configs | json }}
- -->
+<!-- <h1>{{ title }}</h1> -->
+<!-- {{ philgo.postConfigs | json }} -->
 
-<h1>{{ philgo.t(philgo.postConfigs.jobs.category[ category ]) }}</h1>
+
+<h1>{{ philgo.forumName('wanted', category) }}</h1>
 
 <ion-button (click)="onClickPost()">POST</ion-button>
+
+
+<ion-list class="">
+
+    <ion-item routerLink="#" *ngFor="let post of posts" (click)=" onView( post ) ">
+        {{ post[ N.name ] }}
+    </ion-item>
+
+</ion-list>

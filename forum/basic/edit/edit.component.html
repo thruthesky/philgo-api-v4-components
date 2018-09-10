@@ -6,20 +6,20 @@
 <ion-content>
 
 
-  <ion-list class="mx-4 mt-1 mb-4">
+  <ion-list class="mx-4 mb-4">
 
-    <div class="d-md-flex mb-2">
-        <ion-item class="mr-md-1" *ngIf=" philgo.isLoggedOut() ">
-          <ion-label position="floating">{{ philgo.t({en: 'Name', ko: '이름' }) }}</ion-label>
+    <div class="d-md-flex mb-2" *ngIf=" philgo.isLoggedOut() ">
+        <ion-item class="mr-md-1">
+          <ion-label color="tertiary" position="floating">{{ philgo.t({en: 'Name', ko: '이름' }) }}</ion-label>
           <ion-input [(ngModel)]="form.user_name"></ion-input>
         </ion-item>
-        <ion-item class="mx-md-2" *ngIf=" philgo.isLoggedOut() ">
-          <ion-label position="floating">{{ philgo.t({en: 'Email address', ko: '이메일' }) }}</ion-label>
-          <ion-input [(ngModel)]="form.user_email"></ion-input>
+        <ion-item class="mx-md-2">
+          <ion-label color="tertiary" position="floating">{{ philgo.t({en: 'Email address', ko: '이메일' }) }}</ion-label>
+          <ion-input type="email" [(ngModel)]="form.user_email"></ion-input>
         </ion-item>
-        <ion-item class="ml-md-1" *ngIf=" philgo.isLoggedOut() ">
-          <ion-label position="floating">{{ philgo.t({en: 'Password', ko: '비밀번호' }) }}</ion-label>
-          <ion-input [(ngModel)]="form.user_password"></ion-input>
+        <ion-item class="ml-md-1">
+          <ion-label color="tertiary" position="floating">{{ philgo.t({en: 'Password', ko: '비밀번호' }) }}</ion-label>
+          <ion-input type="password" [(ngModel)]="form.user_password"></ion-input>
         </ion-item>
     </div>
 
@@ -30,7 +30,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">{{ philgo.t({ en: 'Please input content', ko: '내용을 입력하세요.' }) }}</ion-label>
-      <ion-textarea rows="5" [(ngModel)]="form.content"></ion-textarea>
+      <ion-textarea rows="4" [(ngModel)]="form.content"></ion-textarea>
     </ion-item>
     <ion-item>
       <app-files-component class="d-block my-3" [showDeleteButton]=" true " [post]=" form "></app-files-component>
@@ -60,7 +60,7 @@
           Submit
         </ion-button>
 
-        <ion-button (click)=" controller.dismiss( null, 'close' ) ">
+        <ion-button color="light" fill="solid"  (click)=" controller.dismiss( null, 'close' ) ">
           <ion-icon color="danger" slot="start" name="close"></ion-icon>
           Close
         </ion-button>
