@@ -6,7 +6,12 @@
 <ion-content>
 
   <div class="flex-center p-2">
-      <ion-text>Job Profile Update</ion-text>
+      <ion-text>
+        Must Read: Please continue posting your job seeking profile only if you really want it.
+        We guarantee that you will have contact from your potential employer as quickly as it can be.
+        Before we will show your profile to your potential employer, we will verify if your data is true or not.
+        Input true data and be ready for the contact.
+      </ion-text>
       <ion-button class="ml-2 no-shadow" (click)="tooltip.present( $event, { title: 'Job Forum', subTitle: 'Job', content: 'If you are in need of job, this is right place to get it. Please input true information only.'} )">
           <ion-icon name="help"></ion-icon>
       </ion-button>
@@ -34,7 +39,7 @@
             <ion-text>Profile Photo</ion-text>
             <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  profilePhoto )">
           </ion-button>
-          <ion-button color="light" class="pl-1 no-shadow" (click)=" tooltip.present( $event, { title: 'Upload profile photo', subTitle: 'Profile photo', content: 'size: width: 200px, height: 200px'}) ">
+          <ion-button color="light" class="pl-1 no-shadow" (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Profile photo', content: 'size: width: 200px, height: 200px'}) ">
             <ion-icon name="help"></ion-icon>
           </ion-button>
         </ion-item>

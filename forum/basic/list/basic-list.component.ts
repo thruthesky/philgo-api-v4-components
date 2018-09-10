@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { PhilGoApiService, ApiPost, ApiForum } from '../../../../philgo-api/philgo-api.service';
+import { PhilGoApiService, ApiPost, ApiForum, ApiPostSearch } from '../../../../philgo-api/philgo-api.service';
 import { EditService } from '../edit/edit.component.service';
 import { ActivatedRoute } from '@angular/router';
 import { PopoverController, InfiniteScroll } from '@ionic/angular';
@@ -19,6 +19,14 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   posts: Array<ApiPost> = [];
 
 
+  /**
+   * Post view
+   */
+  postView: ApiPost;
+
+  /**
+   * Page navigation
+   */
   post_id: string = '';
   page_no = 1;
   limit = 20;
@@ -33,7 +41,8 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
     this.activatedRoute.paramMap.subscribe(params => {
       this.post_id = params.get('post_id');
-      this.loadPage();
+      const idx = params.get('idx');
+      this.loadPage(null, { view: idx });
     });
 
   }
@@ -45,12 +54,16 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     // window.setTimeout(() => this.onClickPost(), 200);
   }
 
-  loadPage(event?: Event) {
+  loadPage(event?: Event, options: { view: string } = <any>{}) {
     let infiniteScroll: InfiniteScroll;
     if (event) {
       infiniteScroll = <any>event.target;
     }
-    this.philgo.postSearch({ post_id: this.post_id, page_no: this.page_no, limit: this.limit }).subscribe(search => {
+    const req: ApiPostSearch = { post_id: this.post_id, page_no: this.page_no, limit: this.limit };
+    if (options.view) {
+      req.view = options.view;
+    }
+    this.philgo.postSearch(req).subscribe(search => {
       console.log('search: ', search);
       this.page_no++;
       this.forum = search;
@@ -138,10 +151,6 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   }
 
 
-  onView(post: ApiPost) {
-    post['showMore'] = ! post['showMore'];
-  }
-
 
   /**
    * Opens an edit box.
@@ -212,9 +221,14 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
   }
 
-  show(post) {
-    return post['showMore'] || this.autoViewContent;
+
+
+  onView(post: ApiPost) {
+    post['showMore'] = !post['showMore'];
+    history.pushState({}, post.subject, `/forum/${post.post_id}/${post.idx}`);
   }
+
+
 }
 
 

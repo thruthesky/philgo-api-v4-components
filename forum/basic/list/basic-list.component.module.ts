@@ -6,6 +6,7 @@ import { MenuPopoverComponent } from './menu-popover/menu-popover.component';
 import { ForumBasicListComponent } from './basic-list.component';
 import { ComponentServiceModule } from '../../../service/component.service.module';
 import { FilesComponentModule } from '../../files/files.module';
+import { ViewComponent } from '../view/view.component';
 // import { RouterModule } from '@angular/router';
 
 
@@ -20,7 +21,7 @@ import { FilesComponentModule } from '../../files/files.module';
         FilesComponentModule
     ],
     exports: [ForumBasicListComponent],
-    declarations: [ForumBasicListComponent, MenuPopoverComponent],
+    declarations: [ForumBasicListComponent, MenuPopoverComponent, ViewComponent],
     entryComponents: [MenuPopoverComponent],
     providers: [],
 })

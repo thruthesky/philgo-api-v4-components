@@ -80,10 +80,19 @@ export class ChatRoomInputComponent implements OnInit {
          * Assign to a new Object.
          */
         const m = Object.assign({}, this.form);
+        
+        /**
+         * 채팅을 보내고, 바로 idx 를 -1 로 해서, gif loader 가 표시되지 않도록 한다.
+         * 에러가 있으면 [x] 표시가 된다.
+         * 이 때문에, 괜히, 채팅 속도가 느리니 어쩌니 하는 말이 나온다.
+         */
+        m.idx = '-1';
+
+        /**
+         *
+         */
         this.send.emit(m);
-
         this.resetForm();
-
         this.philgo.chatSendMessage(m).subscribe(res => {
             /**
              * Update the new Object by reference.
@@ -108,13 +117,6 @@ export class ChatRoomInputComponent implements OnInit {
         if (files === void 0 || !files.length || files[0] === void 0) {
             return this.error.emit(this.philgo.error(-1, 'Please select a file'));
         }
-
-        // const message: ApiChatMessage = <any>{
-        //   idx_member: this.philgo.myIdx(),
-        //   message: ''
-        // };
-        // message['percentage'] = 33;
-        // this.displayMessage(message);
 
         this.doFile(files);
     }
@@ -245,27 +247,6 @@ export class ChatRoomInputComponent implements OnInit {
         this.doFile(files, dataUrl);
     }
 
-
-    /**
-     *
-     * Base64 데이터를 바이너리로 변경해서 리턴한다.
-     *
-     */
-    // static base64toBlob(b64Data, contentType = 'image/jpeg', sliceSize = 512): Blob {
-    //     const byteCharacters = atob(b64Data);
-    //     const byteArrays = [];
-    //     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    //         const slice = byteCharacters.slice(offset, offset + sliceSize);
-    //         const byteNumbers = new Array(slice.length);
-    //         for (let i = 0; i < slice.length; i++) {
-    //             byteNumbers[i] = slice.charCodeAt(i);
-    //         }
-    //         const byteArray = new Uint8Array(byteNumbers);
-    //         byteArrays.push(byteArray);
-    //     }
-    //     const blob = new Blob(byteArrays, { type: contentType });
-    //     return blob;
-    // }
 
 
     safeUrl(url) {
