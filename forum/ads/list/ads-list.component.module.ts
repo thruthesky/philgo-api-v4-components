@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { AdsEditComponentModule } from '../edit/edit.component.module';
+import { AdsEditComponentModule } from '../edit/ads-edit.component.module';
 import { AdsListComponent } from './ads-list.component';
 import { ComponentServiceModule } from '../../../service/component.service.module';
 import { FilesComponentModule } from '../../files/files.module';

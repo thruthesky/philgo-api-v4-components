@@ -217,8 +217,9 @@ export class EditComponent implements OnInit, AfterViewInit {
 
     console.log('files: ', files);
     if (files === void 0 || !files.length || files[0] === void 0) {
-      const e = { code: -1, message: this.philgo.t({ en: 'Please select a file', ko: '업로드 할 팔일을 선택해주세요.' }) };
-      this.componentService.alert(e);
+      const e = { code: -1, message: this.philgo.t({ en: 'Please select a file', ko: '업로드 할 파일을 선택해주세요.' }) };
+      // this.componentService.alert(e);
+      return;
     }
 
     this.philgo.fileUpload(files, { gid: this.form.gid, user_password: this.form.user_password }).subscribe(res => {

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AdsEditComponent } from './edit.component';
+import { AdsEditComponent } from './ads-edit.component';
 @Injectable()
 export class AdsEditService {
   constructor(
     public modalController: ModalController
   ) { }
-  async present(data): Promise<{ data?: any, role: 'success' | 'close' }> {
+  async present(data): Promise<{ data?: any, role: 'success' | 'delete' | 'close' }> {
     const modal = await this.modalController.create({
       component: AdsEditComponent,
       componentProps: {
