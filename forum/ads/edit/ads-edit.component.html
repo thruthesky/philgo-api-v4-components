@@ -6,12 +6,16 @@
 <ion-content>
 
 
-  <ion-list class="mx-4 mb-4">
+  <ion-list class="mb-4">
 
     <ion-item>
-      광고를 업로드합니다.
-      <ion-button color="light" class="pl-1 no-shadow" (click)="tooltip.present( $event, { title: '광고 등록 안내', subTitle: '광고', content: '아래의 광고 배너 중 정사각형 배너는 필수입니다. 그 외 두가지는 옵션이며, 광고 배너를 모두 올리면 광고가 더 많이 노출될 확율이 높습니다.'} )">
+
+
+      <h3>광고 업로드 안내</h3>
+
+      <ion-button #intro color="light" class="pl-1 no-shadow" (click)=" onClickIntro( $event ) ">
         <ion-icon name="help"></ion-icon>
+        {{ philgo.t({ en: 'Must read', ko: '필독' })}}
       </ion-button>
 
     </ion-item>

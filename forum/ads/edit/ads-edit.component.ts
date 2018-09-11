@@ -129,7 +129,7 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
   }
 
   getPhoto(code): ApiFile {
-    return this.philgo.getFile( this.form.files, code );
+    return this.philgo.getFile(this.form.files, code);
     // if (this.form.files) {
     //   return this.form.files.find(v => v.code === code);
     // }
@@ -137,6 +137,14 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
 
   src(code): string {
     return this.getPhoto(code).src + '?name=' + this.getPhoto(code).name;
+  }
+
+  onClickIntro(event: Event) {
+    this.tooltip.present(event, {
+      title: '광고 등록 안내',
+      subTitle: '광고',
+      content: '아래의 광고 배너 중 정사각형 배너는 필수입니다. 그 외 두가지는 옵션이며, 광고 배너를 모두 올리면 광고가 더 많이 노출될 확율이 높습니다.'
+    });
   }
 }
 
