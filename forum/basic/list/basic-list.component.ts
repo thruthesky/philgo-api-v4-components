@@ -14,6 +14,7 @@ import { ComponentService } from '../../../service/component.service';
 })
 export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
+  @Input() displayHeaderMenu = true;
   @Input() autoViewContent = false;
   forum: ApiForum = null;
   posts: Array<ApiPost> = [];
