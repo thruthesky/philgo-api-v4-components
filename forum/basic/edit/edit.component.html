@@ -33,7 +33,7 @@
       <ion-textarea rows="4" [(ngModel)]="form.content"></ion-textarea>
     </ion-item>
     <ion-item>
-      <app-files-component class="d-block my-3" [showDeleteButton]=" true " [post]=" form "></app-files-component>
+      <app-files-component class="d-block my-3" [edit]=" true " [post]=" form "></app-files-component>
     </ion-item>
     <ion-item>
       <div class="progress w-200px" *ngIf=" percentage ">

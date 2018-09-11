@@ -9,7 +9,7 @@ import { ComponentService } from '../../service/component.service';
 })
 export class FilesComponent implements OnInit {
 
-  @Input() showDeleteButton = false;
+  @Input() edit = false;
   @Input() post: ApiPost;
   constructor(
     public philgo: PhilGoApiService,
@@ -17,6 +17,14 @@ export class FilesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  photos(): Array<ApiFile> {
+    return this.post.files.filter(file => file.type.indexOf('image') === 0);
+  }
+
+  attachments(): Array<ApiFile> {
+    return this.post.files.filter(file => file.type.indexOf('image') !== 0);
   }
 
   onClickDeleteButton(file: ApiFile) {

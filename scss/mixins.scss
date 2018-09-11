@@ -1,8 +1,17 @@
+@mixin clearfix() {
+    &:after {
+        display: block;
+        clear: both;
+        content: '';
+    }
+}
+
 
 @mixin size-px($w, $h) {
     width: $w + px !important;
-    height: $h + px!important;
+    height: $h + px !important;
 }
+
 @mixin position-top-right {
     position: absolute;
     z-index: 10002;
@@ -20,6 +29,7 @@
     background-color: blue;
     opacity: 0.001;
 }
+
 @mixin flex-center {
     display: flex;
     align-items: center;
