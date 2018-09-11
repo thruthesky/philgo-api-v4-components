@@ -11,6 +11,7 @@ export class FilesComponent implements OnInit {
 
   @Input() showDeleteButton = false;
   @Input() post: ApiPost;
+  @Input() percentage = 0;
   constructor(
     public philgo: PhilGoApiService,
     private componentService: ComponentService

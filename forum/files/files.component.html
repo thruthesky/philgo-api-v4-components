@@ -4,3 +4,8 @@
     <ion-icon *ngIf=" showDeleteButton " name="trash" class="photo-delete-icon bg-white darkred" (click)=" onClickDeleteButton( file ) "></ion-icon>
   </div>
 </div>
+<div class="upload-bar" *ngIf=" percentage ">
+  <div class="progress w-200px">
+    <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
+  </div>
+</div>

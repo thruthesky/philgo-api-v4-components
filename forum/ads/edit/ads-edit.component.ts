@@ -53,8 +53,11 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
   }
 
   get subjectInDanger(): string {
-    if (this.form.subject && this.form.subject.length > 10) return 'danger';
-    else return 'dark';
+    if (this.form.subject && this.form.subject.length > 10) {
+        return 'danger';
+    } else {
+        return 'dark';
+    }
   }
 
   onSubmit() {
@@ -105,10 +108,12 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
       } else {
         console.log('file success: ', res);
         this.insertUploadedPhoto(res);
+          this.percentage = 0;
       }
     }, e => {
       console.error(e);
       this.componentService.alert(e);
+        this.percentage = 0;
     });
   }
 

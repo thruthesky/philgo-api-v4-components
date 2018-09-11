@@ -37,7 +37,6 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     const d = new Date();
-    this.birthday = { 'month': { 'text': '10', 'value': 10, 'columnIndex': 0 }, 'day': { 'text': '11', 'value': 11, 'columnIndex': 1 }, 'year': { 'text': '1998', 'value': 1998, 'columnIndex': 2 } };
 
     if (this.data && this.data.idx === void 0) {
       this.form.post_id = this.data.post_id;
@@ -61,8 +60,11 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   }
 
   get subjectInDanger(): string {
-    if (this.form.subject && this.form.subject.length > 10) return 'danger';
-    else return 'dark';
+    if (this.form.subject && this.form.subject.length > 10) {
+        return 'danger';
+    } else {
+        return 'dark';
+    }
   }
 
   onSubmit() {
@@ -115,10 +117,12 @@ export class JobEditComponent implements OnInit, AfterViewInit {
       } else {
         console.log('file success: ', res);
         this.insertUploadedPhoto(res);
+          this.percentage = 0;
       }
     }, e => {
       console.error(e);
       this.componentService.alert(e);
+        this.percentage = 0;
     });
   }
 

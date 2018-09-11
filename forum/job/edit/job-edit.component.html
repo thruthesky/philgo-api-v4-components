@@ -43,6 +43,11 @@
             <ion-icon name="help"></ion-icon>
           </ion-button>
         </ion-item>
+        <ion-item  *ngIf=" percentage ">
+            <div class="progress w-200px">
+              <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
+            </div>
+        </ion-item>
       </div>
 
       <div class="col-12 col-md-6 flex-center flex-column mt-3 mt-md-0">
@@ -70,7 +75,11 @@
             <ion-icon name="help"></ion-icon>
           </ion-button>
         </ion-item>
-
+        <ion-item  *ngIf=" percentage ">
+          <div class="progress w-200px">
+            <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
+          </div>
+        </ion-item>
       </div>
       
     </div>
