@@ -8,7 +8,7 @@
 
     <div class="photo row no-gutters" *ngIf=" edit == false && photos().length == 2">
       <div class="col" *ngFor=" let photo of photos() ">
-        <img class="d-block w-100" src="{{ philgo.thumbnailUrl({ width: 320, height: 160, idx: photo.idx }) }}">
+        <img class="d-block w-100 pr-2" src="{{ philgo.thumbnailUrl({ width: 320, height: 160, idx: photo.idx }) }}">
       </div>
     </div>
 
