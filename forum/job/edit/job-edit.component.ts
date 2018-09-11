@@ -7,6 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { TooltipService } from '../../../tooltip/tooltip.module';
 
 import * as N from './../job.defines';
+import { AppService } from '../../../../../providers/app.service';
 
 
 @Component({
@@ -18,7 +19,11 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   controller: ModalController;
   data;
   form: ApiPost = <ApiPost>{};
-  birthday;
+
+  month = null;
+  day = null;
+  year = null;
+
 
   pageTitle = '';
   percentage = 0;
@@ -47,6 +52,13 @@ export class JobEditComponent implements OnInit, AfterViewInit {
       this.form = this.data;
       this.pageTitle = this.philgo.t({ en: `Job Editing ##no`, ko: `구인구직 수정 ##no` }, { no: this.data['idx'] });
     }
+
+    if ( this.data[N.birthday] ) {
+        this.year = this.data[N.birthday].substr(0, 4);
+        this.month = this.data[N.birthday].substr(4, 2);
+        this.day = this.data[N.birthday].substr(6, 2);
+    }
+
   }
 
   ngAfterViewInit() {
@@ -70,7 +82,7 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   onSubmit() {
     console.log('data.role: ', this.data.role);
 
-    // this.form[N.birthday] = this.birthday;
+    this.form[N.birthday] = this.year + this.philgo.add0(this.month) + this.philgo.add0(this.day);
     /**
      * Edit
      */
@@ -162,6 +174,22 @@ export class JobEditComponent implements OnInit, AfterViewInit {
    */
   src(code): string {
     return this.getPhoto(code).src + '?name=' + this.getPhoto(code).name;
+  }
+
+  /**
+  * @see https://www.jstips.co/en/javascript/create-range-0...n-easily-using-one-line/
+  * @see https://jsperf.com/create-1-n-range
+  *
+  * @param n 0...N number to return as array.
+  * @param base default
+  */
+  makeArrayNumber( n: number = 0, base: number = 0): Array<Number> {
+      // return Array.apply(null, {length: n}).map((value, index) => index + indexStart);
+      const arr = [];
+      for (let i = 0; i < n; i++) {
+          arr.push(i + base);
+      }
+      return arr;
   }
 }
 

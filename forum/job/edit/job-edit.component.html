@@ -6,47 +6,50 @@
 <ion-content>
 
   <div class="flex-center p-2">
-      <ion-text>
-        Must Read: Please continue posting your job seeking profile only if you really want it.
-        We guarantee that you will have contact from your potential employer as quickly as it can be.
-        Before we will show your profile to your potential employer, we will verify if your data is true or not.
-        Input true data and be ready for the contact.
-      </ion-text>
-      <ion-button class="ml-2 no-shadow" (click)="tooltip.present( $event, { title: 'Job Forum', subTitle: 'Job', content: 'If you are in need of job, this is right place to get it. Please input true information only.'} )">
-          <ion-icon name="help"></ion-icon>
-      </ion-button>
+    <ion-text>
+      Must Read: Please continue posting your job seeking profile only if you really want it.
+      We guarantee that you will have contact from your potential employer as quickly as it can be.
+      Before we will show your profile to your potential employer, we will verify if your data is true or not.
+      Input true data and be ready for the contact.
+    </ion-text>
+    <ion-button class="ml-2 no-shadow"
+                (click)="tooltip.present( $event, { title: 'Job Forum', subTitle: 'Job', content: 'If you are in need of job, this is right place to get it. Please input true information only.'} )">
+      <ion-icon name="help"></ion-icon>
+    </ion-button>
   </div>
-  
+
   <ion-list class="mx-4 mb-4">
 
     <div class="row">
 
       <div class="col-12 col-md-6 flex-column-center">
         <ion-item *ngIf=" getPhoto( profilePhoto ) ">
-          <div class="size-120px of-hidden" >
-              <img class="w-100" src="{{ src( profilePhoto ) }}">
+          <div class="size-120px of-hidden">
+            <img class="w-100" src="{{ src( profilePhoto ) }}">
           </div>
         </ion-item>
 
         <ion-item *ngIf=" ! getPhoto( profilePhoto ) ">
-          <div class="size-120px of-hidden" >
-              <img class="w-100" src="{{ philgo.anonymousPhotoURL }}">
+          <div class="size-120px of-hidden">
+            <img class="w-100" src="{{ philgo.anonymousPhotoURL }}">
           </div>
         </ion-item>
         <ion-item>
           <ion-button class="no-shadow" color="secondary">
             <ion-icon class="pl-1" slot="start" name="image"></ion-icon>
             <ion-text>Profile Photo</ion-text>
-            <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  profilePhoto )">
+            <input class="transparent-cover pointer" type="file" name="file"
+                   (change)="onChangeFile($event,  profilePhoto )">
           </ion-button>
-          <ion-button color="light" class="pl-1 no-shadow" (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Profile photo', content: 'size: width: 200px, height: 200px'}) ">
+          <ion-button color="light" class="pl-1 no-shadow"
+                      (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Profile photo', content: 'size: width: 200px, height: 200px'}) ">
             <ion-icon name="help"></ion-icon>
           </ion-button>
         </ion-item>
-        <ion-item  *ngIf=" percentage ">
-            <div class="progress w-200px">
-              <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
-            </div>
+        <ion-item *ngIf=" percentage ">
+          <div class="progress w-200px">
+            <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
+          </div>
         </ion-item>
       </div>
 
@@ -60,7 +63,7 @@
 
         <ion-item *ngIf=" ! getPhoto( bodyPhoto ) ">
           <div class="size-120px of-hidden">
-              <img class="w-100" src="{{ philgo.anonymousPhotoURL }}">
+            <img class="w-100" src="{{ philgo.anonymousPhotoURL }}">
           </div>
         </ion-item>
 
@@ -69,19 +72,20 @@
           <ion-button color="secondary no-shadow" fill="solid">
             <ion-icon class="pl-1" slot="start" name="image"></ion-icon>
             <ion-text>Whole Body Photo</ion-text>
-            <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, bodyPhoto )">
+            <input class="transparent-cover pointer" type="file" name="file"
+                   (change)="onChangeFile($event, bodyPhoto )">
           </ion-button>
           <ion-button color="light" class="pl-1 no-shadow">
             <ion-icon name="help"></ion-icon>
           </ion-button>
         </ion-item>
-        <ion-item  *ngIf=" percentage ">
+        <ion-item *ngIf=" percentage ">
           <div class="progress w-200px">
             <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
           </div>
         </ion-item>
       </div>
-      
+
     </div>
 
 
@@ -113,35 +117,41 @@
       <ion-label position="floating">{{ philgo.t({ en: 'Address', ko: '나머지 주소' }) }}</ion-label>
       <ion-input [(ngModel)]="form[N.address]"></ion-input>
     </ion-item>
-
     <div class="note">Address will not be shown to others.</div>
 
+
+    <ion-item-divider>
+      <ion-label>
+        {{ philgo.t({ en: 'Birth Day', ko: '생년월일' }) }}
+      </ion-label>
+    </ion-item-divider>
     <ion-item>
-      <ion-label position="floating">{{ philgo.t({ en: 'Birth Day', ko: '생년월일' }) }} </ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" min="1945-01-01" max="2000-01-01" [(ngModel)]="birthday"></ion-datetime>
+      <ion-label>{{ philgo.t({ en: 'Month', ko: '달' }) }}</ion-label>
+      <ion-select placeholder="1-12" [(ngModel)]=" month ">
+        <ion-select-option *ngFor=" let m of makeArrayNumber(12, 1)" [value]="m">{{m}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ philgo.t({ en: 'Day', ko: '일' }) }}</ion-label>
+      <ion-select placeholder="1-31" [(ngModel)]=" day ">
+        <ion-select-option *ngFor=" let m of makeArrayNumber(31, 1)" [value]="m">{{m}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ philgo.t({ en: 'Year', ko: '년' }) }}</ion-label>
+      <ion-select placeholder="2000" [(ngModel)]=" year ">
+        <ion-select-option *ngFor=" let m of makeArrayNumber(50, 1)" [value]=" 2001 - m ">{{ 2001 - m }}</ion-select-option>
+      </ion-select>
     </ion-item>
 
-    {{birthday|json}}
 
     <ion-item>
-        <ion-radio-group [(ngModel)]="form[N.gender]">
-          <ion-list-header>
-            <ion-label>{{ philgo.t({ en: 'Gender', ko: '성별' }) }}</ion-label>
-          </ion-list-header>
-
-          <ion-item>
-            <ion-label>Male</ion-label>
-            <ion-radio slot="start" value="M"></ion-radio>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Female</ion-label>
-            <ion-radio slot="start" value="F"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
+      <ion-label>{{ philgo.t({ en: 'Gender', ko: '성별' }) }}</ion-label>
+      <ion-select placeholder="{{ philgo.t({ en: 'Gender', ko: '성별' }) }}" [(ngModel)]="form[N.gender]">
+        <ion-select-option value="F">{{ philgo.t({ en: 'Female', ko: '여자' }) }}</ion-select-option>
+        <ion-select-option value="M">{{ philgo.t({ en: 'Male', ko: '남성' }) }}</ion-select-option>
+      </ion-select>
     </ion-item>
-
-
 
 
     <ion-item>
@@ -153,7 +163,8 @@
 
 
     <ion-item>
-      <ion-label position="floating">{{ philgo.t({ en: 'Facebook or other URL', ko: '페이스북 또는 참고 URL 을 입력하세요.' }) }}</ion-label>
+      <ion-label position="floating">{{ philgo.t({ en: 'Facebook or other URL', ko: '페이스북 또는 참고 URL 을 입력하세요.' }) }}
+      </ion-label>
       <ion-input [(ngModel)]="form[N.link]"></ion-input>
     </ion-item>
 
