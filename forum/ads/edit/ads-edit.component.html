@@ -8,8 +8,12 @@
 
   <h3>{{ philgo.t({ en: 'Advertisement Posting', ko: '광고 업로드'}) }}</h3>
   <p>
-    광고 업로드 후 운영자에게 요청을 하시면됩니다.
-    <span class="more" (click)=" onClickIntro( $event ) ">더보기...</span>
+    {{ philgo.t({ en: 'Contact admin to display your ads after compelte posting.', ko: '광고 등록 후 광고 표시를 위해서 운영자에게 요청하시면
+    됩니다.' })}}
+
+    <span class="more" (click)=" onClickIntro( $event ) ">
+      {{ philgo.t({ en: 'Read more', ko: '더보기'})}}
+      ...</span>
   </p>
 
 
@@ -23,7 +27,7 @@
     <ion-item>
       <ion-button size="large" color="secondary" class="no-shadow">
         <ion-icon slot="start" name="image"></ion-icon>
-        <ion-text>정사각형 배너</ion-text>
+        <ion-text>{{ philgo.t({en: 'Square Banner', ko: '정사각형 배너'}) }}</ion-text>
         <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, '1:1')">
       </ion-button>
       <ion-button size="large" color="light" class="pl-1 no-shadow">
@@ -68,7 +72,7 @@
     <ion-item>
       <ion-button color="secondary no-shadow" fill="solid">
         <ion-icon slot="start" name="image"></ion-icon>
-        <ion-text>광고 내용 이미지 업로드</ion-text>
+        <ion-text>{{ philgo.t({en: 'Content Image', ko:  '내용 이미지'}) }}</ion-text>
         <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, 'landing')">
       </ion-button>
       <ion-button color="light" class="pl-1 no-shadow">
@@ -87,8 +91,16 @@
       <ion-input color="{{ subjectInDanger }}" [(ngModel)]="form.subject"></ion-input>
     </ion-item>
 
-    <div>10 글자 이내</div>
+    <ion-item>
 
+      <ion-text>
+        {{ philgo.t({en: 'Length should be longer than #min and less than #max letters.', ko: '#min 글자 이상 #max 글자 이내' }, {min: subjectMinLength, max: subjectMaxLength })}}
+        
+        <span *ngIf=" subjectLength ">
+          ({{ philgo.t({en: 'Length', ko: '현재 길이'})}}: {{ subjectLength }})
+        </span></ion-text>
+
+    </ion-item>
 
     <ion-item>
       <ion-label position="floating">{{ philgo.t({ en: 'Input URL', ko: 'URL 입력하세요.' }) }}</ion-label>

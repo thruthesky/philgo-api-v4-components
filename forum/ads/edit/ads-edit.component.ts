@@ -18,6 +18,9 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
 
   pageTitle = '';
   percentage = 0;
+
+  subjectMinLength = 16;
+  subjectMaxLength = 48;
   constructor(
     private readonly alertController: AlertController,
     private camera: Camera,
@@ -53,8 +56,16 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
   }
 
   get subjectInDanger(): string {
-    if (this.form.subject && this.form.subject.length > 10) return 'danger';
-    else return 'dark';
+    if (this.subjectLength < this.subjectMinLength) return 'danger';
+    if (this.subjectLength > this.subjectMaxLength) return 'danger';
+    return 'dark';
+  }
+  get subjectLength(): number {
+    if (this.form.subject) {
+      return this.form.subject.trim().length;
+    } else {
+      return 0;
+    }
   }
 
   onSubmit() {
@@ -141,9 +152,12 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
 
   onClickIntro(event: Event) {
     this.tooltip.present(event, {
-      title: '광고 등록 안내',
-      subTitle: '광고',
-      content: '아래의 광고 배너 중 정사각형 배너는 필수입니다. 그 외 두가지는 옵션이며, 광고 배너를 모두 올리면 광고가 더 많이 노출될 확율이 높습니다.'
+      title: this.philgo.t({ en: 'Advertisement Information', ko: '광고 등록 안내' }),
+      subTitle: this.philgo.t({ en: 'Advertisement', ko: '광고' }),
+      content: this.philgo.t({
+        en: 'You can post advertisement text, banner and content image. But you have to contact admin after you make changes to display your advertisement.',
+        ko: '광고 문구, 배너, 내용 사진 등을 직접 등록 및 수정하시면됩니다. 하지만 운영자의 승인이 있어야 광고가 표시되므로 등록 또는 수정 꼭 운영자에게 연락주세요.'
+      })
     });
   }
 }
