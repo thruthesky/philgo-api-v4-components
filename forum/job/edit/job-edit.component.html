@@ -38,7 +38,7 @@
             <ion-text class="fs-sm w-130px">Profile Photo</ion-text>
             <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  profilePhoto )">
           </ion-button>
-          <ion-button class="no-shadow"  color="light" (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Profile photo', content: 'size: width: 200px, height: 200px'}) ">
+          <ion-button class="no-shadow"  color="light" (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) ">
             <ion-icon class="w-130px" name="help"></ion-icon>
           </ion-button>
         </div>
@@ -63,7 +63,7 @@
             <ion-text class="fs-sm w-130px">Whole Body Photo</ion-text>
             <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, bodyPhoto )">
           </ion-button>
-          <ion-button  class="no-shadow" color="light">
+          <ion-button  class="no-shadow" color="light" (click)=" tooltip.present( $event, { title: 'Whole body photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) ">
             <ion-icon class="w-130px " name="help"></ion-icon>
           </ion-button>
         </div>
