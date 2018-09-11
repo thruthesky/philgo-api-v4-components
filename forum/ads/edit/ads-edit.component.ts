@@ -18,6 +18,9 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
 
   pageTitle = '';
   percentage = 0;
+
+  subjectMinLength = 16;
+  subjectMaxLength = 48;
   constructor(
     private readonly alertController: AlertController,
     private camera: Camera,
@@ -53,8 +56,16 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
   }
 
   get subjectInDanger(): string {
-    if (this.form.subject && this.form.subject.length > 10) return 'danger';
-    else return 'dark';
+    if (this.subjectLength < this.subjectMinLength) return 'danger';
+    if (this.subjectLength > this.subjectMaxLength) return 'danger';
+    return 'dark';
+  }
+  get subjectLength(): number {
+    if (this.form.subject) {
+      return this.form.subject.trim().length;
+    } else {
+      return 0;
+    }
   }
 
   onSubmit() {
@@ -129,7 +140,7 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
   }
 
   getPhoto(code): ApiFile {
-    return this.philgo.getFile( this.form.files, code );
+    return this.philgo.getFile(this.form.files, code);
     // if (this.form.files) {
     //   return this.form.files.find(v => v.code === code);
     // }
@@ -137,6 +148,17 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
 
   src(code): string {
     return this.getPhoto(code).src + '?name=' + this.getPhoto(code).name;
+  }
+
+  onClickIntro(event: Event) {
+    this.tooltip.present(event, {
+      title: this.philgo.t({ en: 'Advertisement Information', ko: '광고 등록 안내' }),
+      subTitle: this.philgo.t({ en: 'Advertisement', ko: '광고' }),
+      content: this.philgo.t({
+        en: 'You can post advertisement text, banner and content image. But you have to contact admin after you make changes to display your advertisement.',
+        ko: '광고 문구, 배너, 내용 사진 등을 직접 등록 및 수정하시면됩니다. 하지만 운영자의 승인이 있어야 광고가 표시되므로 등록 또는 수정 꼭 운영자에게 연락주세요.'
+      })
+    });
   }
 }
 

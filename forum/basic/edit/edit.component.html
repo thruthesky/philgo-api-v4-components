@@ -23,7 +23,6 @@
         </ion-item>
     </div>
 
-
     <ion-item *ngIf=" data.role != 'reply' && data.role != 'comment-edit' ">
       <ion-label position="floating">{{ philgo.t({ en: 'Please input title', ko: '제목을 입력하세요.' }) }}</ion-label>
       <ion-input [(ngModel)]="form.subject"></ion-input>
