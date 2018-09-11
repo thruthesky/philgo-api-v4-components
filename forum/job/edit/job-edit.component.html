@@ -55,7 +55,6 @@
 
       <div class="col-12 col-md-6 flex-center mt-3 mt-md-0">
 
-
         <div>
             <div class="size-120px of-hidden"  *ngIf=" getPhoto( bodyPhoto ) ">
                 <img class="w-100" src="{{ src( bodyPhoto ) }}">
@@ -83,6 +82,39 @@
           </div>
         </div>
       </div>
+
+
+      <div class="col-12 col-md-6 flex-center mt-3 mt-md-0">
+
+          <div>
+              <div class="size-120px of-hidden"  *ngIf=" getPhoto( idPhoto ) ">
+                  <img class="w-100" src="{{ src( idPhoto ) }}">
+                </div>
+        
+                <div class="size-120px of-hidden"  *ngIf=" ! getPhoto( idPhoto ) ">
+                    <img class="w-100" src="{{ philgo.anonymousPhotoURL }}">
+                </div>
+          </div>
+  
+  
+          <div class="flex-column-center ml-4">
+            <ion-button color="secondary no-shadow" fill="solid">
+  
+              <ion-text class="fs-sm w-130px">ID Photo</ion-text>
+              <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, idPhoto )">
+  
+            </ion-button>
+            <ion-button  class="no-shadow" color="light" (click)=" tooltip.present( $event, { title: 'ID Photo', subTitle: 'Upload ID Photo', content: 'size: width: 200px, height: 200px'}) ">
+              <ion-icon class="w-130px " name="help"></ion-icon>
+            </ion-button>
+  
+            <div class="progress w-200px" *ngIf=" percentage && fileCode == idPhoto ">
+              <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
+            </div>
+          </div>
+        </div>
+
+
 
     </div>
 
@@ -141,14 +173,25 @@
       </ion-select>
     </ion-item>
 
+
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Gender', ko: '성별' }) }}</ion-label>
       <ion-select placeholder="{{ philgo.t({ en: 'Gender', ko: '성별' }) }}" [(ngModel)]="form[N.gender]">
         <ion-select-option value="F">{{ philgo.t({ en: 'Female', ko: '여자' }) }}</ion-select-option>
-        <ion-select-option value="M">{{ philgo.t({ en: 'Male', ko: '남성' }) }}</ion-select-option>
+        <ion-select-option value="M">{{ philgo.t({ en: 'Male', ko: '남자' }) }}</ion-select-option>
       </ion-select>
     </ion-item>
 
+
+
+    <ion-item>
+        <ion-label position="fixed" text-wrap>{{ philgo.t({ en: 'Experience', ko: '경력' }) }}</ion-label>
+        
+        Since <ion-input [(ngModel)]="form[N.experience]"></ion-input>
+
+      </ion-item>
+
+      
     <ion-item>
       <ion-label position="floating">{{ philgo.t({ en: 'Self introduction', ko: '본인소개' }) }}</ion-label>
       <ion-input [(ngModel)]="form[N.intro]"></ion-input>

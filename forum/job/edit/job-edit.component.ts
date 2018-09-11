@@ -31,6 +31,8 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
   profilePhoto = 'profile-photo';
   bodyPhoto = 'body-photo';
+  idPhoto = 'id-photo';
+
 
 
   N = N;
@@ -46,8 +48,8 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
     if (this.data && this.data.idx === void 0) {
       this.form.post_id = this.data.post_id;
-      const forumName = this.philgo.forumName(this.data.post_id );
-      const categoryName = this.philgo.forumName(this.data.post_id, this.data.category );
+      const forumName = this.philgo.forumName(this.data.post_id);
+      const categoryName = this.philgo.forumName(this.data.post_id, this.data.category);
       this.pageTitle = `${forumName} >> ${categoryName}`;
     } else {
       this.form = this.data;
@@ -56,13 +58,13 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
 
     console.log('this.data[N.birthday]', this.data[N.birthday]);
-    if ( this.data[N.birthday] ) {
-        const b = '' + this.data[N.birthday];
-        this.year = b.substr(0, 4);
-        this.month = b.substr(4, 2);
-        this.day = b.substr(6, 2);
+    if (this.data[N.birthday]) {
+      const b = '' + this.data[N.birthday];
+      this.year = b.substr(0, 4);
+      this.month = b.substr(4, 2);
+      this.day = b.substr(6, 2);
 
-        console.log('month:: ', this.month, 'day:: ', this.day, 'year:: ', this.year);
+      console.log('month:: ', this.month, 'day:: ', this.day, 'year:: ', this.year);
     }
 
   }
@@ -79,16 +81,25 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
   get subjectInDanger(): string {
     if (this.form.subject && this.form.subject.length > 10) {
-        return 'danger';
+      return 'danger';
     } else {
-        return 'dark';
+      return 'dark';
     }
   }
 
   onSubmit() {
     console.log('data.role: ', this.data.role);
 
-    this.form[N.birthday] = this.year + this.month + this.day;
+
+    /**
+     * Pass job category
+     */
+    this.form.category = this.data.category;
+
+    //
+    if ( this.year && this.month && this.day ) {
+      this.form[N.birthday] = this.year + this.month + this.day;
+    }
     /**
      * Edit
      */
@@ -136,12 +147,12 @@ export class JobEditComponent implements OnInit, AfterViewInit {
       } else {
         console.log('file success: ', res);
         this.insertUploadedPhoto(res);
-          this.percentage = 0;
+        this.percentage = 0;
       }
     }, e => {
       console.error(e);
       this.componentService.alert(e);
-        this.percentage = 0;
+      this.percentage = 0;
     });
   }
 
@@ -190,13 +201,13 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   * @param n 0...N number to return as array.
   * @param base default
   */
-  makeArrayNumber( n: number = 0, base: number = 0): Array<Number> {
-      // return Array.apply(null, {length: n}).map((value, index) => index + indexStart);
-      const arr = [];
-      for (let i = 0; i < n; i++) {
-          arr.push(i + base);
-      }
-      return arr;
+  makeArrayNumber(n: number = 0, base: number = 0): Array<number> {
+    // return Array.apply(null, {length: n}).map((value, index) => index + indexStart);
+    const arr = [];
+    for (let i = 0; i < n; i++) {
+      arr.push(i + base);
+    }
+    return arr;
   }
 }
 

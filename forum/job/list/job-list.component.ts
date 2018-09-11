@@ -7,6 +7,7 @@ import * as N from '../job.defines';
 import { JobViewComponent } from '../view/job.view.component';
 import { MenuPopoverComponent } from '../../basic/list/menu-popover/menu-popover.component';
 import { ComponentService } from '../../../service/component.service';
+import { TooltipService } from '../../../tooltip/tooltip.module';
 
 @Component({
     selector: 'app-job-list-component',
@@ -39,8 +40,11 @@ export class JobListComponent implements OnInit, AfterViewInit {
         private readonly popoverController: PopoverController,
         private readonly componentService: ComponentService,
         public philgo: PhilGoApiService,
-        public edit: JobEditService
-    ) { }
+        public edit: JobEditService,
+        public tooltip: TooltipService
+    ) {
+
+    }
     ngOnInit() { }
     ngAfterViewInit() {
         // setTimeout(() => this.onClickPost(), 200);
@@ -80,7 +84,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
         if (event) {
             infiniteScroll = <any>event.target;
         }
-        this.philgo.postSearch({ post_id: this.post_id, page_no: this.page_no, limit: this.limit, deleted: 0 }).subscribe(search => {
+        this.philgo.postSearch({ post_id: this.post_id, category: this.category, page_no: this.page_no, limit: this.limit, deleted: 0 }).subscribe(search => {
             console.log('search: ', search);
             this.page_no++;
             this.forum = search;
@@ -101,7 +105,6 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     async onClickPost() {
 
-
         const re = await this.edit.present({
             post_id: 'wanted',
             category: this.category
@@ -114,6 +117,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
     }
 
     async onView(post: ApiPost) {
+        history.pushState({}, post.subject, `/job/${post.category}/${post.idx}`);
         const modal = await this.modalController.create({
             component: JobViewComponent,
             componentProps: {
@@ -151,5 +155,13 @@ export class JobListComponent implements OnInit, AfterViewInit {
                 this.posts.splice(pos, 1);
             }
         }
+    }
+
+    onClickNotVerified( event: Event ) {
+        this.tooltip.present( event, {
+            title: this.philgo.t({en: 'Not Verfieid', ko: '확인 안됨'}),
+            subTitle: this.philgo.t({en: 'Profile is not verfied, yet.', ko: '프로필이 확인되지 않았습니다.'}),
+            content: this.philgo.t({en: 'The profile of this person is not yet verified.', ko: '이 구직자의 프로필이 아직 검증되지 않았습니다.'})
+        })
     }
 }

@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { JobEditComponentModule } from '../edit/job-edit.component.module';
 import { JobViewComponent } from '../view/job.view.component';
+import { TooltipModule } from '../../../tooltip/tooltip.module';
 // import { MenuPopoverComponent } from '../../basic/list/menu-popover/menu-popover.component';
 
 @NgModule({
@@ -11,6 +12,7 @@ import { JobViewComponent } from '../view/job.view.component';
         IonicModule,
         CommonModule,
         JobEditComponentModule,
+        TooltipModule
     ],
     declarations: [
         JobListComponent,
