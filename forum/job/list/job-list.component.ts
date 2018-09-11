@@ -131,17 +131,6 @@ export class JobListComponent implements OnInit, AfterViewInit {
      */
     async onEdit(post: ApiPost) {
 
-
-        // if (this.philgo.isAnonymousPost(post)) {
-        //     const password = await this.componentService.checkPostUserPassword(post);
-        //     if (password) {
-        //         post.user_password = password;
-        //     } else {
-        //         console.log('onEdit() ==> philgo.isAnonymousPost() failed ==> return ');
-        //         return;
-        //     }
-        // }
-
         /**
          * Make a copy from job post. So, it will not be referenced.
          */

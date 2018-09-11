@@ -28,10 +28,20 @@
   </ion-card-content>
 
   <ion-buttons class="d-block">
+    <ion-button (click)=" onView( post ) ">
+      <ion-icon slot="start" name="open" mode="ios"></ion-icon>
+      View
+    </ion-button>
+    <ion-button (click)=" onEdit( post ) ">
+      <ion-icon slot="start" name="create" mode="ios"></ion-icon>
+      Edit
+    </ion-button>
     <ion-button (click)=" onDelete( post ) ">
-      <ion-icon slot="icon-only" name="trash" mode="ios"></ion-icon>
+      <ion-icon slot="start" name="trash" mode="ios"></ion-icon>
+      Delete
     </ion-button>
   </ion-buttons>
+
 
 </ion-card>
 

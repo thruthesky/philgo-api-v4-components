@@ -27,6 +27,7 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
   pageTitle = '';
   percentage = 0;
+  fileCode = null;
 
   profilePhoto = 'profile-photo';
   bodyPhoto = 'body-photo';
@@ -53,10 +54,15 @@ export class JobEditComponent implements OnInit, AfterViewInit {
       this.pageTitle = this.philgo.t({ en: `Job Editing ##no`, ko: `구인구직 수정 ##no` }, { no: this.data['idx'] });
     }
 
+
+    console.log('this.data[N.birthday]', this.data[N.birthday]);
     if ( this.data[N.birthday] ) {
-        this.year = this.data[N.birthday].substr(0, 4);
-        this.month = this.data[N.birthday].substr(4, 2);
-        this.day = this.data[N.birthday].substr(6, 2);
+        const b = '' + this.data[N.birthday];
+        this.year = b.substr(0, 4);
+        this.month = b.substr(4, 2);
+        this.day = b.substr(6, 2);
+
+        console.log('month:: ', this.month, 'day:: ', this.day, 'year:: ', this.year);
     }
 
   }
@@ -82,7 +88,7 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   onSubmit() {
     console.log('data.role: ', this.data.role);
 
-    this.form[N.birthday] = this.year + this.philgo.add0(this.month) + this.philgo.add0(this.day);
+    this.form[N.birthday] = this.year + this.month + this.day;
     /**
      * Edit
      */
@@ -114,6 +120,7 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
 
   onChangeFile(event: Event, code: string) {
+    this.fileCode = code;
     const files = <any>event.target['files'];
     console.log('files: ', files);
     if (files === void 0 || !files.length || files[0] === void 0) {

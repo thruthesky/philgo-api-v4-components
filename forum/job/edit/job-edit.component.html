@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>{{ pageTitle }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="controller.dismiss( null, 'close' )">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -41,6 +46,10 @@
           <ion-button class="no-shadow"  color="light" (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) ">
             <ion-icon class="w-130px" name="help"></ion-icon>
           </ion-button>
+
+          <div class="progress w-200px" *ngIf=" percentage && fileCode == profilePhoto ">
+            <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
+          </div>
         </div>
       </div>
 
@@ -69,7 +78,7 @@
             <ion-icon class="w-130px " name="help"></ion-icon>
           </ion-button>
 
-          <div class="progress w-200px">
+          <div class="progress w-200px" *ngIf=" percentage && fileCode == bodyPhoto ">
             <div class="progress-bar" [style.width]="percentage + '%'">{{percentage}}%</div>
           </div>
         </div>
@@ -116,19 +125,19 @@
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Month', ko: '달' }) }}</ion-label>
       <ion-select placeholder="1-12" [(ngModel)]=" month ">
-        <ion-select-option *ngFor=" let m of makeArrayNumber(12, 1)" [value]="m">{{m}}</ion-select-option>
+        <ion-select-option *ngFor=" let m of makeArrayNumber(12, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Day', ko: '일' }) }}</ion-label>
       <ion-select placeholder="1-31" [(ngModel)]=" day ">
-        <ion-select-option *ngFor=" let m of makeArrayNumber(31, 1)" [value]="m">{{m}}</ion-select-option>
+        <ion-select-option *ngFor=" let m of makeArrayNumber(31, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Year', ko: '년' }) }}</ion-label>
       <ion-select placeholder="2000" [(ngModel)]=" year ">
-        <ion-select-option *ngFor=" let m of makeArrayNumber(50, 1)" [value]=" 2001 - m ">{{ 2001 - m }}</ion-select-option>
+        <ion-select-option *ngFor=" let m of makeArrayNumber(50, 1)" value="{{ 2001 - m }}">{{ 2001 - m }}</ion-select-option>
       </ion-select>
     </ion-item>
 
