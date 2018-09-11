@@ -6,19 +6,14 @@
 <ion-content>
 
 
+  <h3>{{ philgo.t({ en: 'Advertisement Posting', ko: '광고 업로드'}) }}</h3>
+  <p>
+    광고 업로드 후 운영자에게 요청을 하시면됩니다.
+    <span class="more" (click)=" onClickIntro( $event ) ">더보기...</span>
+  </p>
+
+
   <ion-list class="mb-4">
-
-    <ion-item>
-
-
-      <h3>광고 업로드 안내</h3>
-
-      <ion-button #intro color="light" class="pl-1 no-shadow" (click)=" onClickIntro( $event ) ">
-        <ion-icon name="help"></ion-icon>
-        {{ philgo.t({ en: 'Must read', ko: '필독' })}}
-      </ion-button>
-
-    </ion-item>
 
 
     <ion-item *ngIf=" getPhoto('1:1') ">
@@ -99,7 +94,7 @@
       <ion-label position="floating">{{ philgo.t({ en: 'Input URL', ko: 'URL 입력하세요.' }) }}</ion-label>
       <ion-input [(ngModel)]="form.link"></ion-input>
     </ion-item>
-    
+
     <ion-item>
       <ion-buttons class="">
 
