@@ -30,7 +30,7 @@ export class AdsListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    window.setTimeout(() => this.onClickPost(), 200);
+    // window.setTimeout(() => this.onClickPost(), 200);
   }
 
   loadPage(event?: Event) {
