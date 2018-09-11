@@ -47,7 +47,6 @@ export class AdsListComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   /**
    * Opens an edit box.
    * @param post post or comment to edit

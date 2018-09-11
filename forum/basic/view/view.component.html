@@ -16,12 +16,10 @@
   </ion-item>
 
   <ion-item *ngIf=" show(post) ">
-    <ion-card class="no-shadow mb-1">
-      <ion-card-content class="p-0">
-        <div [innerHTML]="post?.content"></div>
-        <app-files-component *ngIf="post.files.length" class="d-block pt-2 pb-1" [post]=" post "></app-files-component>
-      </ion-card-content>
-    </ion-card>
+    <div>
+      <app-files-component *ngIf="post.files.length" class="d-block pt-2 pb-1" [post]=" post "></app-files-component>
+      <div class="post-text-content mt-1" [innerHTML]="post?.content"></div>
+    </div>
   </ion-item>
 
 
@@ -53,7 +51,7 @@
   </ion-item>
 
 
-  
+
   <ion-list class="comments comments-depth bg-light pt-2" *ngIf=" post?.comments?.length && show(post) ">
     <ion-item class="comment" *ngFor=" let comment of post.comments " [attr.depth]=" comment.depth ">
       <ion-card class=" no-shadow p-0 mb-0 ml-1 w-100">

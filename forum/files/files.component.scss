@@ -1,0 +1,47 @@
+// @import '../../scss//mixins.scss';
+// .photos {
+//     @include clearfix();
+//     img {
+//         width: 100%;
+//     }
+//     .photo {
+//         width: 33.33%;
+//         overflow: hidden;
+//     }
+//     &[no='1'] {
+//         .photo {
+//             width: 100%;
+//         }
+//     }
+//     &[no='2'] {
+//         .photo {
+//             float: left;
+//             width: 50%;
+//         }
+//     }
+//     &[no='2'] {
+//         .photo {
+//             float: left;
+//             width: 50%;
+//         }
+//     }
+//     &[no='3'] {
+//         .photo:first-child {
+//             width: 100%;
+//         }
+//         .photo {
+//             float: left;
+//             width: 50%;
+//         }
+//     }
+// }
+
+.photo-delete-icon{
+    right: .3em;
+    color: darkred;
+    background: rgba(255,255,255,0.75);
+}
+ .attachment-delete-icon{
+     color: darkred;
+     cursor: pointer;
+ }

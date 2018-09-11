@@ -6,15 +6,18 @@
 <ion-content>
 
 
-  <ion-list class="mx-4 mb-4">
+  <h3>{{ philgo.t({ en: 'Advertisement Posting', ko: '광고 업로드'}) }}</h3>
+  <p>
+    {{ philgo.t({ en: 'Contact admin to display your ads after compelte posting.', ko: '광고 등록 후 광고 표시를 위해서 운영자에게 요청하시면
+    됩니다.' })}}
 
-    <ion-item>
-      광고를 업로드합니다.
-      <ion-button color="light" class="pl-1 no-shadow" (click)="tooltip.present( $event, { title: '광고 등록 안내', subTitle: '광고', content: '아래의 광고 배너 중 정사각형 배너는 필수입니다. 그 외 두가지는 옵션이며, 광고 배너를 모두 올리면 광고가 더 많이 노출될 확율이 높습니다.'} )">
-        <ion-icon name="help"></ion-icon>
-      </ion-button>
+    <span class="more" (click)=" onClickIntro( $event ) ">
+      {{ philgo.t({ en: 'Read more', ko: '더보기'})}}
+      ...</span>
+  </p>
 
-    </ion-item>
+
+  <ion-list class="mb-4">
 
 
     <ion-item *ngIf=" getPhoto('1:1') ">
@@ -24,7 +27,7 @@
     <ion-item>
       <ion-button size="large" color="secondary" class="no-shadow">
         <ion-icon slot="start" name="image"></ion-icon>
-        <ion-text>정사각형 배너</ion-text>
+        <ion-text>{{ philgo.t({en: 'Square Banner', ko: '정사각형 배너'}) }}</ion-text>
         <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, '1:1')">
       </ion-button>
       <ion-button size="large" color="light" class="pl-1 no-shadow">
@@ -69,7 +72,7 @@
     <ion-item>
       <ion-button color="secondary no-shadow" fill="solid">
         <ion-icon slot="start" name="image"></ion-icon>
-        <ion-text>광고 내용 이미지 업로드</ion-text>
+        <ion-text>{{ philgo.t({en: 'Content Image', ko:  '내용 이미지'}) }}</ion-text>
         <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, 'landing')">
       </ion-button>
       <ion-button color="light" class="pl-1 no-shadow">
@@ -88,18 +91,21 @@
       <ion-input color="{{ subjectInDanger }}" [(ngModel)]="form.subject"></ion-input>
     </ion-item>
 
-    <div>10 글자 이내</div>
+    <ion-item>
 
+      <ion-text>
+        {{ philgo.t({en: 'Length should be longer than #min and less than #max letters.', ko: '#min 글자 이상 #max 글자 이내' }, {min: subjectMinLength, max: subjectMaxLength })}}
+        
+        <span *ngIf=" subjectLength ">
+          ({{ philgo.t({en: 'Length', ko: '현재 길이'})}}: {{ subjectLength }})
+        </span></ion-text>
+
+    </ion-item>
 
     <ion-item>
       <ion-label position="floating">{{ philgo.t({ en: 'Input URL', ko: 'URL 입력하세요.' }) }}</ion-label>
       <ion-input [(ngModel)]="form.link"></ion-input>
     </ion-item>
-    <!-- 
-    <ion-item>
-      <app-files-component class="d-block my-3" [showDeleteButton]=" true " [post]=" form "></app-files-component>
-    </ion-item> -->
-
 
     <ion-item>
       <ion-buttons class="">

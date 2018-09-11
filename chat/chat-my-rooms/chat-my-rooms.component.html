@@ -27,12 +27,13 @@
         </ng-container>
     </ion-list>
     
-    <div class="flex-center flex-column my-5 fs-md" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
-        <ion-img class="mx-5 px-5 mw-300px" src="/assets/img/chat-icon.png"></ion-img>
-        <ion-text class="my-2 fs-xl" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text>
-        <ion-text>{{ tr.t({ko: '회원님이 참여한 채팅 방이 없네요.', en: 'You do not have any philgo.myRooms.'}) }}</ion-text>
-        <ion-text class="my-2">{{ tr.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text>
-        <ion-button class="mt-1">
+    <div class="flex-column-center my-3 my-md-4 fs-md" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
+        <!-- <ion-img class="mx-5 px-5 mw-200px" src="/assets/img/chat-icon.png"></ion-img> -->
+        <!-- <ion-text class="my-2 fs-xl" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text> -->
+        <ion-icon color="medium" class="icon-lg mb-2" name="information-circle" mode="ios"></ion-icon>
+        <ion-text class="fs-lg">{{ tr.t({ko: '회원님이 참여한 채팅 방이 없네요.', en: 'You do not have any philgo.myRooms.'}) }}</ion-text>
+        <ion-text class="my-2 text-muted">{{ tr.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text>
+        <ion-button class="mt-1 no-shadow">
             <span>{{ tr.t({ko: '전체 채팅방 목록', en:'All Chat Room List' }) }}</span>
             <ion-icon class="ml-1" name="open"></ion-icon>
         </ion-button>

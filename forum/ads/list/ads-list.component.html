@@ -1,15 +1,7 @@
-<div class="d-flex align-items-stretch mb-2">
-  <ion-button class="no-shadow mr-3 ion-button-m-0" color="tertiary" (click)="onClickPost()">
-    <ion-icon slot="start" name="add"></ion-icon>
-    <ion-text>CREATE POST</ion-text>
-  </ion-button>
-  <div class="flex-center px-2 w-100 bg-light fs-80 text-muted">
-    <span>FORUM</span>
-    <ion-icon class="mx-2" name="play"></ion-icon>
-    <span>{{ philgo.forumName(forum?.post_id)}}</span>
-  </div>
-</div>
-
+<ion-button class="no-shadow mr-3 ion-button-m-0" color="light" (click)="onClickPost()">
+  <ion-icon slot="start" name="add"></ion-icon>
+  <ion-text>{{ philgo.t({en: 'Create Advertisement', ko: '광고 등록'}) }}</ion-text>
+</ion-button>
 
 <ion-list class="mb-0" *ngIf=" forum?.posts?.length ">
   <ion-item class=" my-2" routerLink="#" *ngFor="let post of forum.posts" (click)="onEdit( post ) ">
@@ -19,8 +11,8 @@
     <ion-label class="d-md-flex pl-2 align-items-center justify-content-between my-1" text-wrap>
       <h2 class="flex-1">{{ post.subject }}</h2>
       <p class="fs-sm my-md-0 ml-md-2">
-        <span class="mr-3 darkgreen">게재 위치: {{ post.varchar_1 }}</span>
-        <span>종료일: {{ philgo.dateYmd(post.int_2) }}</span>
+        <span class="mr-3 darkgreen">{{ philgo.t({en: 'Placement', ko: '게재 위치'})}}: {{ post.varchar_1 }}</span>
+        <span>{{ philgo.t({en: 'End Date', ko: '종료일'})}}: {{ philgo.dateYmd(post.int_2) }}</span>
       </p>
     </ion-label>
   </ion-item>
