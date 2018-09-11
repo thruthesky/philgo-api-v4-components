@@ -15,7 +15,7 @@
     <ng-container *ngIf=" edit || photos().length > 2 ">
       <div class="photo position-relative float-left py-1 pr-2 mw-100px mw-md-200px" [class.edit]=" edit " *ngFor=" let photo of photos() ">
         <img class="w-100" src="{{ photo.src_thumbnail }}">
-        <ion-icon *ngIf=" edit " name="trash" class="photo-delete-icon bg-white darkred" (click)=" onClickDeleteButton( photo ) "></ion-icon>
+        <ion-icon *ngIf=" edit " name="trash" class="photo-delete-icon" (click)=" onClickDeleteButton( photo ) "></ion-icon>
       </div>
     </ng-container>
 
