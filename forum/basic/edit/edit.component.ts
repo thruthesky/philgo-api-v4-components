@@ -143,6 +143,10 @@ export class EditComponent implements OnInit, AfterViewInit {
   }
 
   async onClickCordovaFileUploadButton() {
+
+    /**
+     * Ask first
+     */
     const alert = await this.alertController.create({
       header: this.philgo.t({ ko: '사진', en: 'Photo' }),
       subHeader: this.philgo.t({ ko: '사진 전송을 합니다.', en: 'Sending a photo.' }),
@@ -160,6 +164,9 @@ export class EditComponent implements OnInit, AfterViewInit {
 
     await alert.present();
     const re = await alert.onDidDismiss();
+    if (re.role === 'cancel') {
+      return;
+    }
 
 
     /**
@@ -172,15 +179,13 @@ export class EditComponent implements OnInit, AfterViewInit {
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.CAMERA
     };
-    if (re.role === 'cancel') {
-      return;
-    }
     if (re.role === 'gallery') {
       options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
     }
 
 
     /**
+     * Take photo
      * Get base64 data of photo.
      *
      * 문제의 핵심은 Cordova Camera 로 받은 base64 데이터를 어떻게 <input type='file'> 과 같은 FileList 형의 데이터를 가져오는 것인가이다.
@@ -198,19 +203,19 @@ export class EditComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    //
-    const blob = AngularLibrary.base64toBlob(base64);
+    
     /**
+     * Convert and upload
+     *
      * File 와 FileList 타입의 변수를 만든다.
      * 그리고 그냥 일반 HTML FORM <input type='file'> 에서 파일 정보를 받아 업로드하는 것과 똑 같이 하면 된다.
      */
+    const blob = AngularLibrary.base64toBlob(base64);
     const name = AngularLibrary.dateString() + '-' + AngularLibrary.randomString(8) + '.jpg';
     const file = new File([blob], name, { type: 'image/jpeg' });
     const files: FileList = <any>[file];
 
-
     this.uploadFile(files);
-
   }
 
   uploadFile(files: FileList) {

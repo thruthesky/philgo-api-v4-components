@@ -1,11 +1,11 @@
 <section class="flex-center flex-column" *ngIf=" philgo.isLoggedIn() ">
 
-    <div class="position-relative  d-flex flex-column align-items-center  of-hidden py-3 w-200px">
-        <input class="transparent-cover w-200px pointer" type="file" name="file" (change)="onChangePrimaryPhoto($event)">
+    <div class="position-relative  d-flex flex-column align-items-center  of-hidden py-3 w-200px" (click)=" onClickCordovaPhotoUpload() ">
+        <input class="transparent-cover w-200px pointer" type="file" name="file" (change)="onChangePrimaryPhoto($event)" *ngIf=" isWeb ">
         <div class="size-120px of-hidden">
             <img class="d-block w-100" src="{{ philgo.profilePhotoUrl(form.url_profile_photo) }}">
         </div>
-        <ion-icon class="photo-delete-icon" name="close" (click)=" onClickDeletePrimaryPhoto() "
+        <ion-icon class="photo-delete-icon" name="close" (click)=" onClickDeletePrimaryPhoto( $event ) "
             *ngIf=" form.url_profile_photo "></ion-icon>
 
         <ion-button class="mt-2 no-shadow">
