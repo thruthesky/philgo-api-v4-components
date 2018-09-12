@@ -5,36 +5,37 @@
 </ion-header>
 <ion-content>
 
-<div class="px-3">
-  <h3>{{ philgo.t({ en: 'Advertisement Posting', ko: '광고 업로드'}) }}</h3>
+<div class="px-3 fs-md">
+  <h3 class="mb-1">{{ philgo.t({ en: 'Advertisement Posting', ko: '광고 업로드'}) }}</h3>
   <span>{{ philgo.t({ en: 'Contact admin to display your ads after compelte posting.', ko: '광고 등록 후 광고 표시를 위해서 운영자에게 요청하시면 됩니다.' })}}</span>
-  <span class="more blue" (click)=" onClickIntro( $event ) ">{{ philgo.t({ en: 'Read more', ko: '더보기'})}}...</span>
+  <span class="more" (click)=" onClickIntro( $event ) ">{{ philgo.t({ en: 'Read more', ko: '더보기'})}}...</span>
 </div>
 
-  <ion-list class="mb-4">
+<ion-list class="mb-4">
 
-    <ion-item *ngIf=" getPhoto('1:1') ">
-      <img src="{{ src('1:1') }}">
-    </ion-item>
+<div class="flex-column-center flex-md-row pt-2">
+  <div class="flex-column-center py-3">
+      <ion-item class="mb-3" *ngIf=" getPhoto('1:1') ">
+          <div class="flex-center size-200px of-hidden">
+            <img class="w-100" src="{{ src('1:1') }}">
+          </div>
+      </ion-item>
 
-    <ion-item>
-      <ion-button size="large" color="secondary" class="no-shadow">
-        <ion-icon slot="start" name="image"></ion-icon>
-        <ion-text>{{ philgo.t({en: 'Square Banner', ko: '정사각형 배너'}) }}</ion-text>
-        <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, '1:1')">
-      </ion-button>
-      <ion-button size="large" color="light" class="pl-1 no-shadow">
-        <ion-icon name="help"></ion-icon>
-      </ion-button>
-    </ion-item>
-
-
+      <ion-item>
+        <ion-button size="large" color="secondary" class="no-shadow">
+          <ion-icon slot="start" name="image"></ion-icon>
+          <ion-text>{{ philgo.t({en: 'Square Banner', ko: '정사각형 배너'}) }}</ion-text>
+          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, '1:1')">
+        </ion-button>
+        <ion-button size="large" color="light" class="pl-1 no-shadow">
+          <ion-icon name="help"></ion-icon>
+        </ion-button>
+      </ion-item>
+  </div>
 
     <!-- <ion-item *ngIf=" getPhoto('2:1') ">
       <img src="{{ src('2:1') }}">
     </ion-item>
-
-
     <ion-item>
       <ion-button color="secondary no-shadow" fill="solid">
         <ion-icon slot="start" name="image"></ion-icon>
@@ -45,8 +46,6 @@
         <ion-icon name="help"></ion-icon>
       </ion-button>
     </ion-item>
-
-
     <ion-item *ngIf=" getPhoto('4:1') ">
       <img src="{{ src('4:1') }}">
     </ion-item>
@@ -62,64 +61,74 @@
       </ion-button>
     </ion-item> -->
 
-    <ion-item>
-      <ion-button color="secondary no-shadow" fill="solid">
-        <ion-icon slot="start" name="image"></ion-icon>
-        <ion-text>{{ philgo.t({en: 'Content Image', ko:  '내용 이미지'}) }}</ion-text>
-        <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, 'landing')">
-      </ion-button>
-      <ion-button color="light" class="pl-1 no-shadow">
-        <ion-icon name="help"></ion-icon>
-      </ion-button>
-    </ion-item>
+    <div class="flex-column-center py-3">
+        <ion-item class="mb-3" *ngIf=" getPhoto('landing') ">
+          <div class="flex-center size-200px of-hidden">
+              <img class="w-100" src="{{ src('landing') }}">
+          </div>
+        </ion-item>
+    
+        <ion-item>
+          <ion-button size="large" color="secondary no-shadow" fill="solid">
+            <ion-icon slot="start" name="image"></ion-icon>
+            <ion-text>{{ philgo.t({en: 'Content Image', ko:  '내용 이미지'}) }}</ion-text>
+            <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, 'landing')">
+          </ion-button>
+          <ion-button size="large" color="light" class="pl-1 no-shadow">
+            <ion-icon name="help"></ion-icon>
+          </ion-button>
+        </ion-item>
+    </div>
+</div>
 
 
-    <ion-item *ngIf=" getPhoto('landing') ">
-      <img src="{{ src('landing') }}">
-    </ion-item>
 
 
-    <ion-item>
-      <ion-label position="floating">{{ philgo.t({ en: 'Input advertisement title', ko: '광고 제목을 입력하세요.' }) }}</ion-label>
-      <ion-input color="{{ subjectInDanger }}" [(ngModel)]="form.subject"></ion-input>
-    </ion-item>
+      <ion-item>
+          <ion-label position="floating">{{ philgo.t({ en: 'Input advertisement title', ko: '광고 제목을 입력하세요.' }) }}</ion-label>
+          <ion-input color="{{ subjectInDanger }}" [(ngModel)]="form.subject"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+    
+        <ion-text>
+          <div class="note">
+              {{ philgo.t({en: 'Length should be longer than #min and less than #max letters.', ko: '#min 글자 이상 #max 글자 이내' }, {min: subjectMinLength, max: subjectMaxLength })}}
+          
+              <span *ngIf=" subjectLength ">
+                ({{ philgo.t({en: 'Length', ko: '현재 길이'})}}: {{ subjectLength }})
+              </span>
+          </div>
+        </ion-text>
+    
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating">{{ philgo.t({ en: 'Input URL', ko: 'URL 입력하세요.' }) }}</ion-label>
+          <ion-input [(ngModel)]="form.link"></ion-input>
+        </ion-item>
+    
+        <ion-item class="pt-4">
+          <ion-buttons class="m-auto">
+    
+            <ion-button class="" color="primary" fill="solid" (click)=" onSubmit() ">
+              <ion-icon slot="start" name="paper-plane"></ion-icon>
+              Submit
+            </ion-button>
+    
+            <ion-button color="danger" (click)=" onDelete() ">
+              Delete
+            </ion-button>
+    
+    
+            <ion-button color="light" fill="solid" (click)=" controller.dismiss( null, 'close' ) ">
+              <ion-icon slot="start" name="close"></ion-icon>
+              Close
+            </ion-button>
+    
+          </ion-buttons>
+        </ion-item>
 
-    <ion-item>
-
-      <ion-text>
-        {{ philgo.t({en: 'Length should be longer than #min and less than #max letters.', ko: '#min 글자 이상 #max 글자 이내' }, {min: subjectMinLength, max: subjectMaxLength })}}
-        
-        <span *ngIf=" subjectLength ">
-          ({{ philgo.t({en: 'Length', ko: '현재 길이'})}}: {{ subjectLength }})
-        </span></ion-text>
-
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">{{ philgo.t({ en: 'Input URL', ko: 'URL 입력하세요.' }) }}</ion-label>
-      <ion-input [(ngModel)]="form.link"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-buttons class="m-auto">
-
-        <ion-button class="" color="primary" fill="solid" (click)=" onSubmit() ">
-          <ion-icon slot="start" name="paper-plane"></ion-icon>
-          Submit
-        </ion-button>
-
-        <ion-button color="danger" (click)=" onDelete() ">
-          Delete
-        </ion-button>
-
-
-        <ion-button color="light" fill="solid" (click)=" controller.dismiss( null, 'close' ) ">
-          <ion-icon slot="start" name="close"></ion-icon>
-          Close
-        </ion-button>
-
-      </ion-buttons>
-    </ion-item>
-  </ion-list>
+</ion-list>
 
 </ion-content>
