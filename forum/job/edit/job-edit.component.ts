@@ -22,6 +22,12 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   day = null;
   year = null;
 
+  provinces: Array<string> = [];
+  cities: Array<string> = [];
+  showCities = false;
+
+  city = 'all';
+  province = 'all';
 
   pageTitle = '';
   percentage = 0;
@@ -46,6 +52,12 @@ export class JobEditComponent implements OnInit, AfterViewInit {
     public readonly componentService: ComponentService,
     public tooltip: TooltipService
   ) {
+      this.philgo.provinces().subscribe( provinces => {
+          console.log('provinces:: ', provinces);
+          this.provinces = provinces;
+      }, e => {
+          this.componentService.alert(e);
+      });
   }
   ngOnInit() {
     const d = new Date();
@@ -293,5 +305,26 @@ export class JobEditComponent implements OnInit, AfterViewInit {
     }
     return arr;
   }
+
+    onClickProvince() {
+        if (this.province !== 'all') {
+            this.city = this.province;
+            this.getCities();
+        } else {
+            this.city = 'all';
+            this.showCities = false;
+        }
+    }
+
+    getCities() {
+        this.philgo.cities().subscribe( provinces => {
+            console.log('getCities:: ', provinces);
+            this.cities = re;
+            this.showCities = true;
+        }, e => {
+            this.componentService.alert(e);
+        });
+    }
+
 }
 

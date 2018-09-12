@@ -47,7 +47,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() { }
     ngAfterViewInit() {
-        setTimeout(() => this.onClickPost(), 200);
+        // setTimeout(() => this.onClickPost(), 200);
 
         this.loadPage();
     }

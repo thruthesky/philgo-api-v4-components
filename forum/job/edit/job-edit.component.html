@@ -96,12 +96,16 @@
 
     <ion-item>
       <ion-label position="fixed" text-wrap>{{ philgo.t({ en: 'Province', ko: '주' }) }}</ion-label>
-      <ion-input [(ngModel)]="form[N.province]"></ion-input>
+      <ion-select placeholder="{{ philgo.t({ en: 'Province', ko: '주' }) }}" [(ngModel)]=" province " (change)="onClickProvince()">
+        <ion-select-option *ngFor=" let province of province" [value]="province">{{province}}</ion-select-option>
+      </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf=" showCities ">
       <ion-label position="fixed" text-wrap>{{ philgo.t({ en: 'City', ko: '도시' }) }}</ion-label>
-      <ion-input [(ngModel)]="form[N.city]"></ion-input>
+      <ion-select placeholder="{{ philgo.t({ en: 'City', ko: '도시' }) }}" [(ngModel)]=" cities ">
+        <ion-select-option *ngFor=" let key of a.keys(cities)" [value]="key">{{cities[key]}}</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
@@ -146,10 +150,10 @@
 
 
     <ion-item>
-      <ion-label position="fixed" text-wrap>{{ philgo.t({ en: 'Experience', ko: '경력' }) }}</ion-label>
-
-      Since <ion-input [(ngModel)]="form[N.experience]"></ion-input>
-
+      <ion-label>{{ philgo.t({ en: 'Experience', ko: '경력' }) }}</ion-label>
+      <ion-select placeholder="{{ philgo.t({ en: 'Experience', ko: '경력' }) }}" [(ngModel)]="form[N.experience]">
+        <ion-select-option *ngFor=" let y of makeArrayNumber(30, 1)" value="{{ y }}">{{y}}</ion-select-option>
+      </ion-select>
     </ion-item>
 
 
