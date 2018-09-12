@@ -81,53 +81,53 @@
     </div>
 </div>
 
+<div class="px-3">
 
-
-
+    <ion-item>
+        <ion-label position="floating">{{ philgo.t({ en: 'Input advertisement title', ko: '광고 제목을 입력하세요.' }) }}</ion-label>
+        <ion-input color="{{ subjectInDanger }}" [(ngModel)]="form.subject"></ion-input>
+      </ion-item>
+  
       <ion-item>
-          <ion-label position="floating">{{ philgo.t({ en: 'Input advertisement title', ko: '광고 제목을 입력하세요.' }) }}</ion-label>
-          <ion-input color="{{ subjectInDanger }}" [(ngModel)]="form.subject"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-    
-        <ion-text>
-          <div class="note">
-              {{ philgo.t({en: 'Length should be longer than #min and less than #max letters.', ko: '#min 글자 이상 #max 글자 이내' }, {min: subjectMinLength, max: subjectMaxLength })}}
-          
-              <span *ngIf=" subjectLength ">
-                ({{ philgo.t({en: 'Length', ko: '현재 길이'})}}: {{ subjectLength }})
-              </span>
-          </div>
-        </ion-text>
-    
-        </ion-item>
-    
-        <ion-item>
-          <ion-label position="floating">{{ philgo.t({ en: 'Input URL', ko: 'URL 입력하세요.' }) }}</ion-label>
-          <ion-input [(ngModel)]="form.link"></ion-input>
-        </ion-item>
-    
-        <ion-item class="pt-4">
-          <ion-buttons class="m-auto">
-    
-            <ion-button class="" color="primary" fill="solid" (click)=" onSubmit() ">
-              <ion-icon slot="start" name="paper-plane"></ion-icon>
-              Submit
-            </ion-button>
-    
-            <ion-button color="danger" (click)=" onDelete() ">
-              Delete
-            </ion-button>
-    
-    
-            <ion-button color="light" fill="solid" (click)=" controller.dismiss( null, 'close' ) ">
-              <ion-icon slot="start" name="close"></ion-icon>
-              Close
-            </ion-button>
-    
-          </ion-buttons>
-        </ion-item>
+  
+      <ion-text>
+        <div class="note">
+            {{ philgo.t({en: 'Length should be longer than #min and less than #max letters.', ko: '#min 글자 이상 #max 글자 이내' }, {min: subjectMinLength, max: subjectMaxLength })}}
+        
+            <span *ngIf=" subjectLength ">
+              ({{ philgo.t({en: 'Length', ko: '현재 길이'})}}: {{ subjectLength }})
+            </span>
+        </div>
+      </ion-text>
+  
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">{{ philgo.t({ en: 'Input URL', ko: 'URL 입력하세요.' }) }}</ion-label>
+        <ion-input [(ngModel)]="form.link"></ion-input>
+      </ion-item>
+  
+      <ion-item class="pt-4">
+        <ion-buttons class="m-auto">
+  
+          <ion-button class="" color="primary" fill="solid" (click)=" onSubmit() ">
+            <ion-icon slot="start" name="paper-plane"></ion-icon>
+            Submit
+          </ion-button>
+  
+          <ion-button color="danger" (click)=" onDelete() ">
+            Delete
+          </ion-button>
+  
+  
+          <ion-button color="light" fill="solid" (click)=" controller.dismiss( null, 'close' ) ">
+            <ion-icon slot="start" name="close"></ion-icon>
+            Close
+          </ion-button>
+  
+        </ion-buttons>
+      </ion-item>
+</div>
 
 </ion-list>
 
