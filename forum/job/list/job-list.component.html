@@ -1,52 +1,50 @@
-<div class="d-flex align-items-stretch mb-2">
-  <ion-button class="no-shadow mr-3 ion-button-m-0" color="tertiary" (click)="onClickPost()">
+<div class="text-right border-bottom pb-2">
+  <ion-button class="no-shadow mr-3" (click)="onClickPost()">
     <ion-icon slot="start" name="add"></ion-icon>
     <ion-text>CREATE POST</ion-text>
   </ion-button>
-  <div class="flex-center px-2 w-100 bg-light fs-80 text-muted">
+  <!-- <div class="flex-center px-2 w-100 bg-light fs-80 text-muted">
     <span>Job</span>
     <ion-icon class="mx-2" name="play"></ion-icon>
     <span>{{ philgo.forumName('wanted', category)}}</span>
-  </div>
+  </div> -->
 </div>
 
-<ion-card class="job" *ngFor="let post of posts">
-    <ion-button color="warning" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">Not verified</ion-button>
-  <ion-card-content (click)=" onView( post ) ">
-    <img class="w-100px" src="{{  philgo.getSrc( post.files, 'profile-photo' )}}">
-    <ion-text class="d-block">Name:{{ post[ N.name ] }}</ion-text>
-    <ion-text class="d-block">Mobile:{{ post[ N.mobile ] }}</ion-text>
-    <ion-text class="d-block">Email:{{ post[ N.email ] }}</ion-text>
-    <ion-text class="d-block">Province:{{ post[ N.province ] }}</ion-text>
-    <ion-text class="d-block">City:{{ post[ N.city ] }}</ion-text>
-    <ion-text class="d-block">Birthday:{{ post[ N.birthday ] }}</ion-text>
-    <ion-text class="d-block">Gender:{{ N.selectedGender[ post[ N.gender ] ] }}</ion-text>
-    <ion-text class="d-block">Introduction:{{ post[ N.intro ] }}</ion-text>
-    <ion-text class="d-block">Link:{{ post[ N.link ] }}</ion-text>
-    <ion-item>
-
-    </ion-item>
-  </ion-card-content>
-
-  <ion-buttons class="d-block">
-    <ion-button (click)=" onView( post ) ">
-      <ion-icon slot="start" name="open" mode="ios"></ion-icon>
-      View
-    </ion-button>
-    <ion-button (click)=" onEdit( post ) ">
-      <ion-icon slot="start" name="create" mode="ios"></ion-icon>
-      Edit
-    </ion-button>
-    <ion-button (click)=" onDelete( post ) ">
-      <ion-icon slot="start" name="trash" mode="ios"></ion-icon>
-      Delete
-    </ion-button>
-  </ion-buttons>
-
-
-</ion-card>
-
-<div class="text-center py-3 text-muted" *ngIf=" noMorePosts ">
+<div class="flex-column-center flex-md-row border-bottom"  *ngFor="let post of posts">
+  <div ion-activable class="d-flex align-items-center w-100 position-relative py-1"  (click)=" onView( post ) ">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div slot="start" class="flex-center size-120px of-hidden">
+          <img class="w-100" src="{{  philgo.getSrc( post.files, 'profile-photo' )}}">
+      </div>
+      <div class="fs-md ml-2">
+          <ion-text class="d-block mb-1">Name:{{ post[ N.name ] }}</ion-text>
+          <ion-text class="d-block mb-1">Gender:{{ N.selectedGender[ post[ N.gender ] ] }}</ion-text>
+          <ion-text class="d-block mb-1">Birthday:{{ N.selectedGender[ post[ N.gender ] ] }}</ion-text>
+          <ion-text class="d-block mb-1">Introduction:{{ post[ N.intro ] }}</ion-text>
+          <ion-text class="d-block mb-1">Link:{{ post[ N.link ] }}</ion-text>
+      </div>
+  </div>
+  <div class="ml-auto">
+      <ion-buttons>
+          <ion-button (click)=" onView( post ) ">
+            <ion-icon slot="start" name="open" mode="ios"></ion-icon>
+            View
+          </ion-button>
+          <ion-button (click)=" onEdit( post ) ">
+            <ion-icon slot="start" name="create" mode="ios"></ion-icon>
+            Edit
+          </ion-button>
+          <ion-button (click)=" onDelete( post ) ">
+            <ion-icon slot="start" name="trash" mode="ios"></ion-icon>
+            Delete
+          </ion-button>
+          <ion-button fill="solid" color="warning" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">
+            Not verified
+          </ion-button>
+        </ion-buttons>
+  </div>
+</div>
+<div class="text-center py-5 text-muted" *ngIf=" noMorePosts ">
   {{ philgo.t({ en: 'There is no more posts.', ko: '더 이상 글이 없습니다.' })}}
 </div>
 
