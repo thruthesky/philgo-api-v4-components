@@ -36,10 +36,10 @@
     <div class="row pt-1 pb-2">
 
       <div class="col-12 col-md-4 flex-column-center">
-        <div class="position-relative">
+        <div class="position-relative" (click)=" onClickCordovaPhotoUpload( profilePhoto ) ">
           <ng-container *ngTemplateOutlet="photo; context: { code: profilePhoto }"></ng-container>
           <ion-button class="fs-sm w-125px no-shadow" color="secondary">Profile Photo</ion-button>
-          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  profilePhoto )">
+          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  profilePhoto )" *ngIf=" isWeb ">
         </div>
         <ion-button class="no-shadow" color="light" (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) ">
           <ion-icon name="help"></ion-icon>
@@ -48,10 +48,10 @@
       </div>
 
       <div class="col-12 col-md-4 flex-center mt-3 mt-md-0">
-        <div class="position-relative">
+        <div class="position-relative" (click)=" onClickCordovaPhotoUpload( bodyPhoto ) ">
           <ng-container *ngTemplateOutlet="photo; context: { code: bodyPhoto }"></ng-container>
           <ion-button class="fs-sm w-125px no-shadow" color="secondary">Whole Body Photo</ion-button>
-          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  bodyPhoto )">
+          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  bodyPhoto )" *ngIf=" isWeb ">
         </div>
         <ion-button class="no-shadow" color="light" (click)=" tooltip.present( $event, { title: 'Whole body photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) ">
           <ion-icon class="" name="help"></ion-icon>
@@ -60,10 +60,10 @@
       </div>
 
       <div class="col-12 col-md-4 flex-center mt-3 mt-md-0">
-        <div class="position-relative">
+        <div class="position-relative" (click)=" onClickCordovaPhotoUpload( idPhoto ) ">
           <ng-container *ngTemplateOutlet="photo; context: { code: idPhoto }"></ng-container>
           <ion-button class="fs-sm w-125px no-shadow" color="secondary">ID Photo</ion-button>
-          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  idPhoto )">
+          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  idPhoto )" *ngIf=" isWeb ">
         </div>
         <ion-button class="no-shadow" color="light" (click)=" tooltip.present( $event, { title: 'ID Photo', subTitle: 'Upload ID Photo', content: 'size: width: 200px, height: 200px'}) ">
           <ion-icon class="w-125px " name="help"></ion-icon>

@@ -1,14 +1,12 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
-import { PhilGoApiService, ApiPost, ApiError, ApiForum, ApiFile } from '../../../../philgo-api/philgo-api.service';
+import { PhilGoApiService, ApiPost, ApiFile } from '../../../../philgo-api/philgo-api.service';
 import { AngularLibrary } from '../../../../angular-library/angular-library';
 import { ComponentService } from '../../../service/component.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { TooltipService } from '../../../tooltip/tooltip.module';
 
 import * as N from './../job.defines';
-import { AppService } from '../../../../../providers/app.service';
-
 
 @Component({
   selector: 'app-job-edit',
@@ -37,8 +35,13 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
   N = N;
 
+  isWeb = AngularLibrary.isWeb();
+  isCordova = AngularLibrary.isCordova();
+
 
   constructor(
+    private camera: Camera,
+    private alertController: AlertController,
     public philgo: PhilGoApiService,
     public readonly componentService: ComponentService,
     public tooltip: TooltipService
@@ -130,10 +133,94 @@ export class JobEditComponent implements OnInit, AfterViewInit {
     }, e => this.componentService.alert(e));
   }
 
+  async onClickCordovaPhotoUpload(code: string) {
+
+    if (this.isWeb) {
+      return;
+    }
+
+    /**
+     * Ask first
+     */
+    const alert = await this.alertController.create({
+      header: this.philgo.t({ ko: '사진', en: 'Photo' }),
+      subHeader: this.philgo.t({ ko: '사진 전송을 업로드합니다.', en: 'Uploading a photo.' }),
+      message: this.philgo.t({
+          ko: '카메라로 사진을 찍거나 갤러리에서 사진을 선택하세요.',
+          en: 'Please take a photo from Camera or choose one from Gallery.'
+      }),
+      buttons: [
+        { role: 'camera', text: this.philgo.t({ ko: '카메라로 사진 찍기', en: 'Take a photo using Camera' }) },
+        { role: 'gallery', text: this.philgo.t({ ko: '갤러리에서 선택하기', en: 'Select a photo from Gallery' }) },
+        { role: 'cancel', text: this.philgo.t({ ko: '취소', en: 'Cancel' }) }
+      ]
+    });
+
+
+    await alert.present();
+    const re = await alert.onDidDismiss();
+    if (re.role === 'cancel') {
+      return;
+    }
+
+
+    /**
+     * This is camera settings.
+     */
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.CAMERA
+    };
+    if (re.role === 'gallery') {
+      options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
+    }
+
+
+    /**
+     * Take photo
+     * Get base64 data of photo.
+     *
+     * 문제의 핵심은 Cordova Camera 로 받은 base64 데이터를 어떻게 <input type='file'> 과 같은 FileList 형의 데이터를 가져오는 것인가이다.
+     * FileList 로 값을 가져오면 그냥 HTML 의 <input type='file'> 과 똑 같은 코드로 Angular 로 업로드하면 되기 때문이다.
+     */
+    const base64 = await this.camera.getPicture(options).then((imageData) => {
+      return imageData;
+    }, (e) => {
+      // console.log('Camera/Gallery cancelled');
+      return '';
+    });
+
+    if (!base64) {
+      // console.log('No data path or base64. just return');
+      return;
+    }
+
+    /**
+     * Convert and upload
+     *
+     * File 와 FileList 타입의 변수를 만든다.
+     * 그리고 그냥 일반 HTML FORM <input type='file'> 에서 파일 정보를 받아 업로드하는 것과 똑 같이 하면 된다.
+     */
+    const blob = AngularLibrary.base64toBlob(base64);
+    const name = AngularLibrary.dateString() + '-' + AngularLibrary.randomString(8) + '.jpg';
+    const file = new File([blob], name, { type: 'image/jpeg' });
+    const files: FileList = <any>[file];
+
+    this.onUpload(files, code);
+  }
 
   onChangeFile(event: Event, code: string) {
-    this.fileCode = code;
     const files = <any>event.target['files'];
+    this.onUpload(files, code);
+  }
+
+  onUpload(files: FileList, code: string) {
+
+    this.fileCode = code;
+
     console.log('files: ', files);
     if (files === void 0 || !files.length || files[0] === void 0) {
       const e = { code: -1, message: this.philgo.t({ en: 'Please select a file', ko: '업로드 할 파일을 선택해주세요.' }) };
