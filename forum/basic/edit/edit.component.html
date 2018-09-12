@@ -35,33 +35,30 @@
       <app-files-component class="d-block my-3" [edit]=" true " [post]=" form " [percentage]=" percentage "></app-files-component>
     </ion-item>
 
-    <ion-item>
-      <ion-buttons class="d-md-flex flex-column flex-md-row m-auto">
-
-        <ion-button  *ngIf=" isWeb " color="light" fill="solid">
-          <ion-icon slot="start" name="attach"></ion-icon>
-          <ion-text>File upload</ion-text>
-          <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event)">
-        </ion-button>
-
-        <ion-button *ngIf=" isCordova " color="light" fill="solid" (click)=" onClickCordovaFileUploadButton() ">
-          <ion-icon slot="start" name="camera"></ion-icon>
-          <ion-text>Cordova file upload</ion-text>
-        </ion-button>
-
-        <ion-button class="m-3 my-md-0" color="primary" fill="solid" (click)=" onSubmit() ">
-          <ion-icon slot="start" name="paper-plane"></ion-icon>
-          Submit
-        </ion-button>
-
-        <ion-button color="light" fill="solid"  (click)=" controller.dismiss( null, 'close' ) ">
-          <ion-icon color="danger" slot="start" name="close"></ion-icon>
-          Close
-        </ion-button>
-
-      </ion-buttons>
-    </ion-item>
   </ion-list>
 
+  <ion-buttons class="flex-center">
 
+      <ion-button  *ngIf=" isWeb " color="light" fill="solid">
+        <ion-icon slot="start" name="attach"></ion-icon>
+        <ion-text>File upload</ion-text>
+        <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event)">
+      </ion-button>
+
+      <ion-button *ngIf=" isCordova " color="light" fill="solid" (click)=" onClickCordovaFileUploadButton() ">
+        <ion-icon slot="start" name="camera"></ion-icon>
+        <ion-text>Cordova file upload</ion-text>
+      </ion-button>
+
+      <ion-button class="mx-2" color="primary" fill="solid" (click)=" onSubmit() ">
+        <ion-icon slot="start" name="paper-plane"></ion-icon>
+        Submit
+      </ion-button>
+
+      <ion-button color="light" fill="solid"  (click)=" controller.dismiss( null, 'close' ) ">
+        <ion-icon color="danger" slot="start" name="close"></ion-icon>
+        Close
+      </ion-button>
+
+    </ion-buttons>
 </ion-content>

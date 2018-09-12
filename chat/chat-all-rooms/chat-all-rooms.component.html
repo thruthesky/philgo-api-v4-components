@@ -15,7 +15,8 @@
         
         <ng-container *ngFor="let room of rooms">
             <ion-item class="name pointer" (click)=" onClickRoom(room.idx) ">
-                <ion-label>
+                <ion-label ion-activable>
+                    <ion-ripple-effect></ion-ripple-effect>
                     <h3 class="fs-md">{{ room.name }}</h3>
                     <p class="mb-2 fs-sm text-secondary">{{ room.description }}</p>
                     <p class="d-none d-md-flex align-items-center">

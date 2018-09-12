@@ -25,7 +25,7 @@
   <ion-list class="mx-4 mb-4 mt-3">
     <div class="row pt-1 pb-2">
 
-      <div class="col-12 col-md-6 flex-center">
+      <div class="col-12 col-md-4 flex-center">
         
         <div>
             <div class="size-120px of-hidden"  *ngIf=" getPhoto( profilePhoto ) ">
@@ -40,11 +40,11 @@
         <div class="flex-column-center ml-3">
           <ion-button class="no-shadow" color="secondary">
             <!-- <ion-icon class="d-none d-md-block" slot="start" name="image"></ion-icon> -->
-            <ion-text class="fs-sm w-130px">Profile Photo</ion-text>
+            <ion-text class="fs-sm w-125px">Profile Photo</ion-text>
             <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  profilePhoto )">
           </ion-button>
           <ion-button class="no-shadow"  color="light" (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) ">
-            <ion-icon class="w-130px" name="help"></ion-icon>
+            <ion-icon class="w-125px" name="help"></ion-icon>
           </ion-button>
 
           <div class="progress w-200px" *ngIf=" percentage && fileCode == profilePhoto ">
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-md-6 flex-center mt-3 mt-md-0">
+      <div class="col-12 col-md-4 flex-center mt-3 mt-md-0">
 
         <div>
             <div class="size-120px of-hidden"  *ngIf=" getPhoto( bodyPhoto ) ">
@@ -69,12 +69,12 @@
         <div class="flex-column-center ml-4">
           <ion-button color="secondary no-shadow" fill="solid">
 
-            <ion-text class="fs-sm w-130px">Whole Body Photo</ion-text>
+            <ion-text class="fs-sm w-125px">Whole Body Photo</ion-text>
             <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, bodyPhoto )">
 
           </ion-button>
           <ion-button  class="no-shadow" color="light" (click)=" tooltip.present( $event, { title: 'Whole body photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) ">
-            <ion-icon class="w-130px " name="help"></ion-icon>
+            <ion-icon class="w-125px " name="help"></ion-icon>
           </ion-button>
 
           <div class="progress w-200px" *ngIf=" percentage && fileCode == bodyPhoto ">
@@ -84,7 +84,7 @@
       </div>
 
 
-      <div class="col-12 col-md-6 flex-center mt-3 mt-md-0">
+      <div class="col-12 col-md-4 flex-center mt-3 mt-md-0">
 
           <div>
               <div class="size-120px of-hidden"  *ngIf=" getPhoto( idPhoto ) ">
@@ -100,12 +100,12 @@
           <div class="flex-column-center ml-4">
             <ion-button color="secondary no-shadow" fill="solid">
   
-              <ion-text class="fs-sm w-130px">ID Photo</ion-text>
+              <ion-text class="fs-sm w-125px">ID Photo</ion-text>
               <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event, idPhoto )">
   
             </ion-button>
             <ion-button  class="no-shadow" color="light" (click)=" tooltip.present( $event, { title: 'ID Photo', subTitle: 'Upload ID Photo', content: 'size: width: 200px, height: 200px'}) ">
-              <ion-icon class="w-130px " name="help"></ion-icon>
+              <ion-icon class="w-125px " name="help"></ion-icon>
             </ion-button>
   
             <div class="progress w-200px" *ngIf=" percentage && fileCode == idPhoto ">
