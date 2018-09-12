@@ -1,13 +1,13 @@
-<div class="d-flex align-items-stretch mb-2">
-  <ion-button class="no-shadow mr-3 ion-button-m-0" color="tertiary" (click)="onClickPost()">
+<div class="text-right mb-2">
+  <ion-button class="no-shadow mr-3 ion-button-m-0" (click)="onClickPost()">
     <ion-icon slot="start" name="add"></ion-icon>
     <ion-text>CREATE POST</ion-text>
   </ion-button>
-  <div class="flex-center px-2 w-100 bg-light fs-80 text-muted">
+  <!-- <div class="flex-center px-2 w-100 bg-light fs-80 text-muted">
     <span>Job</span>
     <ion-icon class="mx-2" name="play"></ion-icon>
     <span>{{ philgo.forumName('wanted', category)}}</span>
-  </div>
+  </div> -->
 </div>
 
 <ion-card class="job" *ngFor="let post of posts">
