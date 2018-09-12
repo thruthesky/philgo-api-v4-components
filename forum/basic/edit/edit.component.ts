@@ -149,10 +149,10 @@ export class EditComponent implements OnInit, AfterViewInit {
      */
     const alert = await this.alertController.create({
       header: this.philgo.t({ ko: '사진', en: 'Photo' }),
-      subHeader: this.philgo.t({ ko: '사진 전송을 합니다.', en: 'Sending a photo.' }),
+      subHeader: this.philgo.t({ ko: '사진 전송을 업로드합니다.', en: 'Uploading a photo.' }),
       message: this.philgo.t({
-        ko: '카메라로 사진을 찍어서 전송 할 수 있으며 갤러리에서 사진을 선택 할 수도 있습니다.',
-        en: 'You can take a picture from Camera or select a photo from gallery.'
+          ko: '카메라로 사진을 찍거나 갤러리에서 사진을 선택하세요.',
+          en: 'Please take a photo from Camera or choose one from Gallery.'
       }),
       buttons: [
         { role: 'camera', text: this.philgo.t({ ko: '카메라로 사진 찍기', en: 'Take a photo using Camera' }) },
