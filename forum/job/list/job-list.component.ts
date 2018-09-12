@@ -1,13 +1,12 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { PhilGoApiService, ApiForum, ApiPost } from '../../../../philgo-api/philgo-api.service';
+import { PhilGoApiService, ApiForum, ApiPost, ApiPostSearch } from '../../../../philgo-api/philgo-api.service';
 import { JobEditService } from '../edit/job-edit.component.service';
-import { InfiniteScroll, ModalController, PopoverController } from '@ionic/angular';
+import { InfiniteScroll } from '@ionic/angular';
 
 import * as N from '../job.defines';
-import { JobViewComponent } from '../view/job.view.component';
-import { MenuPopoverComponent } from '../../basic/list/menu-popover/menu-popover.component';
 import { ComponentService } from '../../../service/component.service';
 import { TooltipService } from '../../../tooltip/tooltip.module';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-job-list-component',
@@ -17,9 +16,19 @@ import { TooltipService } from '../../../tooltip/tooltip.module';
 
 export class JobListComponent implements OnInit, AfterViewInit {
 
+    showSearch = false;
     forum: ApiForum = null;
     posts: Array<ApiPost> = [];
+    postView: ApiPost = null;
     @Input() category;
+
+
+    form: ApiPost = <ApiPost>{};
+    provinces: Array<string> = [];
+    cities: Array<string> = [];
+    showCities = false;
+    province = '';
+    city = '';
 
 
     /**
@@ -36,8 +45,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     //
     constructor(
-        private modalController: ModalController,
-        private readonly popoverController: PopoverController,
+        private readonly activatedRoute: ActivatedRoute,
         private readonly componentService: ComponentService,
         public philgo: PhilGoApiService,
         public edit: JobEditService,
@@ -49,45 +57,37 @@ export class JobListComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         // setTimeout(() => this.onClickPost(), 200);
 
-        this.loadPage();
+        this.activatedRoute.paramMap.subscribe(params => {
+            const idx = params.get('idx');
+            this.loadPage(null, { view: idx });
+        });
+
+        this.philgo.provinces().subscribe( provinces => {
+            // console.log('provinces:: ', provinces);
+            this.provinces = provinces;
+        }, e => {
+            this.componentService.alert(e);
+        });
     }
 
 
-    async onClickMenu(event: any, post: ApiPost) {
-        // event.stopPropagation();
-        // const popover = await this.popoverController.create({
-        //     component: MenuPopoverComponent,
-        //     componentProps: {
-        //         controller: this.popoverController
-        //     },
-        //     event: event,
-        //     translucent: true
-        // });
-        // await popover.present();
-        // const re = await popover.onDidDismiss();
-        // const action = re.role;
-
-        // console.log('action: ', action);
-        // if (action === 'view') {
-        //     this.onView(post);
-        // } else if (action === 'edit') {
-        //     this.onEdit(post);
-        // } else if (action === 'delete') {
-        //     this.onDelete(post);
-        // }
-    }
-
-
-
-    loadPage(event?: Event) {
+    loadPage(event?: Event,  options: { view: string } = <any>{}) {
         let infiniteScroll: InfiniteScroll;
         if (event) {
             infiniteScroll = <any>event.target;
         }
-        this.philgo.postSearch({ post_id: this.post_id, category: this.category, page_no: this.page_no, limit: this.limit, deleted: 0 }).subscribe(search => {
+
+        const req: ApiPostSearch = { post_id: this.post_id, category: this.category, page_no: this.page_no, limit: this.limit, deleted: 0 };
+        if (options.view) {
+            req.view = options.view;
+        }
+        this.philgo.postSearch(req).subscribe(search => {
             console.log('search: ', search);
             this.page_no++;
             this.forum = search;
+            if ( search && search.view && search.view.idx ) {
+                this.postView = search.view;
+            }
 
             if (!search.posts || !search.posts.length) {
                 if (event) {
@@ -105,6 +105,11 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     async onClickPost() {
 
+        if (this.philgo.isLoggedOut()) {
+            return this.componentService.alert({ message: this.philgo.t({ ko: '먼저 로그인하십시오.', en: 'Please sign-in first.' }) });
+        }
+
+
         const re = await this.edit.present({
             post_id: 'wanted',
             category: this.category
@@ -116,17 +121,21 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     }
 
-    async onView(post: ApiPost) {
+    async onView(post: ApiPost, autoViewContent) {
+        if ( !autoViewContent ) {
+            post['showMore'] = !post['showMore'];
+        }
         history.pushState({}, post.subject, `/job/${post.category}/${post.idx}`);
-        const modal = await this.modalController.create({
-            component: JobViewComponent,
-            componentProps: {
-                controller: this.modalController,
-                post: post
-            }
-        });
-        await modal.present();
-        const re = await modal.onDidDismiss();
+
+        // const modal = await this.modalController.create({
+        //     component: JobViewComponent,
+        //     componentProps: {
+        //         controller: this.modalController,
+        //         post: post
+        //     }
+        // });
+        // await modal.present();
+        // const re = await modal.onDidDismiss();
     }
 
     /**
@@ -162,6 +171,30 @@ export class JobListComponent implements OnInit, AfterViewInit {
             title: this.philgo.t({en: 'Not Verfieid', ko: '확인 안됨'}),
             subTitle: this.philgo.t({en: 'Profile is not verfied, yet.', ko: '프로필이 확인되지 않았습니다.'}),
             content: this.philgo.t({en: 'The profile of this person is not yet verified.', ko: '이 구직자의 프로필이 아직 검증되지 않았습니다.'})
-        })
+        });
+    }
+
+    onClickProvince() {
+        console.log('onClickProvince:: ', this.province);
+        if ( this.province ) {
+            this.city = this.province;
+            this.getCities();
+        }
+    }
+
+    getCities() {
+        this.showCities = false;
+        this.philgo.cities(this.province).subscribe( cities => {
+            console.log('getCities:: ', this.city);
+            this.cities = cities;
+            this.showCities = true;
+        }, e => {
+            this.componentService.alert(e);
+            this.showCities = false;
+        });
+    }
+
+    get cityKeys() {
+        return Object.keys(this.cities);
     }
 }

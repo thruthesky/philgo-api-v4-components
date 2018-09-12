@@ -1,25 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ApiPost, PhilGoApiService } from '../../../../philgo-api/philgo-api.service';
 import * as N from '../job.defines';
 
 @Component({
-  selector: 'app-job-view',
-  templateUrl: './job.view.component.html',
-  styleUrls: ['../../../scss/index.scss', './job.view.component.scss']
+    selector: 'app-job-view',
+    templateUrl: './job.view.component.html',
+    styleUrls: ['../../../scss/index.scss', './job.view.component.scss']
 })
 export class JobViewComponent implements OnInit {
 
-  controller: ModalController;
-  post: ApiPost;
+    @Input() post: ApiPost;
+    @Input() autoViewContent = false;
 
-  N = N;
-  constructor(
-      public philgo: PhilGoApiService
-  ) { }
+    @Output() onView = new EventEmitter();
+    @Output() onEdit = new EventEmitter();
+    @Output() onDelete = new EventEmitter();
 
-  ngOnInit() {
-  }
+
+    N = N;
+
+    constructor(public philgo: PhilGoApiService) {
+    }
+
+    ngOnInit() {
+    }
+
+    show(post) {
+        return post['showMore'] || this.autoViewContent;
+    }
+
+
 
 }
 

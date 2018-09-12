@@ -1,4 +1,4 @@
-<app-forum-basic-view [post]=" forum.view " [autoViewContent]=" true " *ngIf=" forum?.view?.idx " (onVote)=" onVote( $event[0], $event[1] ) "
+<app-forum-basic-view [post]=" postView " [autoViewContent]=" true " *ngIf=" postView?.idx " (onVote)=" onVote( $event[0], $event[1] ) "
   (onReply)=" onReply( $event[0], $event[1] ) " (onClickMenu)=" onClickMenu( $event[0], $event[1] ) "></app-forum-basic-view>
 
 

@@ -68,7 +68,9 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
       console.log('search: ', search);
       this.page_no++;
       this.forum = search;
-
+      if ( search && search.view && search.view.idx ) {
+          this.postView = search.view;
+      }
       if (!search.posts || !search.posts.length) {
         infiniteScroll.disabled = true;
         this.noMorePosts = true;
