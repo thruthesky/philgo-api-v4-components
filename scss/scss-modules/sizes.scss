@@ -14,6 +14,10 @@
     @include size-px(200, 200);
 }
 
+.size-300px {
+    @include size-px(300, 300);
+}
+
 .w-100px {
     width: 100px !important;
 }
