@@ -17,6 +17,12 @@ export class RegisterComponent implements OnInit {
     @Output() error = new EventEmitter<ApiErrorResponse>();
     @Output() register = new EventEmitter<ApiRegisterResponse>();
     @Output() update = new EventEmitter<ApiProfileResponse>();
+
+    /**
+     * @Bug This component may created once, but used many times without Angular lifecycle due to Ionic lifecycle.
+     *      And this will lead a bug of not initializing the form.
+     *      If it's a big matter to you, then you may call `loadUserProfile()` again on Ionic life cycle.
+     */
     form;
     loader = {
         profile: false,
@@ -27,10 +33,12 @@ export class RegisterComponent implements OnInit {
         public philgo: PhilGoApiService,
         public tr: LanguageTranslate
     ) {
-        this.resetForm();
     }
     ngOnInit() {
+        this.loadUserProfile();
+    }
 
+    loadUserProfile() {
         if (this.philgo.isLoggedIn()) {
             this.loader.profile = true;
             this.philgo.profile().subscribe(user => {
@@ -50,7 +58,8 @@ export class RegisterComponent implements OnInit {
             password: '',
             name: '',
             nickname: '',
-            mobile: ''
+            mobile: '',
+            url_profile_photo: ''
         };
     }
 
@@ -99,9 +108,9 @@ export class RegisterComponent implements OnInit {
             } else if (re['code'] && re['idx'] === void 0) {
                 // console.log('error: ', re);
             } else if (re['idx'] !== void 0 && re['idx']) {
-                // console.log('file upload success: ', re);
+                console.log('file upload success: ', re);
                 // this.photo = re;
-                this.form.url_profile_photo = re['url'];
+                this.form.url_profile_photo = re['src'];
                 this.percentage = 0;
             }
         }, (e: HttpErrorResponse) => {
@@ -119,7 +128,7 @@ export class RegisterComponent implements OnInit {
                 }
             }
             console.log('file upload failed');
-            this.error.emit( this.philgo.error( ApiErrorFileUploadError, 'File upload failed') );
+            this.error.emit(this.philgo.error(ApiErrorFileUploadError, 'File upload failed'));
         });
     }
 
