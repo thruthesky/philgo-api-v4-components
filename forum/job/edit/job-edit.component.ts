@@ -37,6 +37,7 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
   N = N;
 
+
   constructor(
     public philgo: PhilGoApiService,
     public readonly componentService: ComponentService,
@@ -97,7 +98,7 @@ export class JobEditComponent implements OnInit, AfterViewInit {
     this.form.category = this.data.category;
 
     //
-    if ( this.year && this.month && this.day ) {
+    if (this.year && this.month && this.day) {
       this.form[N.birthday] = this.year + this.month + this.day;
     }
     /**
@@ -176,22 +177,18 @@ export class JobEditComponent implements OnInit, AfterViewInit {
     console.log('file list:', this.form.files);
   }
 
-  /**
-   * Returns the photo of the code.
-   * @param code code of the uploaded file
-   */
-  getPhoto(code): ApiFile {
-    if (this.form.files) {
-      return this.form.files.find(v => v.code === code);
-    }
-  }
 
   /**
    * Returns the src of uploaded photo
    * @param code code of uploaded photo
    */
   src(code): string {
-    return this.getPhoto(code).src + '?name=' + this.getPhoto(code).name;
+    const src = this.philgo.getSrc(this.form.files, code);
+    if (src) {
+      return src;
+    } else {
+      return this.philgo.anonymousPhotoURL;
+    }
   }
 
   /**
