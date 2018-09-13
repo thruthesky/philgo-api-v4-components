@@ -29,8 +29,14 @@ export class JobListComponent implements OnInit, AfterViewInit {
     showCities = false;
     province = '';
     city = '';
-    year = '';
 
+    age_min = 18;
+    age_max = 70;
+
+    ageRange = {
+        lower: this.age_min,
+        upper: this.age_max
+    };
 
     /**
      * Page nav
@@ -91,6 +97,15 @@ export class JobListComponent implements OnInit, AfterViewInit {
         if (this.city) {
             and.push(`${N.city}='${this.city}'`);
         }
+
+        if ( this.ageRange['lower'] !== this.age_min || this.ageRange['upper'] !== this.age_max ) {
+            const n = new Date();
+            const min = n.getFullYear() - this.ageRange['lower'];
+            const max = n.getFullYear() - this.ageRange['upper'];
+            and.push(`${N.birthday}>=${max}0101 AND ${N.birthday}<=${min}1231`);
+        }
+
+
         const req: ApiPostSearch = { post_id: this.post_id, category: this.category, page_no: this.page_no, limit: this.limit, deleted: 0 };
         req.and = and.join(' AND ');
         if (options.view) {
