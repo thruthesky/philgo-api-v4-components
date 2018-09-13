@@ -6,28 +6,31 @@
 <ng-template #roomListLoaded>
     <ion-list lines="full" *ngIf=" philgo.myRooms.length ">
         <ng-container *ngFor="let room of philgo.myRooms">
-            <ion-item class="pointer" routerLink="/room/{{ room.idx }}">
-                <ion-label>
-                    <h3 class="fs-md">{{ room.name }}</h3>
-                    <p class="mb-2 fs-sm text-secondary">{{ room.description }}</p>
-                    <p class="d-flex align-items-center mb-1" *ngIf= "philgo.lastMessage( room )">
-                        <span><ion-icon class="align-icon mr-1" name="mail"></ion-icon></span>
-                        <span>{{ philgo.lastMessage( room ) }}</span>
-                    </p>
-                    <p class="d-none d-md-flex align-items-center">
-                        <span><ion-icon class="align-icon mr-1" name="person"></ion-icon></span>
-                        <span>{{ tr.t({ ko: '총 인원: ', en: 'No of users: ' }) }}{{ room.no_of_member }}</span>
-                    </p>
-                </ion-label>
-                <ion-icon color="dark" name="ribbon" *ngIf="room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
-                <ion-icon color="primary" name="heart" *ngIf=" room.favorite == 'Y' "></ion-icon>
-                <ion-icon color="tertiary" name="notifications" *ngIf=" room.disable_alarm != 'Y' "></ion-icon>
-                <ion-badge class="border-radius-45px" slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
-            </ion-item>
+            <a ion-activable class="d-block position-relative" routerLink="/room/{{ room.idx }}">
+                <ion-ripple-effect></ion-ripple-effect>
+                <ion-item class="pointer">
+                    <ion-label>
+                        <h3 class="fs-md">{{ room.name }}</h3>
+                        <p class="mb-2 fs-sm text-secondary">{{ room.description }}</p>
+                        <p class="d-flex align-items-center mb-1" *ngIf= "philgo.lastMessage( room )">
+                            <span><ion-icon class="align-icon mr-1" name="mail"></ion-icon></span>
+                            <span>{{ philgo.lastMessage( room ) }}</span>
+                        </p>
+                        <p class="d-none d-md-flex align-items-center">
+                            <span><ion-icon class="align-icon mr-1" name="person"></ion-icon></span>
+                            <span>{{ tr.t({ ko: '총 인원: ', en: 'No of users: ' }) }}{{ room.no_of_member }}</span>
+                        </p>
+                    </ion-label>
+                    <ion-icon color="dark" name="ribbon" *ngIf="room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
+                    <ion-icon color="primary" name="heart" *ngIf=" room.favorite == 'Y' "></ion-icon>
+                    <ion-icon color="tertiary" name="notifications" *ngIf=" room.disable_alarm != 'Y' "></ion-icon>
+                    <ion-badge class="border-radius-45px" slot="end" color="danger" *ngIf=" room.no_of_unread_messages != '0' ">{{ room.no_of_unread_messages }}</ion-badge>
+                </ion-item>
+            </a>
         </ng-container>
     </ion-list>
     
-    <div ion-activable class="flex-column-center my-4 mt-md-5 fs-md" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
+    <div class="flex-column-center my-4 mt-md-5 fs-md" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
         <!-- <ion-img class="mx-5 px-5 mw-200px" src="/assets/img/chat-icon.png"></ion-img> -->
         <!-- <ion-text class="my-2 fs-xl" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text> -->
         <ion-icon color="medium" class="icon-lg" name="chatbubbles" mode="ios"></ion-icon>
