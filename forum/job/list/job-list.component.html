@@ -1,10 +1,12 @@
-<ion-list>
-  <ion-list-header>
+<ion-list class="mb-0">
+  <ion-list-header class="mb-0 pb-2 border-bottom">
     <ion-button class="ml-auto" (click)=" showSearch = !showSearch ">
       <ion-icon slot="start" name="search"></ion-icon>
       Search
     </ion-button>
   </ion-list-header>
+
+  
   <ng-container *ngIf="showSearch">
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Gender', ko: '성별' }) }}</ion-label>
@@ -41,11 +43,14 @@
         <ion-select-option *ngFor=" let m of _.makeArrayNumber(50, 1)" value="{{ m }}">{{ m }}</ion-select-option>
       </ion-select>
     </ion-item>
-  
+    
+
+    <ion-item class="border-bottom">
+        <ion-button class="mx-auto mt-3 mb-5 no-shadow" size="normal" color="secondary" (click)="onSearch()">Submit</ion-button>
+    </ion-item>
   </ng-container>
 </ion-list>
 
-<ion-button (click)="onSearch()">Submit</ion-button>
 
 <app-job-view *ngIf=" postView?.idx "
               [post]=" postView "
