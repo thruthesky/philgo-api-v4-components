@@ -40,6 +40,8 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   isWeb = AngularLibrary.isWeb();
   isCordova = AngularLibrary.isCordova();
 
+  minAge = new Date().getFullYear() - 17;
+
 
   constructor(
     private camera: Camera,

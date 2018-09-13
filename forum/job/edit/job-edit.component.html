@@ -118,20 +118,20 @@
     </ion-item-divider>
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Month', ko: '달' }) }}</ion-label>
-      <ion-select placeholder="1-12" [(ngModel)]=" month ">
+      <ion-select placeholder="{{ philgo.t({ en: 'Month', ko: '달' }) }}" [(ngModel)]=" month ">
         <ion-select-option *ngFor=" let m of _.makeArrayNumber(12, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Day', ko: '일' }) }}</ion-label>
-      <ion-select placeholder="1-31" [(ngModel)]=" day ">
+      <ion-select placeholder="{{ philgo.t({ en: 'Day', ko: '일' }) }}" [(ngModel)]=" day ">
         <ion-select-option *ngFor=" let m of _.makeArrayNumber(31, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Year', ko: '년' }) }}</ion-label>
-      <ion-select placeholder="2000" [(ngModel)]=" year ">
-        <ion-select-option *ngFor=" let m of _.makeArrayNumber(50, 1)" value="{{ 2001 - m }}">{{ 2001 - m }}</ion-select-option>
+      <ion-select placeholder="{{ philgo.t({ en: 'Year', ko: '년' }) }}" [(ngModel)]=" year ">
+        <ion-select-option *ngFor=" let m of _.makeArrayNumber(50, 1)" value="{{ minAge - m }}">{{ minAge - m }}</ion-select-option>
       </ion-select>
     </ion-item>
 
