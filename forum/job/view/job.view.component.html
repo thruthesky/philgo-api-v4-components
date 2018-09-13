@@ -1,40 +1,91 @@
-<div class="position-relative flex-column-center border-bottom">
-  <div ion-activable class="d-flex align-items-center w-100 position-relative py-1" (click)=" onView.emit( post, autoViewContent) ">
+<div class="position-relative flex-center flex-column flex-md-row border-bottom">
+
+  
+  <div ion-activable class="d-flex flex-column flex-md-row align-items-center w-100 py-4 py-md-2" (click)=" onView.emit( post, autoViewContent) ">
     <ion-ripple-effect></ion-ripple-effect>
-    <div slot="start" class="flex-center size-120px of-hidden">
-      <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
-      <img class="w-100px" src="{{ philgo.getSrc( post.files, N.bodyPhoto ) }}">
-      <img class="w-100px" src="{{ philgo.getSrc( post.files, N.idPhoto ) }}">
+    <div class="d-flex" slot="start">
+      <div class="flex-center size-64px of-hidden">
+          <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
+      </div>
+      <div  class="flex-center size-64px of-hidden mx-2">
+          <img class="w-100" src="{{ philgo.getSrc( post.files, N.bodyPhoto ) }}">
+      </div>
+      <div class="flex-center size-64px of-hidden">
+          <img class="w-100" src="{{ philgo.getSrc( post.files, N.idPhoto ) }}">
+      </div>
     </div>
-    <div class="fs-md ml-2">
-      <ion-text class="d-block mb-1">Name: {{ post[ N.name ] }}</ion-text>
-      <ion-text class="d-block mb-1">Gender: {{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }}</ion-text>
-      <ion-text class="d-block mb-1">Age: {{ _.getAge(post[ N.birthday ]) }}</ion-text>
-      <ion-text class="d-block mb-1" *ngIf=" show( post ) ">Mobile: {{ post[ N.mobile ] }}</ion-text>
-      <ion-text class="d-block mb-1" *ngIf=" show( post ) ">Email: {{ post[ N.email ] }}</ion-text>
-      <ion-text class="d-block mb-1" *ngIf=" show( post ) ">Province: {{ post[ N.province ] }}</ion-text>
-      <ion-text class="d-block mb-1" *ngIf=" show( post ) ">City: {{ post[ N.city ] }}</ion-text>
-      <ion-text class="d-block mb-1">Introduction: {{ post[ N.intro ] }}</ion-text>
-      <ion-text class="d-block mb-1">Link: {{ post[ N.link ] }}</ion-text>
+    <div class="fs-md ml-md-3 mt-3 mt-md-0">
+        <span>{{ post[ N.name ] }} ( </span>
+        <span>{{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }} / </span>
+        <span>{{ _.getAge(post[ N.birthday ]) }} )</span>
     </div>
   </div>
-  <ion-button class="position-top-right" fill="solid" color="warning" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">
-    Not verified
-  </ion-button>
-  <div class="ml-auto">
-    <ion-buttons>
-      <ion-button (click)=" onView.emit( post ) "  *ngIf="!autoViewContent">
-        <ion-icon slot="start" name="open" mode="ios"></ion-icon>
-        View
+
+
+  <ion-buttons  class="ml-md-auto">
+    <ion-button (click)=" onView.emit( post ) "  *ngIf="!autoViewContent">
+      <ion-icon class="d-none d-md-block" slot="start" color="medium" name="open" mode="ios"></ion-icon>
+      View
+    </ion-button>
+    <ion-button (click)=" onEdit.emit( post ) " *ngIf="philgo.isMyPost( post )">
+      <ion-icon class="d-none d-md-block" slot="start" color="medium" name="create" mode="ios"></ion-icon>
+      Edit
+    </ion-button>
+    <ion-button (click)=" onDelete.emit( post ) " *ngIf="philgo.isMyPost( post )">
+      <ion-icon class="d-none d-md-block" slot="start" color="medium" name="trash" mode="ios"></ion-icon>
+      Delete
+    </ion-button>
+    <ion-button class="no-shadow"  color="warning" fill="solid" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">
+        Not verified
       </ion-button>
-      <ion-button (click)=" onEdit.emit( post ) " *ngIf="philgo.isMyPost( post )">
-        <ion-icon slot="start" name="create" mode="ios"></ion-icon>
-        Edit
-      </ion-button>
-      <ion-button (click)=" onDelete.emit( post ) " *ngIf="philgo.isMyPost( post )">
-        <ion-icon slot="start" name="trash" mode="ios"></ion-icon>
-        Delete
-      </ion-button>
-    </ion-buttons>
-  </div>
+  </ion-buttons>
+
+
+</div>
+
+
+
+
+<div class="p-3 bg-light fs-md"   *ngIf=" show( post ) ">
+    <div class="d-flex flex-column flex-md-row">
+
+        <div class="d-flex" slot="start">
+          <div class="flex-center size-180px of-hidden">
+              <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
+          </div>
+          <div  class="flex-center size-180px of-hidden mx-2">
+              <img class="w-100" src="{{ philgo.getSrc( post.files, N.bodyPhoto ) }}">
+          </div>
+          <div class="flex-center size-180px of-hidden">
+              <img class="w-100" src="{{ philgo.getSrc( post.files, N.idPhoto ) }}">
+          </div>
+        </div>
+
+        <table class="meta-table ml-2">
+          <tr>
+            <td>Mobile:</td>
+            <td>{{ post[ N.mobile ] }}</td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td>{{ post[ N.email ] }}</td>
+          </tr>
+          <tr>
+              <td>Province:</td>
+              <td>{{ post[ N.province ] }}</td>
+          </tr>
+          <tr>
+              <td>City:</td>
+              <td>{{ post[ N.city ] }}</td>
+          </tr>
+          <tr>
+              <td>Link:</td>
+              <td>{{ post[ N.link ] }}</td>
+          </tr>
+        </table>
+
+    </div>
+
+    
+    <div class="p-2">Introduction: {{ post[ N.intro ] }}</div>
 </div>

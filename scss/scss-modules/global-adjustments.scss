@@ -1,5 +1,8 @@
-[ion-activable]:focus{
-    outline: 0 !important;
+[ion-activable]{
+    &:focus{
+        outline: 0 !important;
+    }
+    cursor: pointer;
 }
 
 a{

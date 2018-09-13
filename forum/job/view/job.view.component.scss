@@ -1,0 +1,14 @@
+.meta-table{
+    table-layout: fixed;
+    border-collapse: collapse;
+    word-break: break-all;
+    td{
+        padding: .5em;
+        &:first-child{
+            width: 27%
+        }
+        &:last-child{
+            width: 73%
+        }
+    }
+}
