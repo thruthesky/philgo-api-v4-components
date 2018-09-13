@@ -1,49 +1,64 @@
-<div class="text-right border-bottom pb-2">
-  <ion-button class="no-shadow mr-3" (click)="onClickPost()">
-    <ion-icon slot="start" name="add"></ion-icon>
-    <ion-text>CREATE POST</ion-text>
-  </ion-button>
-  <!-- <div class="flex-center px-2 w-100 bg-light fs-80 text-muted">
-    <span>Job</span>
-    <ion-icon class="mx-2" name="play"></ion-icon>
-    <span>{{ philgo.forumName('wanted', category)}}</span>
-  </div> -->
-</div>
+<ion-list>
+  <ion-list-header>
+    <ion-button class="ml-auto" (click)=" showSearch = !showSearch ">
+      <ion-icon slot="start" name="search"></ion-icon>
+      Search
+    </ion-button>
+  </ion-list-header>
+  <ng-container *ngIf="showSearch">
+    <ion-item>
+      <ion-label>{{ philgo.t({ en: 'Gender', ko: '성별' }) }}</ion-label>
+      <ion-select placeholder="{{ philgo.t({ en: 'Gender', ko: '성별' }) }}" [(ngModel)]="form[N.gender]">
+        <ion-select-option value="F">{{ philgo.t({ en: 'Female', ko: '여자' }) }}</ion-select-option>
+        <ion-select-option value="M">{{ philgo.t({ en: 'Male', ko: '남자' }) }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ philgo.t({ en: 'Province', ko: '주' }) }}</ion-label>
+      <ion-select placeholder="{{ philgo.t({ en: 'Province', ko: '주' }) }}" [(ngModel)]=" province "
+                  (ionChange)="onClickProvince()">
+        <ion-select-option *ngFor=" let province of provinces" [value]="province">{{province}}</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-<div class="flex-column-center flex-md-row border-bottom"  *ngFor="let post of posts">
-  <div ion-activable class="d-flex align-items-center w-100 position-relative py-1"  (click)=" onView( post ) ">
-      <ion-ripple-effect></ion-ripple-effect>
-      <div slot="start" class="flex-center size-120px of-hidden">
-          <img class="w-100" src="{{  philgo.getSrc( post.files, 'profile-photo' )}}">
-      </div>
-      <div class="fs-md ml-2">
-          <ion-text class="d-block mb-1">Name:{{ post[ N.name ] }}</ion-text>
-          <ion-text class="d-block mb-1">Gender:{{ N.selectedGender[ post[ N.gender ] ] }}</ion-text>
-          <ion-text class="d-block mb-1">Birthday:{{ N.selectedGender[ post[ N.gender ] ] }}</ion-text>
-          <ion-text class="d-block mb-1">Introduction:{{ post[ N.intro ] }}</ion-text>
-          <ion-text class="d-block mb-1">Link:{{ post[ N.link ] }}</ion-text>
-      </div>
-  </div>
-  <div class="ml-auto">
-      <ion-buttons>
-          <ion-button (click)=" onView( post ) ">
-            <ion-icon slot="start" name="open" mode="ios"></ion-icon>
-            View
-          </ion-button>
-          <ion-button (click)=" onEdit( post ) ">
-            <ion-icon slot="start" name="create" mode="ios"></ion-icon>
-            Edit
-          </ion-button>
-          <ion-button (click)=" onDelete( post ) ">
-            <ion-icon slot="start" name="trash" mode="ios"></ion-icon>
-            Delete
-          </ion-button>
-          <ion-button fill="solid" color="warning" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">
-            Not verified
-          </ion-button>
-        </ion-buttons>
-  </div>
-</div>
+    <ion-item *ngIf=" showCities ">
+      <ion-label>{{ philgo.t({ en: 'City', ko: '도시' }) }}</ion-label>
+      <ion-select placeholder="{{ philgo.t({ en: 'City', ko: '도시' }) }}" [(ngModel)]=" city ">
+        <ion-select-option *ngFor=" let key of cityKeys" [value]="key">{{cities[key]}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{ philgo.t({ en: 'Experience', ko: '경력' }) }}</ion-label>
+      <ion-select placeholder="{{ philgo.t({ en: 'Experience', ko: '경력' }) }}" [(ngModel)]="form[N.experience]">
+        <ion-select-option *ngFor=" let y of philgo.makeArrayNumber(30, 1)" value="{{ y }}">{{y}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{ philgo.t({ en: 'Age', ko: '나이' }) }}</ion-label>
+      <ion-select placeholder="{{ philgo.t({ en: 'Age', ko: '나이' }) }}" [(ngModel)]=" year ">
+        <ion-select-option *ngFor=" let m of philgo.makeArrayNumber(50, 1)" value="{{ m }}">{{ m }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ng-container>
+</ion-list>
+<app-job-view *ngIf=" postView?.idx "
+              [post]=" postView "
+              [autoViewContent]="true"
+              (onView)=" onView( $event ) "
+              (onEdit)=" onEdit( $event ) "
+              (onDelete)=" onDelete( $event ) "
+></app-job-view>
+
+<ng-container *ngFor="let post of posts">
+  <app-job-view [post]=" post "
+                (onView)=" onView( $event ) "
+                (onEdit)=" onEdit( $event ) "
+                (onDelete)=" onDelete( $event ) "
+  ></app-job-view>
+</ng-container>
+
 <div class="text-center py-5 text-muted" *ngIf=" noMorePosts ">
   {{ philgo.t({ en: 'There is no more posts.', ko: '더 이상 글이 없습니다.' })}}
 </div>
