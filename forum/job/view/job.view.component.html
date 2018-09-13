@@ -3,12 +3,6 @@
 
   <div ion-activable class="position-relative d-flex flex-column flex-md-row align-items-center w-100 py-2" (click)=" onView.emit( post, autoViewContent) ">
     <ion-ripple-effect></ion-ripple-effect>
-
-    
-    <div class="position-top-right fs-sm"  color="warning" fill="solid" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">
-      Not verified
-    </div>
-
     <div class="d-flex" slot="start">
       <div class="flex-center size-64px of-hidden">
           <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
@@ -40,6 +34,9 @@
     <ion-button (click)=" onDelete.emit( post ) " *ngIf="philgo.isMyPost( post )">
       <ion-icon class="d-none d-md-block" slot="start" color="medium" name="trash" mode="ios"></ion-icon>
       Delete
+    </ion-button>
+    <ion-button class="no-shadow w-100px"  color="warning" fill="solid" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">
+      Not verified
     </ion-button>
     <ion-text  color="primary w-100px text-center" *ngIf=" post[N.verified] == 'Y' ">
       Verified
