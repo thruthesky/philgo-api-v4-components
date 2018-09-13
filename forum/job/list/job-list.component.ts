@@ -98,7 +98,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
             and.push(`${N.city}='${this.city}'`);
         }
 
-        if ( this.ageRange['lower'] !== this.age_min || this.ageRange['upper'] !== this.age_max ) {
+        if ( this.ageRange['lower'] > this.age_min || this.ageRange['upper'] < this.age_max ) {
             const n = new Date();
             const min = n.getFullYear() - this.ageRange['lower'];
             const max = n.getFullYear() - this.ageRange['upper'];
