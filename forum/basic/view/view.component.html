@@ -1,7 +1,7 @@
 <ion-list class="mb-0" *ngIf=" post ">
 
 
-  <ion-item routerLink="#" (click)="onView.emit( post ) ">
+  <ion-item class="post-header" routerLink="#" (click)="onView.emit( post ) ">
     <ion-avatar slot="start">
       <img [src]="philgo.primaryPhotoUrl( post?.member?.idx_primary_photo )">
     </ion-avatar>

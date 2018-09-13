@@ -1,5 +1,18 @@
 // override ionic css variables of ion-button
-.ion-button-m-0{
-    --margin-top: 0!important;
+.ion-button-m-0 {
+    --margin-top: 0 !important;
     --margin-bottom: 0 !important;
+}
+
+.even, .odd {
+    .post-header {
+        margin: 0 !important;
+        padding: .25em !important;
+    }
+}
+.odd {
+    display: block;
+    .post-header {
+        background-color: rgb(243, 243, 243) !important;
+    }
 }

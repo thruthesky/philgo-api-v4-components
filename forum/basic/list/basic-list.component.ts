@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ViewEncapsulation } from '@angular/core';
 import { PhilGoApiService, ApiPost, ApiForum, ApiPostSearch } from '../../../../philgo-api/philgo-api.service';
 import { EditService } from '../edit/edit.component.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,8 @@ import { ComponentService } from '../../../service/component.service';
 @Component({
   selector: 'app-forum-basic-list-component',
   templateUrl: './basic-list.component.html',
-  styleUrls: ['../../../scss/index.scss', './basic-list.component.scss']
+  styleUrls: ['../../../scss/index.scss', './basic-list.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ForumBasicListComponent implements OnInit, AfterViewInit {
 

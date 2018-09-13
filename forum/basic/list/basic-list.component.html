@@ -15,8 +15,9 @@
 </div>
 
 
-<ng-container *ngFor="let post of posts">
-  <app-forum-basic-view [autoViewContent]=" autoViewContent " [post]=" post " (onView)=" onView( $event ) " (onVote)=" onVote( $event[0], $event[1] ) "
+<ng-container *ngFor="let post of posts; even as isEven; odd as isOdd ">
+  <app-forum-basic-view [class.even]=" isEven " [class.odd]=" isOdd "
+  [autoViewContent]=" autoViewContent " [post]=" post " (onView)=" onView( $event ) " (onVote)=" onVote( $event[0], $event[1] ) "
     (onReply)=" onReply( $event[0], $event[1] ) " (onClickMenu)=" onClickMenu( $event[0], $event[1] ) "></app-forum-basic-view>
 </ng-container>
 
