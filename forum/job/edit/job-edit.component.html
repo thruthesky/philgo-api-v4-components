@@ -93,14 +93,14 @@
 
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Province', ko: '주' }) }}</ion-label>
-      <ion-select placeholder="{{ philgo.t({ en: 'Province', ko: '주' }) }}" [(ngModel)]=" province " (ionChange)="onClickProvince()">
+      <ion-select placeholder="{{ philgo.t({ en: 'Select Province', ko: '주를 선택하세요.' }) }}" [(ngModel)]=" province " (ionChange)="onClickProvince()">
         <ion-select-option *ngFor=" let province of provinces" [value]="province">{{province}}</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item *ngIf=" showCities ">
       <ion-label>{{ philgo.t({ en: 'City', ko: '도시' }) }}</ion-label>
-      <ion-select placeholder="{{ philgo.t({ en: 'City', ko: '도시' }) }}" [(ngModel)]=" city ">
+      <ion-select placeholder="{{ philgo.t({ en: 'Select City', ko: '도시를 선택하세요.' }) }}" [(ngModel)]=" city ">
         <ion-select-option *ngFor=" let key of cityKeys" [value]="key">{{cities[key]}}</ion-select-option>
       </ion-select>
     </ion-item>

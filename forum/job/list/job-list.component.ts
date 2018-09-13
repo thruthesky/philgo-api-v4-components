@@ -73,6 +73,8 @@ export class JobListComponent implements OnInit, AfterViewInit {
         this.philgo.provinces().subscribe(provinces => {
             // console.log('provinces:: ', provinces);
             this.provinces = provinces;
+            this.provinces.splice(1, 0, 'Mabalacat', 'Cebu');
+            console.log('provinces: ', this.provinces);
         }, e => {
             this.componentService.alert(e);
         });
@@ -95,10 +97,10 @@ export class JobListComponent implements OnInit, AfterViewInit {
             and.push(`${N.gender}='${this.form[N.gender]}'`);
         }
         if (this.city) {
-            and.push(`${N.city}='${this.city}'`);
+            and.push(`${N.city} LIKE '${this.city}%'`);
         }
-
-        if ( this.ageRange['lower'] > this.age_min || this.ageRange['upper'] < this.age_max ) {
+        
+        if (this.ageRange['lower'] > this.age_min || this.ageRange['upper'] < this.age_max) {
             const n = new Date();
             const min = n.getFullYear() - this.ageRange['lower'];
             const max = n.getFullYear() - this.ageRange['upper'];
@@ -111,6 +113,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
         if (options.view) {
             req.view = options.view;
         }
+        console.log('re: ', req);
         this.philgo.postSearch(req).subscribe(search => {
             console.log('search: ', search);
             this.page_no++;
@@ -198,9 +201,16 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     onClickProvince() {
         console.log('onClickProvince:: ', this.province);
-        if (this.province) {
-            this.city = this.province;
-            this.getCities();
+        if (this.province === 'Mabalacat' || this.province === 'Cebu') {
+            this.city = 'Pampanga - Mabalacat';
+        } else {
+            if (this.province) {
+                /**
+                 * Select entire province of the province by default by giving province name on city.
+                 */
+                this.city = this.province;
+                this.getCities();
+            }
         }
     }
 

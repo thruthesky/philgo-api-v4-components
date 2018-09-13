@@ -50,12 +50,12 @@ export class JobEditComponent implements OnInit, AfterViewInit {
     public readonly componentService: ComponentService,
     public tooltip: TooltipService
   ) {
-      this.philgo.provinces().subscribe( provinces => {
-          // console.log('provinces:: ', provinces);
-          this.provinces = provinces;
-      }, e => {
-          this.componentService.alert(e);
-      });
+    this.philgo.provinces().subscribe(provinces => {
+      // console.log('provinces:: ', provinces);
+      this.provinces = provinces;
+    }, e => {
+      this.componentService.alert(e);
+    });
   }
   ngOnInit() {
     if (this.data && this.data.idx === void 0) {
@@ -69,19 +69,19 @@ export class JobEditComponent implements OnInit, AfterViewInit {
     }
 
 
-    if ( this.data[N.province] ) {
-        this.province = this.data[N.province];
-        this.city = this.data[N.city];
-        this.getCities();
+    if (this.data[N.province]) {
+      this.province = this.data[N.province];
+      this.city = this.data[N.city];
+      this.getCities();
     }
 
-      console.log('this.data[N.birthday]', this.data[N.birthday]);
-      if (this.data[N.birthday]) {
-          const b = '' + this.data[N.birthday];
-          this.year = b.substr(0, 4);
-          this.month = b.substr(4, 2);
-          this.day = b.substr(6, 2);
-      }
+    console.log('this.data[N.birthday]', this.data[N.birthday]);
+    if (this.data[N.birthday]) {
+      const b = '' + this.data[N.birthday];
+      this.year = b.substr(0, 4);
+      this.month = b.substr(4, 2);
+      this.day = b.substr(6, 2);
+    }
   }
 
   ngAfterViewInit() {
@@ -106,63 +106,63 @@ export class JobEditComponent implements OnInit, AfterViewInit {
     console.log('data.role: ', this.data.role);
 
     if (!this.form[N.name]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '이름을 입력하십시오.', en: 'Please input Name.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '이름을 입력하십시오.', en: 'Please input Name.' }) });
     }
     if (!this.form[N.mobile]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '휴대 전화 번호를 입력하십시오.', en: 'Please input mobile number.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '휴대 전화 번호를 입력하십시오.', en: 'Please input mobile number.' }) });
     }
     if (!this.form[N.email]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '이메일을 입력하십시오.', en: 'Please input Email.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '이메일을 입력하십시오.', en: 'Please input Email.' }) });
     }
     if (!this.province) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '지방을 선택하십시오.', en: 'Please choose a province.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '지방을 선택하십시오.', en: 'Please choose a province.' }) });
     }
     if (!this.city) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '도시를 선택하십시오.', en: 'Please choose a city.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '도시를 선택하십시오.', en: 'Please choose a city.' }) });
     }
     if (!this.form[N.address]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '주소를 입력하십시오.', en: 'Please input address.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '주소를 입력하십시오.', en: 'Please input address.' }) });
     }
     if (!this.month) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '태어난 달을 선택하십시오.', en: 'Please select birth month.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '태어난 달을 선택하십시오.', en: 'Please select birth month.' }) });
     }
     if (!this.day) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '태어난 일을 선택하십시오.', en: 'Please select birth day.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '태어난 일을 선택하십시오.', en: 'Please select birth day.' }) });
     }
     if (!this.year) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '태어난 년도를 선택하십시오.', en: 'Please select birth year.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '태어난 년도를 선택하십시오.', en: 'Please select birth year.' }) });
     }
     if (!this.form[N.gender]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '성별을 선택하십시오.', en: 'Please select gender.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '성별을 선택하십시오.', en: 'Please select gender.' }) });
     }
     if (!this.form[N.experience]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '경력을 선택하십시오.', en: 'Please select year of experience.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '경력을 선택하십시오.', en: 'Please select year of experience.' }) });
     }
     if (!this.form[N.intro]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '자기 소개를 입력하십시오.', en: 'Please input self introduction.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '자기 소개를 입력하십시오.', en: 'Please input self introduction.' }) });
     }
     if (!this.form[N.link]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '프로필 URL (페이스북 등) 을 입력하십시오.', en: 'Please input your profile link like facebook URL.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '프로필 URL (페이스북 등) 을 입력하십시오.', en: 'Please input your profile link like facebook URL.' }) });
     }
 
     if (!this.form.files || this.form.files.length < 3) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '모든 사진을 업로드하십시오.', en: 'Please upload required photo.' }) });
+      return this.componentService.alert({ message: this.philgo.t({ ko: '모든 사진을 업로드하십시오.', en: 'Please upload required photo.' }) });
     }
 
 
 
-      /**
-     * Pass job category
-     */
+    /**
+   * Pass job category
+   */
     this.form.category = this.data.category;
 
     //
 
-      this.form[N.birthday] = this.year + this.month + this.day;
+    this.form[N.birthday] = this.year + this.month + this.day;
 
 
-      this.form[N.province] = this.province;
-      this.form[N.city] = this.city;
+    this.form[N.province] = this.province;
+    this.form[N.city] = this.city;
 
     /**
      * Edit
@@ -206,8 +206,8 @@ export class JobEditComponent implements OnInit, AfterViewInit {
       header: this.philgo.t({ ko: '사진', en: 'Photo' }),
       subHeader: this.philgo.t({ ko: '사진 전송을 업로드합니다.', en: 'Uploading a photo.' }),
       message: this.philgo.t({
-          ko: '카메라로 사진을 찍거나 갤러리에서 사진을 선택하세요.',
-          en: 'Please take a photo from Camera or choose one from Gallery.'
+        ko: '카메라로 사진을 찍거나 갤러리에서 사진을 선택하세요.',
+        en: 'Please take a photo from Camera or choose one from Gallery.'
       }),
       buttons: [
         { role: 'camera', text: this.philgo.t({ ko: '카메라로 사진 찍기', en: 'Take a photo using Camera' }) },
@@ -339,29 +339,31 @@ export class JobEditComponent implements OnInit, AfterViewInit {
   }
 
 
-    onClickProvince() {
-      console.log('onClickProvince:: ', this.province);
-        if ( this.province ) {
-            this.city = this.province;
-            this.getCities();
-        }
+  onClickProvince() {
+    console.log('onClickProvince:: ', this.province);
+    if (this.province) {
+      // this.city = this.province;
+      this.getCities();
     }
+  }
 
-    getCities() {
-        this.showCities = false;
-        this.philgo.cities(this.province).subscribe( cities => {
-            console.log('getCities:: ', this.city);
-            this.cities = cities;
-            this.showCities = true;
-        }, e => {
-            this.componentService.alert(e);
-            this.showCities = false;
-        });
-    }
+  getCities() {
+    this.showCities = false;
+    this.philgo.cities(this.province).subscribe(cities => {
+      console.log('getCities:: ', this.city);
+      this.cities = cities;
+      this.showCities = true;
+    }, e => {
+      this.componentService.alert(e);
+      this.showCities = false;
+    });
+  }
 
-    get cityKeys() {
-        return Object.keys(this.cities);
-    }
+  get cityKeys() {
+    const keys = Object.keys(this.cities);
+    keys.splice(0, 1);
+    return keys;
+  }
 
 
 }
