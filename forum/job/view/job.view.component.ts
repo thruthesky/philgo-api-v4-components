@@ -37,6 +37,8 @@ export class JobViewComponent implements OnInit {
 
 
     onClickNotVerified(event: Event) {
+        event.preventDefault();
+        event.stopPropagation();
         this.tooltip.present(event, {
             title: this.philgo.t({ en: 'Not Verfieid', ko: '확인 안됨' }),
             subTitle: this.philgo.t({ en: 'Profile is not verfied, yet.', ko: '프로필이 확인되지 않았습니다.' }),

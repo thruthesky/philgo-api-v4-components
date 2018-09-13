@@ -70,7 +70,7 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSearch(value) {
+  onSearch(value: string) {
     // console.log('value: ', value);
     if (value === '' && this.roomsBackup.length) {
       this.onCancelSearch();
@@ -81,10 +81,10 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
     }
     this.rooms = this.roomsBackup;
     this.rooms = this.rooms.filter(room => {
-      if (room.name.indexOf(value) !== -1) {
+      if (room.name.toLowerCase().indexOf(value.toLocaleLowerCase()) !== -1) {
         return true;
       }
-      if (room.description.indexOf(value) !== -1) {
+      if (room.description.toLocaleLowerCase().indexOf(value.toLocaleLowerCase()) !== -1) {
         return true;
       }
     });
