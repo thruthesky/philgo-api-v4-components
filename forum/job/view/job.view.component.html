@@ -1,7 +1,7 @@
-<div class="position-relative flex-center flex-column flex-md-row border-bottom">
+<div class="flex-center flex-column flex-md-row border-bottom py-2 py-md-0">
 
   
-  <div ion-activable class="d-flex flex-column flex-md-row align-items-center w-100 py-2" (click)=" onView.emit( post, autoViewContent) ">
+  <div ion-activable class="position-relative d-flex flex-column flex-md-row align-items-center w-100 py-2" (click)=" onView.emit( post, autoViewContent) ">
     <ion-ripple-effect></ion-ripple-effect>
     <div class="d-flex" slot="start">
       <div class="flex-center size-64px of-hidden">
@@ -22,7 +22,7 @@
   </div>
 
 
-  <ion-buttons  class="ml-md-auto">
+  <ion-buttons  class="ml-md-auto mr-md-2">
     <ion-button (click)=" onView.emit( post ) "  *ngIf="!autoViewContent">
       <ion-icon class="d-none d-md-block" slot="start" color="medium" name="open" mode="ios"></ion-icon>
       View
@@ -35,9 +35,12 @@
       <ion-icon class="d-none d-md-block" slot="start" color="medium" name="trash" mode="ios"></ion-icon>
       Delete
     </ion-button>
-    <ion-button class="no-shadow"  color="warning" fill="solid" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">
-        Not verified
-      </ion-button>
+    <ion-button class="no-shadow w-100px"  color="warning" fill="solid" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">
+      Not verified
+    </ion-button>
+    <ion-text  color="primary w-100px text-center" *ngIf=" post[N.verified] == 'Y' ">
+      Verified
+    </ion-text>
   </ion-buttons>
 
 
