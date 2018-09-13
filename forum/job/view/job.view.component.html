@@ -8,8 +8,8 @@
     </div>
     <div class="fs-md ml-2">
       <ion-text class="d-block mb-1">Name: {{ post[ N.name ] }}</ion-text>
-      <ion-text class="d-block mb-1">Gender: {{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) : philgo.t({ en: 'Male', ko: '남자' })  }}</ion-text>
-      <ion-text class="d-block mb-1">Age: {{ philgo.getAge(post[ N.birthday ]) }}</ion-text>
+      <ion-text class="d-block mb-1">Gender: {{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }}</ion-text>
+      <ion-text class="d-block mb-1">Age: {{ _.getAge(post[ N.birthday ]) }}</ion-text>
       <ion-text class="d-block mb-1" *ngIf=" show( post ) ">Mobile: {{ post[ N.mobile ] }}</ion-text>
       <ion-text class="d-block mb-1" *ngIf=" show( post ) ">Email: {{ post[ N.email ] }}</ion-text>
       <ion-text class="d-block mb-1" *ngIf=" show( post ) ">Province: {{ post[ N.province ] }}</ion-text>

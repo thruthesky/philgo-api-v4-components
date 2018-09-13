@@ -36,6 +36,7 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
   N = N;
 
+  _ = AngularLibrary;
   isWeb = AngularLibrary.isWeb();
   isCordova = AngularLibrary.isCordova();
 
@@ -123,29 +124,29 @@ export class JobEditComponent implements OnInit, AfterViewInit {
         return this.componentService.alert({ message: this.philgo.t({ ko: '주소를 입력하십시오.', en: 'Please input address.' }) });
     }
     if (!this.month) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '탄생 월을 선택하십시오.', en: 'Please select birth month.' }) });
+        return this.componentService.alert({ message: this.philgo.t({ ko: '태어난 달을 선택하십시오.', en: 'Please select birth month.' }) });
     }
     if (!this.day) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '생일을 선택하십시오.', en: 'Please select birth day.' }) });
+        return this.componentService.alert({ message: this.philgo.t({ ko: '태어난 일을 선택하십시오.', en: 'Please select birth day.' }) });
     }
     if (!this.year) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '출생 연도를 선택하십시오.', en: 'Please select birth year.' }) });
+        return this.componentService.alert({ message: this.philgo.t({ ko: '태어난 년도를 선택하십시오.', en: 'Please select birth year.' }) });
     }
     if (!this.form[N.gender]) {
         return this.componentService.alert({ message: this.philgo.t({ ko: '성별을 선택하십시오.', en: 'Please select gender.' }) });
     }
     if (!this.form[N.experience]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '경험 연수를 선택하십시오.', en: 'Please select year of experience.' }) });
+        return this.componentService.alert({ message: this.philgo.t({ ko: '경력을 선택하십시오.', en: 'Please select year of experience.' }) });
     }
     if (!this.form[N.intro]) {
         return this.componentService.alert({ message: this.philgo.t({ ko: '자기 소개를 입력하십시오.', en: 'Please input self introduction.' }) });
     }
     if (!this.form[N.link]) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '프로필 링크를 입력하십시오.', en: 'Please input your profile link.' }) });
+        return this.componentService.alert({ message: this.philgo.t({ ko: '프로필 URL (페이스북 등) 을 입력하십시오.', en: 'Please input your profile link like facebook URL.' }) });
     }
 
     if (!this.form.files || this.form.files.length < 3) {
-        return this.componentService.alert({ message: this.philgo.t({ ko: '필요한 사진을 업로드하십시오.', en: 'Please upload required photo.' }) });
+        return this.componentService.alert({ message: this.philgo.t({ ko: '모든 사진을 업로드하십시오.', en: 'Please upload required photo.' }) });
     }
 
 
