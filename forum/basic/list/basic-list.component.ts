@@ -17,9 +17,9 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
   @Input() displayHeaderMenu = true;
   @Input() autoViewContent = false;
+  
   forum: ApiForum = null;
   posts: Array<ApiPost> = [];
-
 
   /**
    * Post view
@@ -33,6 +33,15 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   page_no = 1;
   limit = 20;
   noMorePosts = false;
+
+
+  /**
+   * 
+   */
+  show = {
+    firstPageLoader: true
+  };
+  //
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly popoverController: PopoverController,
@@ -56,6 +65,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     // window.setTimeout(() => this.onClickPost(), 200);
   }
 
+
   loadPage(event?: Event, options: { view: string } = <any>{}) {
     let infiniteScroll: InfiniteScroll;
     if (event) {
@@ -67,13 +77,16 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     }
     this.philgo.postSearch(req).subscribe(search => {
       console.log('search: ', search);
+      this.show.firstPageLoader = false;
       this.page_no++;
       this.forum = search;
-      if ( search && search.view && search.view.idx ) {
-          this.postView = search.view;
+      if (search && search.view && search.view.idx) {
+        this.postView = search.view;
       }
       if (!search.posts || !search.posts.length) {
-        infiniteScroll.disabled = true;
+        if (event) {
+          infiniteScroll.disabled = true;
+        }
         this.noMorePosts = true;
         return;
       }
@@ -81,6 +94,9 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
       if (event) {
         infiniteScroll.complete();
       }
+    }, e => {
+      this.show.firstPageLoader = false;
+      this.componentService.alert(e);
     });
   }
 

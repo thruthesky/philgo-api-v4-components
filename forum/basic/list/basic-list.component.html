@@ -14,6 +14,10 @@
   </ion-button>
 </div>
 
+<ion-item class="m-3 p-5" *ngIf=" show.firstPageLoader ">
+  <ion-spinner></ion-spinner>
+  <ion-text class="ml-3">Loading ...</ion-text>
+</ion-item>
 
 <ng-container *ngFor="let post of posts; even as isEven; odd as isOdd ">
   <app-forum-basic-view [class.even]=" isEven " [class.odd]=" isOdd "
