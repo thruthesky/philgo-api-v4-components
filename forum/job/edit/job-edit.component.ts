@@ -58,8 +58,6 @@ export class JobEditComponent implements OnInit, AfterViewInit {
       });
   }
   ngOnInit() {
-    const d = new Date();
-
     if (this.data && this.data.idx === void 0) {
       this.form.post_id = this.data.post_id;
       const forumName = this.philgo.forumName(this.data.post_id);
