@@ -20,12 +20,12 @@
 </ion-header>
 <ion-content>
 
-  <div class="bg-light p-3 px-md-3 fs-md">
-    <ion-text class="">
-      Reminder - post your job inquery only if you need it.
-      <span  (click)=" tooltip.present( $event, { title: 'Reminder', subTitle: 'Post only if needed', content: 'Please post your job inquery only if you really want it. We guarantee that you will have contact from your potential employer as quickly as it can be. But before we show your profile to employers, we will verify if your data is true or not. Please fill in the form with care and wait for the contact.'})">
+  <div class="bg-secondary p-3 px-md-4 fs-md">
+    <ion-text class="white">
+      Reminder - post your job inquiry only if you need it.
+      <b class="pointer" (click)=" tooltip.present( $event, { title: 'Reminder', subTitle: 'Post only if needed', content: 'Please post your job inquery only if you really want it. We guarantee that you will have contact from your potential employer as quickly as it can be. But before we show your profile to employers, we will verify if your data is true or not. Please fill in the form with care and wait for the contact.'})">
           Read more ...
-      </span>
+      </b>
     </ion-text>
     <!-- <ion-button color="light" class="ml-4 no-shadow d-none d-md-block" (click)="tooltip.present( $event, { title: 'Job Forum', subTitle: 'Job', content: 'If you are in need of job, this is right place to get it. Please input true information only.'} )">
       <ion-icon name="help"></ion-icon>
@@ -38,44 +38,39 @@
       <div class="col-12 col-md-4 flex-column-center">
         <div class="position-relative" (click)=" onClickCordovaPhotoUpload( profilePhoto ) ">
           <ng-container *ngTemplateOutlet="photo; context: { code: profilePhoto }"></ng-container>
-          <ion-button class="no-shadow" color="secondary">
-            <div class="w-200px">Profile Photo</div>
-          </ion-button>
+          <ion-button class="w-180px ml-auto no-shadow" expand="full" color="secondary">Profile Photo</ion-button>
           <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  profilePhoto )"
             *ngIf=" isWeb ">
         </div>
-        <ion-icon name="more" mode="ios" class="size-24px no-shadow" (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) ">
-        </ion-icon>
+        <div class="w-180px text-right">
+          <ion-icon class="size-24px pointer"  name="more" mode="ios" (click)=" tooltip.present( $event, { title: 'Profile photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) "></ion-icon>
+        </div>
         <ng-container *ngTemplateOutlet="progressBar; context: { show: percentage && fileCode == profilePhoto, percentage: percentage }"></ng-container>
       </div>
 
-      <div class="col-12 col-md-4 flex-column-center my-4 my-md-0">
+      <div class="col-12 col-md-4 flex-column-center my-3 my-md-0">
         <div class="position-relative" (click)=" onClickCordovaPhotoUpload( bodyPhoto ) ">
           <ng-container *ngTemplateOutlet="photo; context: { code: bodyPhoto }"></ng-container>
-          <ion-button class="no-shadow" color="secondary">
-            <div class="w-200px">Whole Body Photo</div>
-          </ion-button>
+          <ion-button class="w-180px no-shadow" expand="full" color="secondary">Whole Body Photo</ion-button>
           <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  bodyPhoto )"
             *ngIf=" isWeb ">
         </div>
-        <ion-button class="no-shadow" color="light" (click)=" tooltip.present( $event, { title: 'Whole body photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) ">
-          <ion-icon class="w-200px" name="help"></ion-icon>
-        </ion-button>
+        <div class="w-180px text-right">
+          <ion-icon class="size-24px pointer"  name="more" mode="ios" (click)=" tooltip.present( $event, { title: 'Whole body photo', subTitle: 'Upload Photo', content: 'size: width: 200px, height: 200px'}) "></ion-icon>
+        </div>
         <ng-container *ngTemplateOutlet="progressBar; context: { show: percentage && fileCode == bodyPhoto, percentage: percentage }"></ng-container>
       </div>
 
       <div class="col-12 col-md-4 flex-column-center">
         <div class="position-relative" (click)=" onClickCordovaPhotoUpload( idPhoto ) ">
           <ng-container *ngTemplateOutlet="photo; context: { code: idPhoto }"></ng-container>
-          <ion-button class="no-shadow" color="secondary">
-            <div class="w-200px">ID Photo</div>
-          </ion-button>
+          <ion-button class="w-180px no-shadow" expand="full" color="secondary">ID Photo</ion-button>
           <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event,  idPhoto )"
             *ngIf=" isWeb ">
         </div>
-        <ion-button class="no-shadow" color="light" (click)=" tooltip.present( $event, { title: 'ID Photo', subTitle: 'Upload ID Photo', content: 'size: width: 200px, height: 200px'}) ">
-          <ion-icon class="w-200px" name="help"></ion-icon>
-        </ion-button>
+        <div class="w-180px text-right">
+          <ion-icon class="size-24px pointer"  name="more" mode="ios" (click)=" tooltip.present( $event, { title: 'ID Photo', subTitle: 'Upload ID Photo', content: 'size: width: 200px, height: 200px'}) "></ion-icon>
+        </div>
         <ng-container *ngTemplateOutlet="progressBar; context: { show: percentage && fileCode == idPhoto, percentage: percentage }"></ng-container>
       </div>
 
@@ -117,24 +112,28 @@
         {{ philgo.t({ en: 'Birth Day', ko: '생년월일' }) }}
       </ion-label>
     </ion-item-divider>
-    <ion-item>
-      <ion-label>{{ philgo.t({ en: 'Month', ko: '달' }) }}</ion-label>
-      <ion-select placeholder="1-12" [(ngModel)]=" month ">
-        <ion-select-option *ngFor=" let m of makeArrayNumber(12, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>{{ philgo.t({ en: 'Day', ko: '일' }) }}</ion-label>
-      <ion-select placeholder="1-31" [(ngModel)]=" day ">
-        <ion-select-option *ngFor=" let m of makeArrayNumber(31, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>{{ philgo.t({ en: 'Year', ko: '년' }) }}</ion-label>
-      <ion-select placeholder="2000" [(ngModel)]=" year ">
-        <ion-select-option *ngFor=" let m of makeArrayNumber(50, 1)" value="{{ 2001 - m }}">{{ 2001 - m }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+
+
+    <div class="d-block d-md-flex flex-center">
+      <ion-item class="w-100 pr-md-3">
+        <ion-label>{{ philgo.t({ en: 'Month', ko: '달' }) }}</ion-label>
+        <ion-select placeholder="1-12" [(ngModel)]=" month ">
+          <ion-select-option *ngFor=" let m of makeArrayNumber(12, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="w-100 px-md-3">
+        <ion-label>{{ philgo.t({ en: 'Day', ko: '일' }) }}</ion-label>
+        <ion-select placeholder="1-31" [(ngModel)]=" day ">
+          <ion-select-option *ngFor=" let m of makeArrayNumber(31, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="w-100 pl-md-3">
+        <ion-label>{{ philgo.t({ en: 'Year', ko: '년' }) }}</ion-label>
+        <ion-select placeholder="2000" [(ngModel)]=" year ">
+          <ion-select-option *ngFor=" let m of makeArrayNumber(50, 1)" value="{{ 2001 - m }}">{{ 2001 - m }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
 
 
     <ion-item>
