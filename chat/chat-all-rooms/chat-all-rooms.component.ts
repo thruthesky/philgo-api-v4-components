@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { ApiChatRoom, PhilGoApiService, ApiErrorResponse } from '../../../philgo-api/philgo-api.service';
 import { LanguageTranslate } from '../../../language-translate/language-translate';
 import { AngularLibrary } from '../../../angular-library/angular-library';
-import { AppService } from '../../../../providers/app.service';
+import { ComponentService } from '../../service/component.service';
+// import { AppService } from '../../../../providers/app.service';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
     private router: Router,
     public philgo: PhilGoApiService,
     public tr: LanguageTranslate,
-    public a: AppService
+    private componentService: ComponentService
+    // public a: AppService
   ) {
     console.log('ChatAllRoomsComponent::constructor()');
     this.loadAllChatRoomList();
@@ -102,7 +104,7 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
       this.onCancelSearch();
       this.router.navigateByUrl('/room/' + idx);
     } else {
-      this.a.alert({
+      this.componentService.alert({
         header: this.philgo.t({ en: 'Login', ko: '로그인' }),
         message: this.philgo.t({
           en: 'Please login first to enter chat room.',
@@ -111,7 +113,5 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
       });
     }
   }
-
-
 
 }
