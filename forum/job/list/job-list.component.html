@@ -13,9 +13,13 @@
         <ion-select-option value="M">{{ philgo.t({ en: 'Male', ko: '남자' }) }}</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item text-wrap>
-      <ion-label>Most Search</ion-label>
-      <ion-button fill="solid" size="small" shape="round" *ngFor="let k of _.keys(mostSearch)" (click)="onClickProvince(mostSearch[k])" >{{k}}</ion-button>
+    <ion-item class="border-bottom py-2">
+      <div class="d-flex flex-wrap justify-content-between align-items-center w-100">
+          <div class="py-2">Most Search</div>
+          <div>
+              <ion-badge class="pointer my-1 mr-2" *ngFor="let k of _.keys(mostSearch)" (click)="onClickProvince(mostSearch[k])" >{{k}}</ion-badge>
+          </div>
+      </div>
     </ion-item>
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Province', ko: '주' }) }}</ion-label>
