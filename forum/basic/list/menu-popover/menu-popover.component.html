@@ -16,11 +16,11 @@
         <ion-icon color="medium" slot="start" name="text" mode="ios"></ion-icon>
         <ion-label>Reply</ion-label>
       </ion-item> -->
-      <ion-item class="pointer" (click)=" controller.dismiss(null, 'edit')">
+      <ion-item class="pointer" (click)=" controller.dismiss(null, 'edit')" *ngIf=" philgo.isMyPost( post ) ">
         <ion-icon color="medium" slot="start" name="create" mode="ios"></ion-icon>
         <ion-label>Edit</ion-label>
       </ion-item>
-      <ion-item class="pointer" (click)=" controller.dismiss(null, 'delete')">
+      <ion-item class="pointer" (click)=" controller.dismiss(null, 'delete')" *ngIf=" philgo.isMyPost( post ) ">
         <ion-icon color="danger" slot="start" name="trash"></ion-icon>
         <ion-label>Delete</ion-label>
       </ion-item>

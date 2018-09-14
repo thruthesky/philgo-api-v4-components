@@ -155,7 +155,8 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     const popover = await this.popoverController.create({
       component: MenuPopoverComponent,
       componentProps: {
-        controller: this.popoverController
+        controller: this.popoverController,
+        post: post
       },
       event: event,
       translucent: true

@@ -3,7 +3,7 @@
   <div class="photos clearfix" [attr.no]=" photos().length " *ngIf=" photos().length ">
 
     <div class="photo" *ngIf=" edit == false && photos().length == 1">
-      <img class="w-100" src="{{ philgo.thumbnailUrl({ width: 640, height: 160, idx: photos()[0].idx }) }}">
+      <img class="w-100" src="{{ photos()[0].src }}">
     </div>
 
     <div class="photo row no-gutters" *ngIf=" edit == false && photos().length == 2">

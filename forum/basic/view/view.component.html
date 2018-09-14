@@ -16,7 +16,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-item *ngIf=" show(post) ">
+  <ion-item class="post-content" *ngIf=" show(post) ">
     <div>
       <app-files-component *ngIf="post.files.length" class="d-block pt-2 pb-1" [post]=" post "></app-files-component>
       <div class="post-text-content mt-1" [innerHTML]="post?.content"></div>
