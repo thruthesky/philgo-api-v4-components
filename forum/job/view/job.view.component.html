@@ -3,16 +3,8 @@
 
   <div ion-activable class="position-relative d-flex flex-column flex-md-row align-items-center w-100 py-2" (click)=" onView.emit( post, autoViewContent) ">
     <ion-ripple-effect></ion-ripple-effect>
-    <div class="d-flex" slot="start">
-      <div class="flex-center size-64px of-hidden">
-          <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
-      </div>
-      <div  class="flex-center size-64px of-hidden mx-2">
-          <img class="w-100" src="{{ philgo.getSrc( post.files, N.bodyPhoto ) }}">
-      </div>
-      <div class="flex-center size-64px of-hidden">
-          <img class="w-100" src="{{ philgo.getSrc( post.files, N.idPhoto ) }}">
-      </div>
+    <div  slot="start" class="flex-center size-64px of-hidden">
+        <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
     </div>
     <div class="fs-md ml-md-3 mt-3 mt-md-0">
         <span>{{ post[ N.name ] }} ( </span>

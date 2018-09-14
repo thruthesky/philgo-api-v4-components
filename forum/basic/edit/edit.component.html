@@ -5,20 +5,19 @@
 </ion-header>
 <ion-content>
 
+  <ion-list class="mx-4 mt-2 mb-0">
 
-  <ion-list class="m-4">
-
-    <div class="d-md-flex mb-2" *ngIf=" philgo.isLoggedOut() ">
-        <ion-item class="mr-md-1 w-100">
-          <ion-label color="tertiary" position="floating">{{ philgo.t({en: 'Name', ko: '이름' }) }}</ion-label>
+    <div *ngIf=" philgo.isLoggedOut() ">
+        <ion-item>
+          <ion-label position="floating">{{ philgo.t({en: 'Name', ko: '이름' }) }}</ion-label>
           <ion-input [(ngModel)]="form.user_name"></ion-input>
         </ion-item>
-        <ion-item class="mx-md-2 w-100">
-          <ion-label color="tertiary" position="floating">{{ philgo.t({en: 'Email address', ko: '이메일' }) }}</ion-label>
+        <ion-item>
+          <ion-label position="floating">{{ philgo.t({en: 'Email address', ko: '이메일' }) }}</ion-label>
           <ion-input type="email" [(ngModel)]="form.user_email"></ion-input>
         </ion-item>
-        <ion-item class="ml-md-1 w-100">
-          <ion-label color="tertiary" position="floating">{{ philgo.t({en: 'Password', ko: '비밀번호' }) }}</ion-label>
+        <ion-item>
+          <ion-label position="floating">{{ philgo.t({en: 'Password', ko: '비밀번호' }) }}</ion-label>
           <ion-input type="password" [(ngModel)]="form.user_password"></ion-input>
         </ion-item>
     </div>
@@ -29,33 +28,32 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">{{ philgo.t({ en: 'Please input content', ko: '내용을 입력하세요.' }) }}</ion-label>
-      <ion-textarea rows="4" [(ngModel)]="form.content"></ion-textarea>
+      <ion-textarea [attr.rows]="philgo.isLoggedOut()? '10': '15'" [(ngModel)]="form.content"></ion-textarea>
     </ion-item>
-    <ion-item>
+
       <app-files-component class="d-block my-3" [edit]=" true " [post]=" form " [percentage]=" percentage "></app-files-component>
-    </ion-item>
 
   </ion-list>
 
-  <ion-buttons class="flex-center">
+  <ion-buttons class="flex-center mt-2 mb-4">
 
-      <ion-button  *ngIf=" isWeb " color="light" fill="solid">
+      <ion-button  class="w-120px fs-sm"  expand="block"  *ngIf=" isWeb " color="light" fill="solid">
         <ion-icon slot="start" name="attach"></ion-icon>
         <ion-text>File upload</ion-text>
         <input class="transparent-cover pointer" type="file" name="file" (change)="onChangeFile($event)">
       </ion-button>
 
-      <ion-button *ngIf=" isCordova " color="light" fill="solid" (click)=" onClickCordovaFileUploadButton() ">
+      <ion-button  class="w-120px fs-sm"  expand="block" *ngIf=" isCordova " color="light" fill="solid" (click)=" onClickCordovaFileUploadButton() ">
         <ion-icon slot="start" name="camera"></ion-icon>
-        <ion-text>File upload</ion-text>
+        <ion-text>Photo upload</ion-text>
       </ion-button>
 
-      <ion-button class="mx-2" color="primary" fill="solid" (click)=" onSubmit() ">
+      <ion-button class="mx-2 w-120px fs-sm"  expand="block" color="primary" fill="solid" (click)=" onSubmit() ">
         <ion-icon slot="start" name="paper-plane"></ion-icon>
         Submit
       </ion-button>
 
-      <ion-button color="light" fill="solid"  (click)=" controller.dismiss( null, 'close' ) ">
+      <ion-button  class="fs-sm"  expand="block"  (click)=" controller.dismiss( null, 'close' ) ">
         <ion-icon color="danger" slot="start" name="close"></ion-icon>
         Close
       </ion-button>

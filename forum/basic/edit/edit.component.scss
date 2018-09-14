@@ -1,0 +1,15 @@
+@import './../../../scss/vars.scss';
+.w-120px{
+    width: 120px!important;
+}
+
+.file-container{
+    margin-top: 1.25rem;
+    height: 300px;
+    @media (min-width:$md) {
+        height: 240px;
+    }
+    width: 100%;
+    border: 5px dashed #eee;
+    // background: #eee;
+}

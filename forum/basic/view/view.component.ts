@@ -4,7 +4,7 @@ import { ApiPost, PhilGoApiService } from '../../../../philgo-api/philgo-api.ser
 @Component({
   selector: 'app-forum-basic-view',
   templateUrl: './view.component.html',
-  styleUrls: ['./view.component.scss']
+  styleUrls: ['./../../../scss/index.scss', './view.component.scss']
 })
 export class ViewComponent implements OnInit {
 

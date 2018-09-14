@@ -11,7 +11,7 @@ import { ComponentService } from '../../../service/component.service';
   selector: 'app-forum-basic-list-component',
   templateUrl: './basic-list.component.html',
   styleUrls: ['../../../scss/index.scss', './basic-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 })
 export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
