@@ -12,7 +12,6 @@ import { AngularLibrary } from '../../../../angular-library/angular-library';
 export class JobViewComponent implements OnInit {
 
     @Input() post: ApiPost;
-    @Input() autoViewContent = false;
 
     @Output() onView = new EventEmitter();
     @Output() onEdit = new EventEmitter();
@@ -32,7 +31,7 @@ export class JobViewComponent implements OnInit {
     }
 
     show(post) {
-        return post['showMore'] || this.autoViewContent;
+        return post['show'];
     }
 
 

@@ -40,7 +40,10 @@
   </ng-container>
 </ion-list>
 
-
+<ion-item class="m-3 p-5" *ngIf=" show.firstPageLoader ">
+  <ion-spinner></ion-spinner>
+  <ion-text class="ml-3">Loading ...</ion-text>
+</ion-item>
 
 
   <div class="row no-gutters">
@@ -48,7 +51,6 @@
     <div class="col-md-2 col-6 p-2"  *ngIf=" postView?.idx ">
       <app-job-view
         [post]=" postView "
-        [autoViewContent]="true"
         (onView)=" onView( $event ) "
         (onEdit)=" onEdit( $event ) "
         (onDelete)=" onDelete( $event ) "

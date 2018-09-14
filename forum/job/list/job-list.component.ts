@@ -51,6 +51,12 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     _ = AngularLibrary;
 
+    /**
+     * this will display a loader on initial visit.
+     */
+    show = {
+        firstPageLoader: true
+    };
 
     //
     constructor(
@@ -99,7 +105,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
         if (this.city) {
             and.push(`${N.city} LIKE '${this.city}%'`);
         }
-        
+
         if (this.ageRange['lower'] > this.age_min || this.ageRange['upper'] < this.age_max) {
             const n = new Date();
             const min = n.getFullYear() - this.ageRange['lower'];
@@ -115,11 +121,13 @@ export class JobListComponent implements OnInit, AfterViewInit {
         }
         console.log('re: ', req);
         this.philgo.postSearch(req).subscribe(search => {
+            this.show.firstPageLoader = false;
             console.log('search: ', search);
             this.page_no++;
             this.forum = search;
             if (search && search.view && search.view.idx) {
                 this.postView = search.view;
+                this.postView['show'] = true;
             }
 
             if (!search.posts || !search.posts.length) {
@@ -129,10 +137,22 @@ export class JobListComponent implements OnInit, AfterViewInit {
                 this.noMorePosts = true;
                 return;
             }
+
+            if ( this.postView && this.postView.idx ) {
+                const pos = search.posts.findIndex(v => v.idx === this.postView.idx);
+                if (pos !== -1) {
+                    search.posts.splice(pos, 1);
+                }
+            }
+
             this.posts = this.posts.concat(search.posts);
             if (event) {
                 infiniteScroll.complete();
             }
+
+        }, e => {
+            this.show.firstPageLoader = false;
+            this.componentService.alert(e);
         });
     }
 
@@ -154,11 +174,14 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     }
 
-    async onView(post: ApiPost, autoViewContent) {
-        if (!autoViewContent) {
-            post['showMore'] = !post['showMore'];
+    async onView(post: ApiPost) {
+        console.log(post);
+        if (this.postView && this.postView.idx && this.postView.idx === post.idx) {
+            return;
+        } else {
+            post.show = !post.show;
+            history.pushState({}, post.subject, `/job/${post.category}/${post.idx}`);
         }
-        history.pushState({}, post.subject, `/job/${post.category}/${post.idx}`);
 
         // const modal = await this.modalController.create({
         //     component: JobViewComponent,
