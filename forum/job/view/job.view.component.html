@@ -99,7 +99,7 @@
         </div>
 
 
-        <div class="view-post" *ngIf=" show( post ) ">
+        <div class="view-post" *ngIf=" show( post ) " (click)=" onView.emit( post, autoViewContent) ">
     
             <div class="d-flex flex-column flex-md-row">
                 <div class="flex-center size-64px mx-auto of-hidden">

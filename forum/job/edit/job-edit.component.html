@@ -91,7 +91,7 @@
       <ion-input [(ngModel)]="form[N.email]"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="pt-5">
       <ion-label>{{ philgo.t({ en: 'Province', ko: '주' }) }}</ion-label>
       <ion-select placeholder="{{ philgo.t({ en: 'Select Province', ko: '주를 선택하세요.' }) }}" [(ngModel)]=" province " (ionChange)="onClickProvince()">
         <ion-select-option *ngFor=" let province of provinces" [value]="province">{{province}}</ion-select-option>
@@ -116,24 +116,28 @@
         {{ philgo.t({ en: 'Birth Day', ko: '생년월일' }) }}
       </ion-label>
     </ion-item-divider>
-    <ion-item>
-      <ion-label>{{ philgo.t({ en: 'Month', ko: '달' }) }}</ion-label>
-      <ion-select placeholder="{{ philgo.t({ en: 'Month', ko: '달' }) }}" [(ngModel)]=" month ">
-        <ion-select-option *ngFor=" let m of _.makeArrayNumber(12, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>{{ philgo.t({ en: 'Day', ko: '일' }) }}</ion-label>
-      <ion-select placeholder="{{ philgo.t({ en: 'Day', ko: '일' }) }}" [(ngModel)]=" day ">
-        <ion-select-option *ngFor=" let m of _.makeArrayNumber(31, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>{{ philgo.t({ en: 'Year', ko: '년' }) }}</ion-label>
-      <ion-select placeholder="{{ philgo.t({ en: 'Year', ko: '년' }) }}" [(ngModel)]=" year ">
-        <ion-select-option *ngFor=" let m of _.makeArrayNumber(50, 1)" value="{{ minAge - m }}">{{ minAge - m }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+
+
+    <div class="d-flex flex-column flex-md-row">
+        <ion-item class="w-100 pr-md-3">
+          <ion-label>{{ philgo.t({ en: 'Month', ko: '달' }) }}</ion-label>
+          <ion-select placeholder="{{ philgo.t({ en: 'Month', ko: '달' }) }}" [(ngModel)]=" month ">
+            <ion-select-option *ngFor=" let m of _.makeArrayNumber(12, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="w-100 px-md-3">
+          <ion-label>{{ philgo.t({ en: 'Day', ko: '일' }) }}</ion-label>
+          <ion-select placeholder="{{ philgo.t({ en: 'Day', ko: '일' }) }}" [(ngModel)]=" day ">
+            <ion-select-option *ngFor=" let m of _.makeArrayNumber(31, 1)" value="{{ philgo.add0(m)}}">{{m}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="w-100 pl-md-3">
+          <ion-label>{{ philgo.t({ en: 'Year', ko: '년' }) }}</ion-label>
+          <ion-select placeholder="{{ philgo.t({ en: 'Year', ko: '년' }) }}" [(ngModel)]=" year ">
+            <ion-select-option *ngFor=" let m of _.makeArrayNumber(50, 1)" value="{{ minAge - m }}">{{ minAge - m }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+    </div>
 
 
     <ion-item>
