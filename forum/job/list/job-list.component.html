@@ -1,5 +1,5 @@
 <ion-list class="mb-0">
-  <ion-list-header class="m-0 p-0 pb-3 border-bottom">
+  <ion-list-header class="m-0 p-0 pb-1">
     <ion-button class="no-shadow w-100" expand="full" color="light" (click)=" showSearch = !showSearch ">
       <ion-icon slot="start" name="search"></ion-icon>
       Search
@@ -41,21 +41,28 @@
 </ion-list>
 
 
-<app-job-view *ngIf=" postView?.idx "
-              [post]=" postView "
-              [autoViewContent]="true"
-              (onView)=" onView( $event ) "
-              (onEdit)=" onEdit( $event ) "
-              (onDelete)=" onDelete( $event ) "
-></app-job-view>
 
-<ng-container *ngFor="let post of posts">
-  <app-job-view [post]=" post "
-                (onView)=" onView( $event ) "
-                (onEdit)=" onEdit( $event ) "
-                (onDelete)=" onDelete( $event ) "
-  ></app-job-view>
-</ng-container>
+
+  <div class="row no-gutters">
+
+    <div class="col-md-2 col-6 p-2"  *ngIf=" postView?.idx ">
+      <app-job-view
+        [post]=" postView "
+        [autoViewContent]="true"
+        (onView)=" onView( $event ) "
+        (onEdit)=" onEdit( $event ) "
+        (onDelete)=" onDelete( $event ) "
+      ></app-job-view>
+    </div>
+
+    <div class="col-md-2 col-6 p-2"  *ngFor="let post of posts">
+      <app-job-view [post]=" post "
+      (onView)=" onView( $event ) "
+      (onEdit)=" onEdit( $event ) "
+      (onDelete)=" onDelete( $event ) "
+      ></app-job-view>
+    </div>
+</div>
 
 <div class="text-center py-5 text-muted" *ngIf=" noMorePosts ">
   {{ philgo.t({ en: 'There is no more posts.', ko: '더 이상 글이 없습니다.' })}}

@@ -78,16 +78,16 @@
 
 
     <ion-item>
-      <ion-label position="fixed" text-wrap>{{ philgo.t({ en: 'Name', ko: '이름' }) }}</ion-label>
+      <ion-label position="floating" text-wrap>{{ philgo.t({ en: 'Name', ko: '이름' }) }}</ion-label>
       <ion-input [(ngModel)]="form[N.name]"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="fixed" text-wrap>{{ philgo.t({ en: 'Mobile Number', ko: '핸드폰 번호' }) }}</ion-label>
+      <ion-label position="floating" text-wrap>{{ philgo.t({ en: 'Mobile Number', ko: '핸드폰 번호' }) }}</ion-label>
       <ion-input [(ngModel)]="form[N.mobile]"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="fixed" text-wrap>{{ philgo.t({ en: 'Email Address', ko: '이메일 주소' }) }}</ion-label>
+      <ion-label position="floating" text-wrap>{{ philgo.t({ en: 'Email Address', ko: '이메일 주소' }) }}</ion-label>
       <ion-input [(ngModel)]="form[N.email]"></ion-input>
     </ion-item>
 
@@ -106,7 +106,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="fixed" text-wrap>{{ philgo.t({ en: 'Address', ko: '나머지 주소' }) }}</ion-label>
+      <ion-label position="floating" text-wrap>{{ philgo.t({ en: 'Address', ko: '나머지 주소' }) }}</ion-label>
       <ion-input [(ngModel)]="form[N.address]"></ion-input>
     </ion-item>
     <div class="note mb-3">Address will not be shown to others.</div>
