@@ -121,6 +121,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
         }
         console.log('re: ', req);
         this.philgo.postSearch(req).subscribe(search => {
+            this.show.firstPageLoader = false;
             console.log('search: ', search);
             this.page_no++;
             this.forum = search;
@@ -141,7 +142,6 @@ export class JobListComponent implements OnInit, AfterViewInit {
                 infiniteScroll.complete();
             }
 
-            this.show.firstPageLoader = false;
         }, e => {
             this.show.firstPageLoader = false;
             this.componentService.alert(e);
