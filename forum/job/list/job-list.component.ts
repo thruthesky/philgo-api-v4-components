@@ -51,6 +51,12 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     _ = AngularLibrary;
 
+    /**
+     * this will display a loader on initial visit.
+     */
+    show = {
+        firstPageLoader: true
+    };
 
     //
     constructor(
@@ -134,6 +140,11 @@ export class JobListComponent implements OnInit, AfterViewInit {
             if (event) {
                 infiniteScroll.complete();
             }
+
+            this.show.firstPageLoader = false;
+        }, e => {
+            this.show.firstPageLoader = false;
+            this.componentService.alert(e);
         });
     }
 
