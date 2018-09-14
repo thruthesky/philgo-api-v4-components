@@ -153,7 +153,7 @@
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Experience', ko: '경력' }) }}</ion-label>
       <ion-select placeholder="{{ philgo.t({ en: 'Experience', ko: '경력' }) }}" [(ngModel)]="form[N.experience]">
-        <ion-select-option *ngFor=" let y of _.makeArrayNumber(30, 1)" value="{{ y }}">{{y}}</ion-select-option>
+        <ion-select-option *ngFor=" let y of _.makeArrayNumber(30, 1)" value="{{ y }}">{{y}} {{ philgo.t({en: 'Years', ko: '년'}) }}</ion-select-option>
       </ion-select>
     </ion-item>
 

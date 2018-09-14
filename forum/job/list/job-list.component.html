@@ -5,7 +5,7 @@
       Search
     </ion-button>
   </ion-list-header>
-  <ng-container *ngIf="!showSearch">
+  <ng-container *ngIf="showSearch">
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Gender', ko: '성별' }) }}</ion-label>
       <ion-select placeholder="{{ philgo.t({ en: 'Gender', ko: '성별' }) }}" [(ngModel)]="form[N.gender]">
@@ -54,18 +54,19 @@
 </ion-item>
 
 
+
+<div *ngIf=" postView?.idx ">
+    <app-job-view
+      [post]=" postView "
+      (onView)=" onView( $event ) "
+      (onEdit)=" onEdit( $event ) "
+      (onDelete)=" onDelete( $event ) "
+    ></app-job-view>
+  </div>
+
   <div class="row no-gutters">
 
-    <div class="position-static col-md-2 col-6 p-2"  *ngIf=" postView?.idx ">
-      <app-job-view
-        [post]=" postView "
-        (onView)=" onView( $event ) "
-        (onEdit)=" onEdit( $event ) "
-        (onDelete)=" onDelete( $event ) "
-      ></app-job-view>
-    </div>
-
-    <div class="position-static col-md-2 col-6 p-2" *ngFor="let post of posts">
+    <div class="col-md-2 col-6 p-2" [class.col-12]=" post.show " *ngFor="let post of posts">
       <app-job-view [post]=" post "
       (onView)=" onView( $event ) "
       (onEdit)=" onEdit( $event ) "
