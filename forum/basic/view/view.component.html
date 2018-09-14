@@ -1,14 +1,13 @@
 <ion-list class="mb-0" *ngIf=" post ">
 
-
-  <ion-item  class="post-header" (click)="onView.emit( post ) ">
+  <ion-item class="post-header" (click)="onView.emit( post ) ">
     <ion-avatar slot="start">
       <img [src]="philgo.primaryPhotoUrl( post?.member?.idx_primary_photo )">
     </ion-avatar>
 
-    <ion-label ion-activable  class="d-md-flex align-items-center justify-content-between my-1" text-wrap>
+    <ion-label ion-activable class="d-md-flex align-items-center justify-content-between my-1" text-wrap>
       <ion-ripple-effect></ion-ripple-effect>
-      <h2 class="flex-1">{{ post.subject }}</h2>
+      <h2 class="flex-1">{{ post.subject }} <span *ngIf="post.no_of_comment">({{ post.no_of_comment }})</span></h2>
       <p class="fs-sm my-md-0 ml-md-2">
         <span class="mr-3 darkgreen" *ngIf=" post?.member "> {{ post?.member?.nickname }}</span>
         <span>Date: {{ philgo.shortDate(post.stamp ) }}</span>
@@ -16,7 +15,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-item *ngIf=" show(post) ">
+  <ion-item class="post-content" *ngIf=" show(post) ">
     <div>
       <app-files-component *ngIf="post.files.length" class="d-block pt-2 pb-1" [post]=" post "></app-files-component>
       <div class="post-text-content mt-1" [innerHTML]="post?.content"></div>
@@ -52,12 +51,25 @@
   </ion-item>
 
 
+  
 
   <ion-list class="comments comments-depth bg-light pt-2" *ngIf=" post?.comments?.length && show(post) ">
     <ion-item class="comment" *ngFor=" let comment of post.comments " [attr.depth]=" comment.depth ">
       <ion-card class=" no-shadow p-0 mb-0 ml-1 w-100">
 
-        <div>No. {{ comment.idx }}</div>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img [src]="philgo.primaryPhotoUrl( comment?.member?.idx_primary_photo )">
+          </ion-avatar>
+          <div class="ml-2">
+            <div class="fs-sm">{{ comment.member?.nickname }}</div>
+            <div class="d-flex">
+              <div class="fs-sm">No. {{ comment.idx }}</div>
+              <div class="ml-2 fs-sm">Date: {{ philgo.shortDate(post.stamp ) }}</div>
+            </div>
+          </div>
+        </ion-item>
+
         <ion-card-content class="pb-0">
           <div [innerHTML]="comment.content"></div>
           <app-files-component *ngIf="comment.files.length" class="d-block pt-2 pb-1" [post]=" comment "></app-files-component>

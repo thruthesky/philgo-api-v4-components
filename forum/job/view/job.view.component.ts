@@ -12,7 +12,6 @@ import { AngularLibrary } from '../../../../angular-library/angular-library';
 export class JobViewComponent implements OnInit {
 
     @Input() post: ApiPost;
-
     @Output() onView = new EventEmitter();
     @Output() onEdit = new EventEmitter();
     @Output() onDelete = new EventEmitter();

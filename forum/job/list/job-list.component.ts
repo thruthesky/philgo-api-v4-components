@@ -125,7 +125,6 @@ export class JobListComponent implements OnInit, AfterViewInit {
             and.push(`${N.birthday}>=${max}0101 AND ${N.birthday}<=${min}1231`);
         }
 
-
         const req: ApiPostSearch = { post_id: this.post_id, category: this.category, page_no: this.page_no, limit: this.limit, deleted: 0 };
         req.and = and.join(' AND ');
         if (options.view) {
