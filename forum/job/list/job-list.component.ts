@@ -58,6 +58,18 @@ export class JobListComponent implements OnInit, AfterViewInit {
         firstPageLoader: true
     };
 
+    mostSearch = {
+        'Metro Manila': {province: 'Metro Manila', city: 'Metro Manila'},
+        'Baguio': {province: 'Benguet', city: 'Benguet - Baguio'},
+        'Cebu': {province: 'Cebu', city: 'Cebu'},
+        'Pampanga': {province: 'Pampanga', city: 'Pampanga'},
+        'Angeles': {province: 'Pampanga', city: 'Pampanga - Angeles'},
+        'Manila': {province: 'Metro Manila', city: 'Metro Manila - Manila'},
+        'Quezon': {province: 'Metro Manila', city: 'Metro Manila - Quezon'},
+        'Mandaluyong': {province: 'Metro Manila', city: 'Metro Manila - Mandaluyong'},
+        'Muntinlupa': {province: 'Metro Manila', city: 'Metro Manila - Muntinlupa'},
+    };
+
     //
     constructor(
         private readonly activatedRoute: ActivatedRoute,
@@ -221,19 +233,23 @@ export class JobListComponent implements OnInit, AfterViewInit {
         }
     }
 
-    onClickProvince() {
-        console.log('onClickProvince:: ', this.province);
-        if (this.province === 'Mabalacat' || this.province === 'Cebu') {
-            this.city = 'Pampanga - Mabalacat';
-        } else {
-            if (this.province) {
-                /**
-                 * Select entire province of the province by default by giving province name on city.
-                 */
-                this.city = this.province;
-                this.getCities();
-            }
+    onClickProvince( o?: { province?: string, city?: string } ) {
+        if ( o.province ) {
+            this.province = o.province;
         }
+        console.log('onClickProvince:: ', this.province);
+        if (this.province) {
+            /**
+             * Select entire province of the province by default by giving province name on city.
+             */
+            if ( o.city ) {
+                this.city = o.city;
+            } else {
+                this.city = this.province;
+            }
+            this.getCities();
+        }
+        // }
     }
 
     getCities() {
@@ -250,5 +266,9 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     get cityKeys() {
         return Object.keys(this.cities);
+    }
+
+    onClickCity() {
+        console.log(this.city);
     }
 }

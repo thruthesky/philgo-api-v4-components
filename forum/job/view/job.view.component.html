@@ -1,9 +1,8 @@
 
-<div class="h-100" (click)=" onView.emit( post, autoViewContent) ">
+<div class="h-100" (click)=" onView.emit( post ) ">
 
 
-
-    <div ion-activable class="position-relative h-100 border ">
+    <div ion-activable class="position-relative h-100 border "  >
         <ion-ripple-effect></ion-ripple-effect>
         <div class="flex-center w-100 h-150px of-hidden">
             <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
@@ -37,44 +36,44 @@
   
 
         <div class="meta">
-            <div class="container-fluid">
-                <div class="row no-gutters">
-                  <div class="col-4">Name:</div>
-                  <div class="col">{{ post[ N.name ] }} </div>
-                </div>
-                <div class="row no-gutters">
-                  <div class="col-4">Gender:</div>
-                  <div class="col">{{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }}  </div>
-                </div>
-                <div class="row no-gutters">
-                  <div class="col-4">Age:</div>
-                  <div class="col"> {{ _.getAge(post[ N.birthday ]) }}</div>
-                </div>
-                <div class="row no-gutters">
-                  <div class="col-4">Mobile:</div>
-                  <div class="col"> {{ post[ N.mobile ] }}</div>
-                </div>
-            </div>
+          <div class="container-fluid">
+              <div class="row no-gutters">
+                <div class="col-4">Name:</div>
+                <div class="col">{{ post[ N.name ] }} </div>
+              </div>
+              <div class="row no-gutters">
+                <div class="col-4">Gender:</div>
+                <div class="col">{{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }}  </div>
+              </div>
+              <div class="row no-gutters">
+                <div class="col-4">Age:</div>
+                <div class="col"> {{ _.getAge(post[ N.birthday ]) }}</div>
+              </div>
+              <div class="row no-gutters">
+                <div class="col-4">Mobile:</div>
+                <div class="col"> {{ post[ N.mobile ] }}</div>
+              </div>
+          </div>
 
-            <div class="container-fluid">
-                <div class="row no-gutters">
-                  <div class="col-4">Email:</div>
-                  <div class="col">{{ post[ N.email ] }}</div>
-                </div>
-                <div class="row no-gutters">
-                  <div class="col-4">Province:</div>
-                  <div class="col">{{ post[ N.province ] }}</div>
-                </div>
-                <div class="row no-gutters">
-                  <div class="col-4">City:</div>
-                  <div class="col"> {{ post[ N.city ] }}</div>
-                </div>
-                <div class="row no-gutters">
-                  <div class="col-4">Link:</div>
-                  <div class="col"> {{ post[ N.link ] }}</div>
-                </div>
-            </div>
-        </div>
+          <div class="container-fluid">
+              <div class="row no-gutters">
+                <div class="col-4">Email:</div>
+                <div class="col">{{ post[ N.email ] }}</div>
+              </div>
+              <div class="row no-gutters">
+                <div class="col-4">Province:</div>
+                <div class="col">{{ post[ N.province ] }}</div>
+              </div>
+              <div class="row no-gutters">
+                <div class="col-4">City:</div>
+                <div class="col"> {{ post[ N.city ] }}</div>
+              </div>
+              <div class="row no-gutters">
+                <div class="col-4">Link:</div>
+                <div class="col"> {{ post[ N.link ] }}</div>
+              </div>
+          </div>
+      </div>
 
         <div class="bg-light p-3">{{ post[ N.intro ] }}</div>
 
