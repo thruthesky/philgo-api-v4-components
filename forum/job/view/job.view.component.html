@@ -70,7 +70,7 @@
               </div>
               <div class="row no-gutters">
                 <div class="col-4">Link:</div>
-                <div class="col"> {{ post[ N.link ] }}</div>
+                <div class="col"><a (click)="onClickLink($event)">{{ post[ N.link ] }}</a></div>
               </div>
           </div>
       </div>
