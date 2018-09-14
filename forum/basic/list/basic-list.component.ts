@@ -36,7 +36,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
 
   /**
-   * 
+   *
    */
   show = {
     firstPageLoader: true
@@ -82,6 +82,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
       this.forum = search;
       if (search && search.view && search.view.idx) {
         this.postView = search.view;
+        this.postView.show = true;
       }
       if (!search.posts || !search.posts.length) {
         if (event) {
@@ -90,6 +91,15 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
         this.noMorePosts = true;
         return;
       }
+
+
+      if ( this.postView && this.postView.idx ) {
+          const pos = search.posts.findIndex(v => v.idx === this.postView.idx);
+          if (pos !== -1) {
+              search.posts.splice(pos, 1);
+          }
+      }
+
       this.posts = this.posts.concat(search.posts);
       if (event) {
         infiniteScroll.complete();
@@ -247,11 +257,14 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
 
   onView(post: ApiPost) {
-    post['showMore'] = !post['showMore'];
-    history.pushState({}, post.subject, `/forum/${post.post_id}/${post.idx}`);
+    if (this.postView && this.postView.idx && this.postView.idx === post.idx) {
+      return;
+    } else {
+        post.show = !post.show;
+        history.pushState({}, post.subject, `/forum/${post.post_id}/${post.idx}`);
+    }
   }
 
 
 }
-
 

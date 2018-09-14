@@ -1,4 +1,4 @@
-<div class="flex-center flex-column flex-md-row border-bottom py-2 py-md-0">
+<!-- <div class="flex-center flex-column flex-md-row border-bottom py-2 py-md-0">
 
 
   <div ion-activable class="position-relative d-flex flex-column flex-md-row align-items-center w-100 py-2" (click)=" onView.emit( post ) ">
@@ -83,3 +83,47 @@
 
     <div class="p-2">Introduction: {{ post[ N.intro ] }}</div>
 </div>
+
+
+ -->
+
+
+    <div ion-activable class="position-relative h-100 border "  (click)=" onView.emit( post, autoViewContent) ">
+        <ion-ripple-effect></ion-ripple-effect>
+        <div class="flex-center w-100 h-150px of-hidden">
+            <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
+        </div>
+        <div class="px-1 py-2 text-center">
+            <div class="fs-md">{{ post[ N.name ] }} </div>
+            <div class="fs-sm py-1 text-muted">( {{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }} / {{ _.getAge(post[ N.birthday ]) }} )</div>
+        </div>
+
+
+        <div class="view-post" *ngIf=" show( post ) ">
+    
+            <div class="d-flex flex-column flex-md-row">
+                <div class="flex-center size-64px mx-auto of-hidden">
+                    <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
+                </div>
+                <div class="flex-center size-64px mx-auto of-hidden">
+                    <img class="w-100" src="{{ philgo.getSrc( post.files, N.bodyPhoto ) }}">
+                </div>
+                <div class="flex-center size-64px mx-auto of-hidden">
+                    <img class="w-100" src="{{ philgo.getSrc( post.files, N.idPhoto ) }}">
+                </div>
+            </div>
+    
+            <div class="bg-light">
+                <div>Name: {{ post[ N.name ] }} </div>
+                <div>Gender: {{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }} </div>
+                <div>Age: {{ _.getAge(post[ N.birthday ]) }}</div>
+                <div>Mobile: {{ post[ N.mobile ] }}</div>
+                <div>Email: {{ post[ N.email ] }}</div>
+                <div>Province: {{ post[ N.province ] }}</div>
+                <div>City: {{ post[ N.city ] }}</div>
+                <div>Link: {{ post[ N.link ] }}</div>
+                <div>Introduction: {{ post[ N.intro ] }}</div>
+            </div>
+        </div>
+
+    </div>

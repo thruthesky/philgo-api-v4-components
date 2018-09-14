@@ -51,6 +51,12 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     _ = AngularLibrary;
 
+    /**
+     * this will display a loader on initial visit.
+     */
+    show = {
+        firstPageLoader: true
+    };
 
     //
     constructor(
@@ -114,6 +120,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
         }
         console.log('re: ', req);
         this.philgo.postSearch(req).subscribe(search => {
+            this.show.firstPageLoader = false;
             console.log('search: ', search);
             this.page_no++;
             this.forum = search;
@@ -129,10 +136,22 @@ export class JobListComponent implements OnInit, AfterViewInit {
                 this.noMorePosts = true;
                 return;
             }
+
+            if ( this.postView && this.postView.idx ) {
+                const pos = search.posts.findIndex(v => v.idx === this.postView.idx);
+                if (pos !== -1) {
+                    search.posts.splice(pos, 1);
+                }
+            }
+
             this.posts = this.posts.concat(search.posts);
             if (event) {
                 infiniteScroll.complete();
             }
+
+        }, e => {
+            this.show.firstPageLoader = false;
+            this.componentService.alert(e);
         });
     }
 
@@ -155,7 +174,8 @@ export class JobListComponent implements OnInit, AfterViewInit {
     }
 
     async onView(post: ApiPost) {
-        if (this.postView.idx === post.idx) {
+        console.log(post);
+        if (this.postView && this.postView.idx && this.postView.idx === post.idx) {
             return;
         } else {
             post.show = !post.show;

@@ -1,14 +1,6 @@
-.meta-table{
-    table-layout: fixed;
-    border-collapse: collapse;
-    word-break: break-all;
-    td{
-        padding: .5em;
-        &:first-child{
-            width: 27%
-        }
-        &:last-child{
-            width: 73%
-        }
-    }
+@import './../../../scss/vars.scss';
+.view-post{
+    width: 300px;
+    background: #fff;
+    z-index: 200000;
 }

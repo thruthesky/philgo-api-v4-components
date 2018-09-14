@@ -9,7 +9,6 @@ import { ApiPost, PhilGoApiService } from '../../../../philgo-api/philgo-api.ser
 export class ViewComponent implements OnInit {
 
   @Input() post: ApiPost;
-  @Input() autoViewContent = false;
 
   @Output() onView = new EventEmitter();
   @Output() onVote = new EventEmitter();
@@ -25,6 +24,6 @@ export class ViewComponent implements OnInit {
 
 
   show(post) {
-    return post['showMore'] || this.autoViewContent;
+      return post['show'];
   }
 }
