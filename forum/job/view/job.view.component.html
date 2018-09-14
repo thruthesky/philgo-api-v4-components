@@ -1,7 +1,7 @@
 <div class="flex-center flex-column flex-md-row border-bottom py-2 py-md-0">
 
 
-  <div ion-activable class="position-relative d-flex flex-column flex-md-row align-items-center w-100 py-2" (click)=" onView.emit( post, autoViewContent) ">
+  <div ion-activable class="position-relative d-flex flex-column flex-md-row align-items-center w-100 py-2" (click)=" onView.emit( post ) ">
     <ion-ripple-effect></ion-ripple-effect>
     <div  slot="start" class="flex-center size-64px of-hidden">
         <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
@@ -13,9 +13,8 @@
     </div>
   </div>
 
-
   <ion-buttons  class="ml-md-auto mr-md-2">
-    <ion-button (click)=" onView.emit( post ) "  *ngIf="!autoViewContent">
+    <ion-button (click)=" onView.emit( post ); "  *ngIf=" ! show(post) ">
       <ion-icon class="d-none d-md-block" slot="start" color="medium" name="open" mode="ios"></ion-icon>
       View
     </ion-button>

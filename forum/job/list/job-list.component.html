@@ -43,7 +43,6 @@
 
 <app-job-view *ngIf=" postView?.idx "
               [post]=" postView "
-              [autoViewContent]="true"
               (onView)=" onView( $event ) "
               (onEdit)=" onEdit( $event ) "
               (onDelete)=" onDelete( $event ) "

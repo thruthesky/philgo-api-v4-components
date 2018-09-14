@@ -99,7 +99,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
         if (this.city) {
             and.push(`${N.city} LIKE '${this.city}%'`);
         }
-        
+
         if (this.ageRange['lower'] > this.age_min || this.ageRange['upper'] < this.age_max) {
             const n = new Date();
             const min = n.getFullYear() - this.ageRange['lower'];
@@ -120,6 +120,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
             this.forum = search;
             if (search && search.view && search.view.idx) {
                 this.postView = search.view;
+                this.postView['show'] = true;
             }
 
             if (!search.posts || !search.posts.length) {
@@ -154,11 +155,13 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     }
 
-    async onView(post: ApiPost, autoViewContent) {
-        if (!autoViewContent) {
-            post['showMore'] = !post['showMore'];
+    async onView(post: ApiPost) {
+        if (this.postView.idx === post.idx) {
+            return;
+        } else {
+            post.show = !post.show;
+            history.pushState({}, post.subject, `/job/${post.category}/${post.idx}`);
         }
-        history.pushState({}, post.subject, `/job/${post.category}/${post.idx}`);
 
         // const modal = await this.modalController.create({
         //     component: JobViewComponent,
