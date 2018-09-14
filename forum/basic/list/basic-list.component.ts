@@ -91,6 +91,15 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
         this.noMorePosts = true;
         return;
       }
+
+
+      if ( this.postView && this.postView.idx ) {
+          const pos = search.posts.findIndex(v => v.idx === this.postView.idx);
+          if (pos !== -1) {
+              search.posts.splice(pos, 1);
+          }
+      }
+
       this.posts = this.posts.concat(search.posts);
       if (event) {
         infiniteScroll.complete();
