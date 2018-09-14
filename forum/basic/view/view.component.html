@@ -55,25 +55,25 @@
 
   <ion-list class="comments comments-depth bg-light pt-2" *ngIf=" post?.comments?.length && show(post) ">
     <ion-item class="comment" *ngFor=" let comment of post.comments " [attr.depth]=" comment.depth ">
-      <ion-card class=" no-shadow p-0 mb-0 ml-1 w-100">
+      <div class="ml-1 w-100">
 
         <ion-item>
           <ion-avatar slot="start">
             <img [src]="philgo.primaryPhotoUrl( comment?.member?.idx_primary_photo )">
           </ion-avatar>
           <div class="ml-2">
-            <div class="fs-sm">{{ comment.member?.nickname }}</div>
-            <div class="d-flex">
+            <div class="fs-sm mb-1">{{ comment.member?.nickname }}</div>
+            <div class="d-flex align-items-center">
               <div class="fs-sm">No. {{ comment.idx }}</div>
               <div class="ml-2 fs-sm">Date: {{ philgo.shortDate(post.stamp ) }}</div>
             </div>
           </div>
         </ion-item>
 
-        <ion-card-content class="pb-0">
+        <div class="pl-3 pt-1">
           <div [innerHTML]="comment.content"></div>
           <app-files-component *ngIf="comment.files.length" class="d-block pt-2 pb-1" [post]=" comment "></app-files-component>
-        </ion-card-content>
+        </div>
 
         <ion-buttons class="d-block">
           <ion-button [attr.color]=" comment.good == '0' ? 'medium' : 'primary'" (click)=" onVote.emit([ comment, 'good' ]) ">
@@ -96,7 +96,7 @@
           </ion-button>
 
         </ion-buttons>
-      </ion-card>
+      </div>
     </ion-item>
   </ion-list>
 
