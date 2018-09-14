@@ -44,6 +44,11 @@ export class JobViewComponent implements OnInit {
         });
     }
 
+    onClickLink(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        window.open(this.post[N.link]);
+    }
 
 
 }
