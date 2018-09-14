@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { PhilGoApiService, ApiPost, ApiForum, ApiPostSearch } from '../../../../philgo-api/philgo-api.service';
 import { EditService } from '../edit/edit.component.service';
 import { ActivatedRoute } from '@angular/router';
@@ -17,6 +17,8 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
   @Input() displayHeaderMenu = true;
   @Input() autoViewContent = false;
+
+  @Output() load = new EventEmitter<ApiPostSearch>();
 
   forum: ApiForum = null;
   posts: Array<ApiPost> = [];
@@ -76,6 +78,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
       req.view = options.view;
     }
     this.philgo.postSearch(req).subscribe(search => {
+      this.load.emit( search );
       console.log('search: ', search);
       this.show.firstPageLoader = false;
       this.page_no++;
