@@ -1,8 +1,8 @@
 
-<div class="h-100" (click)=" onView.emit( post ) ">
+<div class="h-100" (click)=" onView.emit( post ); _.scrollToTop() ">
 
 
-    <div ion-activable class="position-relative h-100 border "  >
+    <div ion-activable class="position-relative h-100 border ">
         <ion-ripple-effect></ion-ripple-effect>
         <div class="flex-center w-100 h-150px of-hidden">
             <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
