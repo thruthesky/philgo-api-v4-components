@@ -15,9 +15,7 @@
     </ion-item>
     <ion-item text-wrap>
       <ion-label>Most Search</ion-label>
-
-        <ion-button fill="solid" size="small" shape="round" *ngFor="let k of _.keys(mostSearch)" (click)="onClickProvince(mostSearch[k])" >{{k}}</ion-button>
-
+      <ion-button fill="solid" size="small" shape="round" *ngFor="let k of _.keys(mostSearch)" (click)="onClickProvince(mostSearch[k])" >{{k}}</ion-button>
     </ion-item>
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Province', ko: '주' }) }}</ion-label>
