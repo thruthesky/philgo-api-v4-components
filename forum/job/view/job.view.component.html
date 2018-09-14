@@ -1,94 +1,9 @@
-<!-- <div class="flex-center flex-column flex-md-row border-bottom py-2 py-md-0">
 
-
-  <div ion-activable class="position-relative d-flex flex-column flex-md-row align-items-center w-100 py-2" (click)=" onView.emit( post ) ">
-    <ion-ripple-effect></ion-ripple-effect>
-    <div  slot="start" class="flex-center size-64px of-hidden">
-        <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
-    </div>
-    <div class="fs-md ml-md-3 mt-3 mt-md-0">
-        <span>{{ post[ N.name ] }} ( </span>
-        <span>{{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }} / </span>
-        <span>{{ _.getAge(post[ N.birthday ]) }} )</span>
-    </div>
-  </div>
-
-  <ion-buttons  class="ml-md-auto mr-md-2">
-    <ion-button (click)=" onView.emit( post ); "  *ngIf=" ! show(post) ">
-      <ion-icon class="d-none d-md-block" slot="start" color="medium" name="open" mode="ios"></ion-icon>
-      View
-    </ion-button>
-    <ion-button (click)=" onEdit.emit( post ) " *ngIf="philgo.isMyPost( post )">
-      <ion-icon class="d-none d-md-block" slot="start" color="medium" name="create" mode="ios"></ion-icon>
-      Edit
-    </ion-button>
-    <ion-button (click)=" onDelete.emit( post ) " *ngIf="philgo.isMyPost( post )">
-      <ion-icon class="d-none d-md-block" slot="start" color="medium" name="trash" mode="ios"></ion-icon>
-      Delete
-    </ion-button>
-    <ion-button class="no-shadow w-100px"  color="warning" fill="solid" *ngIf=" post[N.verified] != 'Y' " (click)="onClickNotVerified( $event )">
-      Not verified
-    </ion-button>
-    <ion-text  color="primary w-100px text-center" *ngIf=" post[N.verified] == 'Y' ">
-      Verified
-    </ion-text>
-  </ion-buttons>
-
-
-</div>
+<div class="h-100" (click)=" onView.emit( post, autoViewContent) ">
 
 
 
-
-<div class="p-3 bg-light fs-md"   *ngIf=" show( post ) ">
-    <div class="d-flex flex-column flex-md-row">
-
-        <div class="d-flex" slot="start">
-          <div class="flex-center size-180px of-hidden">
-              <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
-          </div>
-          <div  class="flex-center size-180px of-hidden mx-2">
-              <img class="w-100" src="{{ philgo.getSrc( post.files, N.bodyPhoto ) }}">
-          </div>
-          <div class="flex-center size-180px of-hidden">
-              <img class="w-100" src="{{ philgo.getSrc( post.files, N.idPhoto ) }}">
-          </div>
-        </div>
-
-        <table class="meta-table ml-2">
-          <tr>
-            <td>Mobile:</td>
-            <td>{{ post[ N.mobile ] }}</td>
-          </tr>
-          <tr>
-            <td>Email:</td>
-            <td>{{ post[ N.email ] }}</td>
-          </tr>
-          <tr>
-              <td>Province:</td>
-              <td>{{ post[ N.province ] }}</td>
-          </tr>
-          <tr>
-              <td>City:</td>
-              <td>{{ post[ N.city ] }}</td>
-          </tr>
-          <tr>
-              <td>Link:</td>
-              <td>{{ post[ N.link ] }}</td>
-          </tr>
-        </table>
-
-    </div>
-
-
-    <div class="p-2">Introduction: {{ post[ N.intro ] }}</div>
-</div>
-
-
- -->
-
-
-    <div ion-activable class="position-relative h-100 border "  (click)=" onView.emit( post, autoViewContent) ">
+    <div ion-activable class="position-relative h-100 border ">
         <ion-ripple-effect></ion-ripple-effect>
         <div class="flex-center w-100 h-150px of-hidden">
             <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
@@ -97,33 +12,76 @@
             <div class="fs-md">{{ post[ N.name ] }} </div>
             <div class="fs-sm py-1 text-muted">( {{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }} / {{ _.getAge(post[ N.birthday ]) }} )</div>
         </div>
+    </div>
 
 
-        <div class="view-post" *ngIf=" show( post ) " (click)=" onView.emit( post, autoViewContent) ">
-    
-            <div class="d-flex flex-column flex-md-row">
-                <div class="flex-center size-64px mx-auto of-hidden">
-                    <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
+
+    <div class="view-post p-4" *ngIf=" show( post ) " >
+      <ion-button color="light" class="position-top-right no-shadow my-2 mx-4">
+          <ion-icon slot="start" color="danger" name="close"></ion-icon>
+          Close
+      </ion-button>
+
+      <div class="view-post-content py-5">
+        <div class="flex-center justify-content-around" >
+            <div class="img-resizable mr-1">
+                <img class="w-100" src="{{  philgo.getSrc( post.files, N.profilePhoto )}}">
+            </div>
+            <div class="img-resizable mx-1">
+                <img class="w-100" src="{{ philgo.getSrc( post.files, N.bodyPhoto ) }}">
+            </div>
+            <div class="img-resizable ml-1">
+                <img class="w-100" src="{{ philgo.getSrc( post.files, N.idPhoto ) }}">
+            </div>
+        </div>
+  
+
+        <div class="meta">
+            <div class="container-fluid">
+                <div class="row no-gutters">
+                  <div class="col-4">Name:</div>
+                  <div class="col">{{ post[ N.name ] }} </div>
                 </div>
-                <div class="flex-center size-64px mx-auto of-hidden">
-                    <img class="w-100" src="{{ philgo.getSrc( post.files, N.bodyPhoto ) }}">
+                <div class="row no-gutters">
+                  <div class="col-4">Gender:</div>
+                  <div class="col">{{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }}  </div>
                 </div>
-                <div class="flex-center size-64px mx-auto of-hidden">
-                    <img class="w-100" src="{{ philgo.getSrc( post.files, N.idPhoto ) }}">
+                <div class="row no-gutters">
+                  <div class="col-4">Age:</div>
+                  <div class="col"> {{ _.getAge(post[ N.birthday ]) }}</div>
+                </div>
+                <div class="row no-gutters">
+                  <div class="col-4">Mobile:</div>
+                  <div class="col"> {{ post[ N.mobile ] }}</div>
                 </div>
             </div>
-    
-            <div class="bg-light">
-                <div>Name: {{ post[ N.name ] }} </div>
-                <div>Gender: {{ post[ N.gender ] == 'F' ? philgo.t({ en: 'Female', ko: '여자' }) :  post[ N.gender ] == 'M' ? philgo.t({ en: 'Male', ko: '남자' }) : ''  }} </div>
-                <div>Age: {{ _.getAge(post[ N.birthday ]) }}</div>
-                <div>Mobile: {{ post[ N.mobile ] }}</div>
-                <div>Email: {{ post[ N.email ] }}</div>
-                <div>Province: {{ post[ N.province ] }}</div>
-                <div>City: {{ post[ N.city ] }}</div>
-                <div>Link: {{ post[ N.link ] }}</div>
-                <div>Introduction: {{ post[ N.intro ] }}</div>
+
+            <div class="container-fluid">
+                <div class="row no-gutters">
+                  <div class="col-4">Email:</div>
+                  <div class="col">{{ post[ N.email ] }}</div>
+                </div>
+                <div class="row no-gutters">
+                  <div class="col-4">Province:</div>
+                  <div class="col">{{ post[ N.province ] }}</div>
+                </div>
+                <div class="row no-gutters">
+                  <div class="col-4">City:</div>
+                  <div class="col"> {{ post[ N.city ] }}</div>
+                </div>
+                <div class="row no-gutters">
+                  <div class="col-4">Link:</div>
+                  <div class="col"> {{ post[ N.link ] }}</div>
+                </div>
             </div>
         </div>
 
+        <div class="bg-light p-3">{{ post[ N.intro ] }}</div>
+
+      </div>
     </div>
+
+
+
+</div>
+

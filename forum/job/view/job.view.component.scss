@@ -1,10 +1,82 @@
 @import './../../../scss/vars.scss';
+
+//container must not be position:absolute/relative
+//and should be position static
+
+
+// EXAMPLE: 
+// <div class="row no-gutters">
+
+// <div class="position-static col-md-2 col-6 p-2"  *ngIf=" postView?.idx ">
+//   <app-job-view
+//     [post]=" postView "
+//     (onView)=" onView( $event ) "
+//     (onEdit)=" onEdit( $event ) "
+//     (onDelete)=" onDelete( $event ) "
+//   ></app-job-view>
+// </div>
+
+// <div class="position-static col-md-2 col-6 p-2" *ngFor="let post of posts">
+//   <app-job-view [post]=" post "
+//   (onView)=" onView( $event ) "
+//   (onEdit)=" onEdit( $event ) "
+//   (onDelete)=" onDelete( $event ) "
+//   ></app-job-view>
+// </div>
+// </div>
+
+
+
 .view-post{
     position: fixed;
-    top: 0;
+    @media (min-width:$md) {
+        // so it does not cover the 'Sidebar'
+        position: absolute;
+        top: 0;
+    }
+    top: 56px;
     left: 0;
     right: 0;
     bottom: 0;
+    overflow: auto;
     background: #fff;
-    z-index: 200000;
+    z-index: 1;
+    cursor: pointer;
+}
+
+
+.img-resizable{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 100px;
+    width: 100px;
+    @media (min-width:$md) {
+        height: 200px;
+        width: 200px;
+    }
+}
+
+
+.meta{
+    @media (min-width:$md) {
+         display: flex;
+    }
+    margin: 2em 0;
+    word-break: break-all;
+    .container-fluid{
+        border-top: 1px solid rgba(125,125,125,0.2);
+        padding: 0;
+        .row{
+            div{
+                &:first-child{
+                    background: #eee;
+                }
+                padding: .5em;
+                border-bottom: 1px solid rgba(125,125,125,0.2);
+            }
+        }
+    }
+
 }

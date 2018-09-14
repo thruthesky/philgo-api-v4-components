@@ -48,7 +48,7 @@
 
   <div class="row no-gutters">
 
-    <div class="col-md-2 col-6 p-2"  *ngIf=" postView?.idx ">
+    <div class="position-static col-md-2 col-6 p-2"  *ngIf=" postView?.idx ">
       <app-job-view
         [post]=" postView "
         (onView)=" onView( $event ) "
@@ -57,7 +57,7 @@
       ></app-job-view>
     </div>
 
-    <div class="col-md-2 col-6 p-2" *ngFor="let post of posts">
+    <div class="position-static col-md-2 col-6 p-2" *ngFor="let post of posts">
       <app-job-view [post]=" post "
       (onView)=" onView( $event ) "
       (onEdit)=" onEdit( $event ) "
