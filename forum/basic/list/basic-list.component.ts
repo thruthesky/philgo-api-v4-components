@@ -17,7 +17,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
 
   @Input() displayHeaderMenu = true;
   @Input() autoViewContent = false;
-  
+
   forum: ApiForum = null;
   posts: Array<ApiPost> = [];
 
@@ -145,7 +145,8 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
     const popover = await this.popoverController.create({
       component: MenuPopoverComponent,
       componentProps: {
-        controller: this.popoverController
+        controller: this.popoverController,
+        post: post
       },
       event: event,
       translucent: true
