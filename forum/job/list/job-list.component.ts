@@ -234,7 +234,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
     }
 
     onClickProvince( o?: { province?: string, city?: string } ) {
-        if ( o.province ) {
+        if ( o && o.province ) {
             this.province = o.province;
         }
         console.log('onClickProvince:: ', this.province);
@@ -242,7 +242,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
             /**
              * Select entire province of the province by default by giving province name on city.
              */
-            if ( o.city ) {
+            if ( o && o.city ) {
                 this.city = o.city;
             } else {
                 this.city = this.province;
