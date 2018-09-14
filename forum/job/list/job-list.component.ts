@@ -156,7 +156,8 @@ export class JobListComponent implements OnInit, AfterViewInit {
     }
 
     async onView(post: ApiPost) {
-        if (this.postView.idx === post.idx) {
+        console.log(post);
+        if (this.postView && this.postView.idx && this.postView.idx === post.idx) {
             return;
         } else {
             post.show = !post.show;
