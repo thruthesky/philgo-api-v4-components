@@ -5,13 +5,19 @@
       Search
     </ion-button>
   </ion-list-header>
-  <ng-container *ngIf="showSearch">
+  <ng-container *ngIf="!showSearch">
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Gender', ko: '성별' }) }}</ion-label>
       <ion-select placeholder="{{ philgo.t({ en: 'Gender', ko: '성별' }) }}" [(ngModel)]="form[N.gender]">
         <ion-select-option value="F">{{ philgo.t({ en: 'Female', ko: '여자' }) }}</ion-select-option>
         <ion-select-option value="M">{{ philgo.t({ en: 'Male', ko: '남자' }) }}</ion-select-option>
       </ion-select>
+    </ion-item>
+    <ion-item text-wrap>
+      <ion-label>Most Search</ion-label>
+
+        <ion-button fill="solid" size="small" shape="round" *ngFor="let k of _.keys(mostSearch)" (click)="onClickProvince(mostSearch[k])" >{{k}}</ion-button>
+
     </ion-item>
     <ion-item>
       <ion-label>{{ philgo.t({ en: 'Province', ko: '주' }) }}</ion-label>
@@ -23,7 +29,7 @@
 
     <ion-item *ngIf=" showCities ">
       <ion-label>{{ philgo.t({ en: 'City', ko: '도시' }) }}</ion-label>
-      <ion-select placeholder="{{ philgo.t({ en: 'City', ko: '도시' }) }}" [(ngModel)]=" city ">
+      <ion-select placeholder="{{ philgo.t({ en: 'City', ko: '도시' }) }}" [(ngModel)]=" city " (ionChange)="onClickCity()">
         <ion-select-option *ngFor=" let key of cityKeys" [value]="key">{{cities[key]}}</ion-select-option>
       </ion-select>
     </ion-item>

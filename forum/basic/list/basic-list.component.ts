@@ -29,7 +29,7 @@ export class ForumBasicListComponent implements OnInit, AfterViewInit {
   /**
    * Page navigation
    */
-  post_id: string = '';
+  post_id = '';
   page_no = 1;
   limit = 20;
   noMorePosts = false;
