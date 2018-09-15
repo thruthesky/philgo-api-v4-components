@@ -4,13 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { RegisterComponent } from './register.component';
+import { ComponentServiceModule } from '../../service/component.service.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    ComponentServiceModule
   ],
   declarations: [
     RegisterComponent

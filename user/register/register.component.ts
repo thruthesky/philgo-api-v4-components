@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AngularLibrary } from '../../../angular-library/angular-library';
 import { AlertController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-
+import { ComponentService } from '../../service/component.service';
 
 @Component({
     selector: 'app-register-component',
@@ -38,7 +38,8 @@ export class RegisterComponent implements OnInit {
         private alertController: AlertController,
         private camera: Camera,
         public philgo: PhilGoApiService,
-        public tr: LanguageTranslate
+        public tr: LanguageTranslate,
+        private componentService: ComponentService
     ) {
         this.resetForm();
     }
@@ -91,6 +92,7 @@ export class RegisterComponent implements OnInit {
             }, e => {
                 this.loader.submit = false;
                 this.error.emit(e);
+                this.componentService.alert(e);
             });
         } else {
             this.philgo.register(this.form).subscribe(user => {
@@ -99,6 +101,7 @@ export class RegisterComponent implements OnInit {
             }, e => {
                 this.loader.submit = false;
                 this.error.emit(e);
+                this.componentService.alert(e);
             });
         }
 
@@ -219,7 +222,9 @@ export class RegisterComponent implements OnInit {
                 }
             }
             console.log('file upload failed');
-            this.error.emit(this.philgo.error(ApiErrorFileUploadError, 'File upload failed'));
+            const err = this.philgo.error(ApiErrorFileUploadError, 'File upload failed');
+            this.error.emit(err);
+            this.componentService.alert(err);
         });
     }
 
