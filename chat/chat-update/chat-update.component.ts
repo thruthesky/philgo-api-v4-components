@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LanguageTranslate } from '../../../language-translate/language-translate';
-import { AngularLibrary } from '../../../angular-library/angular-library';
+import { SimpleLibrary as _ } from 'ng-simple-library';
 
 import * as firebase from 'firebase/app';
 import 'firebase/messaging';
@@ -16,8 +15,8 @@ import { PhilGoApiService } from '../../../philgo-api/philgo-api.service';
 export class ChatUpdateComponent implements OnInit {
 
   @Input() appVersion = 0;
+  _ = _;
   constructor(
-    public tr: LanguageTranslate,
     public philgo: PhilGoApiService
   ) {
   }
@@ -27,9 +26,9 @@ export class ChatUpdateComponent implements OnInit {
 
   get needUpdate(): boolean {
 
-    if (AngularLibrary.isCordova()) {
+    if (_.isCordova()) {
       if (this.philgo.info && this.philgo.info.chat_version) {
-        const serverVersion = AngularLibrary.parseNumber(this.philgo.info.chat_version);
+        const serverVersion = _.parseNumber(this.philgo.info.chat_version);
         if (this.appVersion < serverVersion) {
           return true;
         }
@@ -42,8 +41,8 @@ export class ChatUpdateComponent implements OnInit {
    * Returns true if it's not Cordova and permission is not requeted.
    */
   get needRequestWebPushPermission(): boolean {
-    if (!AngularLibrary.isCordova()) {
-      if (!AngularLibrary.isPushPermissionRequested()) {
+    if (!_.isCordova()) {
+      if (!_.isWebPushPermissionRequested()) {
         return true;
       }
     }
@@ -54,8 +53,8 @@ export class ChatUpdateComponent implements OnInit {
    * Return true if the user rejected push notification.
    */
   get isWebPushPermissionDenied(): boolean {
-    if (!AngularLibrary.isCordova()) {
-      if (AngularLibrary.isPushPermissionDenied()) {
+    if (!_.isCordova()) {
+      if (_.isWebPushPermissionDenied()) {
         return true;
       }
     }

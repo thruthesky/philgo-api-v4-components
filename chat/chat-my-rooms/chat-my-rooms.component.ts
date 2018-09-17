@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiChatRoom, PhilGoApiService, ApiErrorResponse } from '../../../philgo-api/philgo-api.service';
-import { LanguageTranslate } from '../../../language-translate/language-translate';
-import { AngularLibrary } from '../../../angular-library/angular-library';
+import { SimpleLibrary as _ } from 'ng-simple-library';
 
 @Component({
   selector: 'app-chat-my-rooms-component',
@@ -16,7 +15,8 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
   roomsBackup: Array<ApiChatRoom> = [];
 
 
-  isMobileWeb = AngularLibrary.isMobileWeb();
+  _ = _;
+  isMobileWeb = _.isMobileWeb();
   show = {
     loader: {
       roomList: true
@@ -24,8 +24,7 @@ export class ChatMyRoomsComponent implements OnInit, OnDestroy {
   };
   constructor(
     private router: Router,
-    public philgo: PhilGoApiService,
-    public tr: LanguageTranslate
+    public philgo: PhilGoApiService
   ) {
     this.loadMyChatRoomList();
   }

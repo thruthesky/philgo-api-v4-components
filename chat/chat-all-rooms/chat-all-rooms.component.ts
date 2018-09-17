@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiChatRoom, PhilGoApiService, ApiErrorResponse } from '../../../philgo-api/philgo-api.service';
-import { LanguageTranslate } from '../../../language-translate/language-translate';
-import { AngularLibrary } from '../../../angular-library/angular-library';
 import { ComponentService } from '../../service/component.service';
 // import { AppService } from '../../../../providers/app.service';
+import { SimpleLibrary as _ } from 'ng-simple-library';
+
 
 
 @Component({
@@ -25,11 +25,10 @@ export class ChatAllRoomsComponent implements OnInit, OnDestroy {
     }
   };
 
-  isMobileWeb = AngularLibrary.isMobileWeb();
+  isMobileWeb = _.isMobileWeb();
   constructor(
     private router: Router,
     public philgo: PhilGoApiService,
-    public tr: LanguageTranslate,
     private componentService: ComponentService
     // public a: AppService
   ) {

@@ -1,6 +1,6 @@
 <div class="text-center p-5" *ngIf=" show.loader.roomList; else roomListLoaded ">
     <ion-spinner class="mb-4"></ion-spinner>
-    <div>{{ tr.t({ko: '채팅방 목록을 로딩중입니다.', en: 'Loading chat room list.'}) }}</div>
+    <div>{{ _.t({ko: '채팅방 목록을 로딩중입니다.', en: 'Loading chat room list.'}) }}</div>
 </div>
 
 <ng-template #roomListLoaded>
@@ -18,7 +18,7 @@
                         </p>
                         <p class="d-none d-md-flex align-items-center">
                             <span><ion-icon class="align-icon mr-1" name="person"></ion-icon></span>
-                            <span>{{ tr.t({ ko: '총 인원: ', en: 'No of users: ' }) }}{{ room.no_of_member }}</span>
+                            <span>{{ _.t({ ko: '총 인원: ', en: 'No of users: ' }) }}{{ room.no_of_member }}</span>
                         </p>
                     </ion-label>
                     <ion-icon color="dark" name="ribbon" *ngIf="room.idx_owner && room.idx_owner == philgo.myIdx() "></ion-icon>
@@ -32,12 +32,12 @@
     
     <div class="flex-column-center my-4 mt-md-5 fs-md" text-center routerLink="/all-rooms" *ngIf=" ! philgo.myRooms.length ">
         <!-- <ion-img class="mx-5 px-5 mw-200px" src="/assets/img/chat-icon.png"></ion-img> -->
-        <!-- <ion-text class="my-2 fs-xl" color="danger">{{ tr.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text> -->
+        <!-- <ion-text class="my-2 fs-xl" color="danger">{{ _.t({ko: '앗 ...?!', en: 'Oops ... ?!'}) }}</ion-text> -->
         <ion-icon color="medium" class="icon-lg" name="chatbubbles" mode="ios"></ion-icon>
-        <ion-text class="mt-3 fs-lg">{{ tr.t({ko: '앗! 회원님이 참여한 채팅 방이 없네요.', en: "Ooh! You haven't joined any room."}) }}</ion-text>
-        <!-- <ion-text class="my-2 text-muted">{{ tr.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text> -->
+        <ion-text class="mt-3 fs-lg">{{ _.t({ko: '앗! 회원님이 참여한 채팅 방이 없네요.', en: "Ooh! You haven't joined any room."}) }}</ion-text>
+        <!-- <ion-text class="my-2 text-muted">{{ _.t({ko: '전체 채팅방 목록 메뉴에서 채팅방에 참여해보세요.', en: 'Please join a room under All Chat Room List menu.'}) }}</ion-text> -->
         <ion-button class="mt-3 no-shadow">
-            <span>{{ tr.t({ko: '전체 채팅방 목록', en:'All Chat Room List' }) }}</span>
+            <span>{{ _.t({ko: '전체 채팅방 목록', en:'All Chat Room List' }) }}</span>
             <ion-icon class="ml-1" name="open"></ion-icon>
         </ion-button>
     </div>
@@ -46,6 +46,6 @@
 
 <a class="playstore-button flex-center mt-3 p-3 pointer" *ngIf=" isMobileWeb " href="https://play.google.com/store/apps/details?id=com.sonub.chat"
     target="_blank">
-    <span>{{ tr.t({ko: '채팅앱 이용하기', en: 'Use chat app'})}}</span>
+    <span>{{ _.t({ko: '채팅앱 이용하기', en: 'Use chat app'})}}</span>
     <ion-icon class="icon-size ml-2" name="appstore"></ion-icon>
 </a>

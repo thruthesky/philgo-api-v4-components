@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiChatMessage, PhilGoApiService } from '../../../../philgo-api/philgo-api.service';
-import { LanguageTranslate } from '../../../../language-translate/language-translate';
+import { SimpleLibrary as _ } from 'ng-simple-library';
 
 @Component({
   selector: 'app-send-file',
@@ -10,9 +10,10 @@ import { LanguageTranslate } from '../../../../language-translate/language-trans
 export class ChatRoomSendFileComponent implements OnInit {
 
   @Input() message: ApiChatMessage;
+
+  _ = _;
   constructor(
-    public philgo: PhilGoApiService,
-    public tr: LanguageTranslate
+    public philgo: PhilGoApiService
   ) { }
 
   ngOnInit() {

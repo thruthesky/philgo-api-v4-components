@@ -1,7 +1,9 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiChatRoomCreateRequest, PhilGoApiService, ApiErrorResponse } from '../../../philgo-api/philgo-api.service';
-import { LanguageTranslate } from '../../../language-translate/language-translate';
+
+import { SimpleLibrary as _ } from 'ng-simple-library';
+
 
 @Component({
   selector: 'app-chat-create-room-component',
@@ -13,11 +15,12 @@ export class ChatCreateRoomComponent implements OnInit {
   @Output() error = new EventEmitter<ApiErrorResponse>();
   @Output() cancel = new EventEmitter<any>();
 
+  _ = _;
+
   form: ApiChatRoomCreateRequest = <any>{};
   constructor(
     private router: Router,
-    public philgo: PhilGoApiService,
-    public tr: LanguageTranslate
+    public philgo: PhilGoApiService
   ) {
     //
     // this.test();

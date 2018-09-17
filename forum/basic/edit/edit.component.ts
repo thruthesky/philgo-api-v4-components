@@ -1,9 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { PhilGoApiService, ApiPost, ApiError, ApiForum } from '../../../../philgo-api/philgo-api.service';
-import { AngularLibrary } from '../../../../angular-library/angular-library';
 import { ComponentService } from '../../../service/component.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+
+import { SimpleLibrary as _ } from 'ng-simple-library';
+
 
 @Component({
   selector: 'app-edit',
@@ -34,7 +36,7 @@ export class EditComponent implements OnInit, AfterViewInit {
     // this.form.post_id = this.forum.post_id;
     // console.log('constructor:forum:: ', this.forum);
 
-    if (AngularLibrary.isCordova()) {
+    if (_.isCordova()) {
       this.isWeb = false;
       this.isCordova = true;
     }
@@ -69,7 +71,7 @@ export class EditComponent implements OnInit, AfterViewInit {
     console.log('form: ', this.form);
     setTimeout(() => {
       if (!this.form.gid) {
-        this.form.gid = AngularLibrary.randomString(19, this.philgo.myIdx());
+        this.form.gid = _.randomString(19, this.philgo.myIdx());
         console.log(this.form.gid);
       }
     });
@@ -203,15 +205,15 @@ export class EditComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    
+
     /**
      * Convert and upload
      *
      * File 와 FileList 타입의 변수를 만든다.
      * 그리고 그냥 일반 HTML FORM <input type='file'> 에서 파일 정보를 받아 업로드하는 것과 똑 같이 하면 된다.
      */
-    const blob = AngularLibrary.base64toBlob(base64);
-    const name = AngularLibrary.dateString() + '-' + AngularLibrary.randomString(8) + '.jpg';
+    const blob = _.base64toBlob(base64);
+    const name = _.dateString() + '-' + _.randomString(8) + '.jpg';
     const file = new File([blob], name, { type: 'image/jpeg' });
     const files: FileList = <any>[file];
 

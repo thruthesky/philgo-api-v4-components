@@ -1,6 +1,5 @@
 import { Component, OnInit, NgZone, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { LanguageTranslate } from '../../../language-translate/language-translate';
-
+import { SimpleLibrary as _ } from 'ng-simple-library';
 
 
 import {
@@ -21,6 +20,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
     // @Output() error = new EventEmitter<ApiErrorResponse>();
     @Output() scroll = new EventEmitter();
 
+    _ = _;
     messages: Array<ApiChatMessage> = [];
     subscriptionNewMessage = null;
 
@@ -31,7 +31,6 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
     };
 
     constructor(
-        public tr: LanguageTranslate,
         public philgo: PhilGoApiService,
         private ngZone: NgZone,
         private activatedRoute: ActivatedRoute,
@@ -135,7 +134,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
      * - 현재 채팅방의 마지막 메시지를 보여주고, 스크롤 하고,
      * - 현재 채팅방의 새 정보들을 listen 할 수 있도록 하고,
      * 등등을 한다.
-     * 
+     *
      * @param res data for chat room enter
      */
     arrangeRoomEnter(res: ApiChatRoomEnter) {
@@ -181,7 +180,7 @@ export class ChatRoomMessagesComponent implements OnInit, OnDestroy {
     displayUsers(users: ApiChatRoomUsers) {
         const message: ApiChatMessage = <any>{};
         message.idx_member = '0';
-        message.name = this.tr.t({ ko: '방 인원 목록 총 ' + users.length + ' 명', en: 'Room user list. No: ' + users.length });
+        message.name = _.t({ ko: '방 인원 목록 총 ' + users.length + ' 명', en: 'Room user list. No: ' + users.length });
         message.stamp = Math.round((new Date).getTime() / 1000).toString();
         message.message = '';
         for (const user of users) {

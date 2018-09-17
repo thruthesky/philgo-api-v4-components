@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ApiPost, PhilGoApiService } from '../../../../philgo-api/philgo-api.service';
 import * as N from '../job.defines';
 import { TooltipService } from '../../../tooltip/tooltip.module';
-import { AngularLibrary } from '../../../../angular-library/angular-library';
+import { SimpleLibrary as _ } from 'ng-simple-library';
+
 
 @Component({
     selector: 'app-job-view',
@@ -19,7 +20,7 @@ export class JobViewComponent implements OnInit {
 
 
     N = N;
-    _ = AngularLibrary;
+    _ = _;
 
     constructor(public philgo: PhilGoApiService,
         private tooltip: TooltipService

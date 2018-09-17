@@ -1,14 +1,14 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { LanguageTranslate } from '../../../language-translate/language-translate';
 import {
     ApiErrorResponse, ApiProfileUpdateRequest,
     ApiRegisterResponse, ApiProfileResponse, ApiErrorFileNotSelected, ApiErrorFileUploadError, PhilGoApiService
 } from '../../../philgo-api/philgo-api.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AngularLibrary } from '../../../angular-library/angular-library';
 import { AlertController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ComponentService } from '../../service/component.service';
+import { SimpleLibrary as _ } from 'ng-simple-library';
+
 
 @Component({
     selector: 'app-register-component',
@@ -21,8 +21,9 @@ export class RegisterComponent implements OnInit {
     @Output() register = new EventEmitter<ApiRegisterResponse>();
     @Output() update = new EventEmitter<ApiProfileResponse>();
 
-    isCordova = AngularLibrary.isCordova();
-    isWeb = AngularLibrary.isWeb();
+    _ = _;
+    isCordova = _.isCordova();
+    isWeb = _.isWeb();
     /**
      * @Bug This component may created once, but used many times without Angular lifecycle due to Ionic lifecycle.
      *      And this will lead a bug of not initializing the form.
@@ -38,7 +39,6 @@ export class RegisterComponent implements OnInit {
         private alertController: AlertController,
         private camera: Camera,
         public philgo: PhilGoApiService,
-        public tr: LanguageTranslate,
         private componentService: ComponentService
     ) {
         this.resetForm();
@@ -182,8 +182,8 @@ export class RegisterComponent implements OnInit {
          * File 와 FileList 타입의 변수를 만든다.
          * 그리고 그냥 일반 HTML FORM <input type='file'> 에서 파일 정보를 받아 업로드하는 것과 똑 같이 하면 된다.
          */
-        const blob = AngularLibrary.base64toBlob(base64);
-        const name = AngularLibrary.dateString() + '-' + AngularLibrary.randomString(8) + '.jpg';
+        const blob = _.base64toBlob(base64);
+        const name = _.dateString() + '-' + _.randomString(8) + '.jpg';
         const file = new File([blob], name, { type: 'image/jpeg' });
         const files: FileList = <any>[file];
 

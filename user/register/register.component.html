@@ -10,13 +10,14 @@
 
         <ion-button class="mt-2 no-shadow">
             <ion-icon class="mr-2 fs-lg" name="camera"></ion-icon>
-            <ion-text>{{ tr.t({ko: '사진 업로드', en: 'Upload Photo' }) }}</ion-text>
+            <ion-text>{{ _.t({ko: '사진 업로드', en: 'Upload Photo' }) }}</ion-text>
         </ion-button>
     </div>
 
     <ion-text class=" my-1 fs-sm" text-center color="primary" *ngIf="percentage">{{ percentage }}%</ion-text>
 
 </section>
+
 
 <!-- {{ form | json }} -->
 
@@ -26,22 +27,22 @@
     <ion-list class="mb-5">
 
         <ion-item margin-vertical color="light" *ngIf=" philgo.isLoggedIn() ">
-            <ion-label>{{ tr.t({ko: '닉네임', en: 'Nickname' }) }}</ion-label>
+            <ion-label>{{ _.t({ko: '닉네임', en: 'Nickname' }) }}</ion-label>
             <ion-text slot="end">{{ form.nickname }}</ion-text>
         </ion-item>
 
         <ion-item margin-bottom color="light" *ngIf=" philgo.isLoggedIn()">
-            <ion-label>{{ tr.t({ko: '이메일', en: 'Email' }) }}</ion-label>
+            <ion-label>{{ _.t({ko: '이메일', en: 'Email' }) }}</ion-label>
             <ion-text slot="end">{{ form.email }}</ion-text>
         </ion-item>
 
         <ion-item *ngIf=" ! philgo.isLoggedIn() ">
-            <ion-label position="floating">{{ tr.t({ko: '이메일', en: 'Email' }) }}</ion-label>
+            <ion-label position="floating">{{ _.t({ko: '이메일', en: 'Email' }) }}</ion-label>
             <ion-input name="email" [(ngModel)]="form.email" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
 
         <ion-item *ngIf=" ! philgo.isLoggedIn() ">
-            <ion-label position="floating">{{ tr.t({ko: '비밀번호', en: 'Password' }) }}</ion-label>
+            <ion-label position="floating">{{ _.t({ko: '비밀번호', en: 'Password' }) }}</ion-label>
             <ion-input name="password" type="password" [(ngModel)]="form.password" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
 
@@ -53,20 +54,20 @@
       </ion-item> -->
 
         <ion-item>
-            <ion-label position="floating">{{ tr.t({ko: '이름', en: 'Name' }) }}</ion-label>
+            <ion-label position="floating">{{ _.t({ko: '이름', en: 'Name' }) }}</ion-label>
             <ion-input name="name" [(ngModel)]="form.name" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
         <ion-item *ngIf=" !  philgo.isLoggedIn() ">
-            <ion-label position="floating">{{ tr.t({ko: '닉네임', en: 'Nickname' }) }}</ion-label>
+            <ion-label position="floating">{{ _.t({ko: '닉네임', en: 'Nickname' }) }}</ion-label>
             <ion-input name="nickname" [(ngModel)]="form.nickname" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label position="floating">{{ tr.t({ko: '전화번호', en: 'Phone Number' }) }}</ion-label>
+            <ion-label position="floating">{{ _.t({ko: '전화번호', en: 'Phone Number' }) }}</ion-label>
             <ion-input name="mobile" [(ngModel)]="form.mobile" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
     </ion-list>
     <ion-button class="submit-button register-submit-button" color="warning" margin-vertical expand="full" type="button" (click)="onSubmit()">
-        {{ philgo.isLoggedIn() ? tr.t({ko: '회원 정보 수정', en: 'Update Profile' }) : tr.t({ko: '회원 가입 하기', en: 'Register' }) }}
+        {{ philgo.isLoggedIn() ? _.t({ko: '회원 정보 수정', en: 'Update Profile' }) : _.t({ko: '회원 가입 하기', en: 'Register' }) }}
         <ion-icon slot="end" name="send"></ion-icon>
     </ion-button>
 </form>

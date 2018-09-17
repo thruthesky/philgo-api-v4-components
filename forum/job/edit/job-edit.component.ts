@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { PhilGoApiService, ApiPost, ApiFile } from '../../../../philgo-api/philgo-api.service';
-import { AngularLibrary } from '../../../../angular-library/angular-library';
 import { ComponentService } from '../../../service/component.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { TooltipService } from '../../../tooltip/tooltip.module';
+import { SimpleLibrary as _ } from 'ng-simple-library';
 
 import * as N from './../job.defines';
 
@@ -36,9 +36,9 @@ export class JobEditComponent implements OnInit, AfterViewInit {
 
   N = N;
 
-  _ = AngularLibrary;
-  isWeb = AngularLibrary.isWeb();
-  isCordova = AngularLibrary.isCordova();
+  _ = _;
+  isWeb = _.isWeb();
+  isCordova = _.isCordova();
 
   minAge = new Date().getFullYear() - 17;
 
@@ -88,7 +88,7 @@ export class JobEditComponent implements OnInit, AfterViewInit {
     console.log('form: ', this.form);
     setTimeout(() => {
       if (!this.form.gid) {
-        this.form.gid = AngularLibrary.randomString(19, this.philgo.myIdx());
+        this.form.gid = _.randomString(19, this.philgo.myIdx());
         console.log(this.form.gid);
       }
     });
@@ -142,7 +142,8 @@ export class JobEditComponent implements OnInit, AfterViewInit {
       return this.componentService.alert({ message: this.philgo.t({ ko: '자기 소개를 입력하십시오.', en: 'Please input self introduction.' }) });
     }
     if (!this.form[N.link]) {
-      return this.componentService.alert({ message: this.philgo.t({ ko: '프로필 URL (페이스북 등) 을 입력하십시오.', en: 'Please input your profile link like facebook URL.' }) });
+      return this.componentService.alert({
+        message: this.philgo.t({ ko: '프로필 URL (페이스북 등) 을 입력하십시오.', en: 'Please input your profile link like facebook URL.' }) });
     }
 
     if (!this.form.files || this.form.files.length < 3) {
@@ -264,8 +265,8 @@ export class JobEditComponent implements OnInit, AfterViewInit {
      * File 와 FileList 타입의 변수를 만든다.
      * 그리고 그냥 일반 HTML FORM <input type='file'> 에서 파일 정보를 받아 업로드하는 것과 똑 같이 하면 된다.
      */
-    const blob = AngularLibrary.base64toBlob(base64);
-    const name = AngularLibrary.dateString() + '-' + AngularLibrary.randomString(8) + '.jpg';
+    const blob = _.base64toBlob(base64);
+    const name = _.dateString() + '-' + _.randomString(8) + '.jpg';
     const file = new File([blob], name, { type: 'image/jpeg' });
     const files: FileList = <any>[file];
 

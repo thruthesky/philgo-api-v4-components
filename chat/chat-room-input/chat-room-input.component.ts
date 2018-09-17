@@ -4,8 +4,10 @@ import { Component, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ApiChatRoomEnter, ApiChatMessage, PhilGoApiService, ApiError } from '../../../philgo-api/philgo-api.service';
-import { AngularLibrary } from '../../../angular-library/angular-library';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import { SimpleLibrary as _ } from 'ng-simple-library';
+
 
 @Component({
     selector: 'app-chat-room-input-component',
@@ -35,7 +37,7 @@ export class ChatRoomInputComponent implements OnInit {
         private domSanitizer: DomSanitizer,
         public philgo: PhilGoApiService,
     ) {
-        if (AngularLibrary.isCordova()) {
+        if (_.isCordova()) {
             this.platform = 'cordova';
         }
         this.resetForm();
@@ -80,7 +82,6 @@ export class ChatRoomInputComponent implements OnInit {
          * Assign to a new Object.
          */
         const m = Object.assign({}, this.form);
-        
         /**
          * 채팅을 보내고, 바로 idx 를 -1 로 해서, gif loader 가 표시되지 않도록 한다.
          * 에러가 있으면 [x] 표시가 된다.
@@ -232,7 +233,7 @@ export class ChatRoomInputComponent implements OnInit {
             // console.log('No data path or base64. just return');
         }
         // console.log('path: ', data);
-        const blob = AngularLibrary.base64toBlob(base64);
+        const blob = _.base64toBlob(base64);
         /**
          * File 와 FileList 타입의 변수를 만든다.
          * 그리고 그냥 일반 HTML FORM <input type='file'> 에서 파일 정보를 받아 업로드하는 것과 똑 같이 하면 된다.

@@ -6,7 +6,8 @@ import { InfiniteScroll } from '@ionic/angular';
 import * as N from '../job.defines';
 import { ComponentService } from '../../../service/component.service';
 import { ActivatedRoute } from '@angular/router';
-import { AngularLibrary } from '../../../../angular-library/angular-library';
+import { SimpleLibrary as _ } from 'ng-simple-library';
+
 
 @Component({
     selector: 'app-job-list-component',
@@ -49,7 +50,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
     N = N;
 
-    _ = AngularLibrary;
+    _ = _;
 
     /**
      * this will display a loader on initial visit.

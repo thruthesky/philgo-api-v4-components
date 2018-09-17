@@ -1,16 +1,18 @@
 <form class="login-form mx-auto" text-center>
     <ion-list class="ion-list">
         <ion-item>
-            <ion-label position="floating">{{ tr.t({ko: '로그인 아이디. 아이디 또는 닉네임, 이메일로 로그인 가능합니다.', en: 'Login ID ( Member ID / Nickname / Email )'})}}</ion-label>
+            <ion-label position="floating">{{ _.t({ko: '로그인 아이디. 아이디 또는 닉네임, 이메일로 로그인 가능합니다.', en: 'Login ID ( Member ID / Nickname / Email )'})}}</ion-label>
             <ion-input clear-input name="uid" [(ngModel)]="uid" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label position="floating">{{ tr.t({ko: '비밀번호', en: 'Password' }) }}</ion-label>
+            <ion-label position="floating">{{ _.t({ko: '비밀번호', en: 'Password' }) }}</ion-label>
             <ion-input name="password" type="password" [(ngModel)]="password" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
     </ion-list>
     <ion-button class="submit-button login-submit-button" type="button" color="warning" expand="full" (click)="onSubmit()">
-        {{ tr.t({ko: '로그인', en: 'Login' }) }}
+        {{ _.t({ko: '로그인', en: 'Login' }) }}
         <ion-icon slot="end" name="send"></ion-icon>
     </ion-button>
 </form>
+
+

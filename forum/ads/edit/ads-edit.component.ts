@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { PhilGoApiService, ApiPost, ApiError, ApiForum, ApiFile } from '../../../../philgo-api/philgo-api.service';
-import { AngularLibrary } from '../../../../angular-library/angular-library';
 import { ComponentService } from '../../../service/component.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { TooltipService } from '../../../tooltip/tooltip.module';
+import { SimpleLibrary as _ } from 'ng-simple-library';
+
 
 @Component({
   selector: 'app-ads-edit',
@@ -49,15 +50,19 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
     console.log('form: ', this.form);
     setTimeout(() => {
       if (!this.form.gid) {
-        this.form.gid = AngularLibrary.randomString(19, this.philgo.myIdx());
+        this.form.gid = _.randomString(19, this.philgo.myIdx());
         console.log(this.form.gid);
       }
     });
   }
 
   get subjectInDanger(): string {
-    if (this.subjectLength < this.subjectMinLength) return 'danger';
-    if (this.subjectLength > this.subjectMaxLength) return 'danger';
+    if (this.subjectLength < this.subjectMinLength) {
+      return 'danger';
+    }
+    if (this.subjectLength > this.subjectMaxLength) {
+      return 'danger';
+    }
     return 'dark';
   }
   get subjectLength(): number {
@@ -116,12 +121,12 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
       } else {
         console.log('file success: ', res);
         this.insertUploadedPhoto(res);
-          this.percentage = 0;
+        this.percentage = 0;
       }
     }, e => {
       console.error(e);
       this.componentService.alert(e);
-        this.percentage = 0;
+      this.percentage = 0;
     });
   }
 
@@ -157,7 +162,8 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
       title: this.philgo.t({ en: 'Advertisement Information', ko: '광고 등록 안내' }),
       subTitle: this.philgo.t({ en: 'Advertisement', ko: '광고' }),
       content: this.philgo.t({
-        en: 'You can post advertisement text, banner and content image. But you have to contact admin after you make changes to display your advertisement.',
+        en: 'You can post advertisement text, banner and content image.'
+          + ' But you have to contact admin after you make changes to display your advertisement.',
         ko: '광고 문구, 배너, 내용 사진 등을 직접 등록 및 수정하시면됩니다. 하지만 운영자의 승인이 있어야 광고가 표시되므로 등록 또는 수정 꼭 운영자에게 연락주세요.'
       })
     });
