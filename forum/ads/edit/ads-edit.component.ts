@@ -73,6 +73,27 @@ export class AdsEditComponent implements OnInit, AfterViewInit {
     }
   }
 
+
+  get subTitleInDanger(): string {
+    if (this.subTitleLength < this.subjectMinLength) {
+      return 'danger';
+    }
+    if (this.subTitleLength > this.subjectMaxLength) {
+      return 'danger';
+    }
+    return 'dark';
+  }
+
+  get subTitleLength(): number {
+    if (this.form.varchar_3) {
+      return this.form.varchar_3.trim().length;
+    } else {
+      return 0;
+    }
+  }
+
+
+
   onSubmit() {
     console.log('data.role: ', this.data.role);
     /**

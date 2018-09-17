@@ -34,7 +34,9 @@ export class AdsListComponent implements OnInit, AfterViewInit {
   }
 
   loadPage(event?: Event) {
-    this.philgo.postSearch({ post_id: this.post_id, uid: this.philgo.myIdx(), page_no: 1, limit: this.limit, deleted: 0 }).subscribe(search => {
+    this.philgo.postSearch({
+      post_id: this.post_id, uid: this.philgo.myIdx(),
+      page_no: 1, limit: this.limit, deleted: 0 }).subscribe(search => {
       console.log('search: ', search);
       this.forum = search;
     });
@@ -64,7 +66,7 @@ export class AdsListComponent implements OnInit, AfterViewInit {
       Object.assign(post, res.data);
     } else if (res.role === 'delete') {
       console.log('res: data', res.data);
-      const i = this.forum.posts.findIndex(v => v.idx == res.data.idx);
+      const i = this.forum.posts.findIndex(v => v.idx === res.data.idx);
       this.forum.posts.splice(i, 1);
     }
   }
